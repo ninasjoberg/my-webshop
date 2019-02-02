@@ -1,5 +1,5 @@
 # my-webshop
 
-Build with nest.js and Express
+Built with Next.js and Express
 
 `npm run dev`
