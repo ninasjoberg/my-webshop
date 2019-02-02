@@ -1,32 +1,27 @@
-import Link from 'next/link'
+import React, { Component } from 'react';
+import styled, { css } from 'styled-components'
+
+import Products from '../components/Products.js'
 import Header from '../components/Header'
-import Layout from '../components/MyLayout.js'
 
 
-const PostLink = (props) => (
-	<li>
-		<Link
-			as={`/p/${props.id}`}
-			href={`/post?title=${props.title}`}
-		>
-			<a>{props.title}</a>
-		</Link>
-	</li>
-)
+const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
 
 
-const Index = () => (
-	<div>
-		<Header />
-		<Layout>
-			<h1>My Blog</h1>
-			<ul>
-				<PostLink id="hello-nextjs" title="Hello Next.js" />
-				<PostLink id="learn-nextjs" title="Learn Next.js is awesome" />
-				<PostLink id="deploy-nextjs" title="Deploy apps with Zeit" />
-			</ul>
-		</Layout>
-	</div>
-)
+
+class Index extends Component {
+
+	render() {
+		return (
+			<Wrapper>
+				<Header />
+				<Products />
+			</Wrapper>
+		)
+	}
+}
 
 export default Index

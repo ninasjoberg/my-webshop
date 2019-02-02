@@ -15,11 +15,7 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/post": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/about": [
+    "/product": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
