@@ -7,6 +7,7 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	padding: 10px;
 	font-family: helvetica;
+	background-color: #3c3c3c;
 `;
 
 const LinkWrapper = styled.div`
@@ -35,7 +36,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.p`
 	font-size: 20px;
-	color: #252c30;
+	color: #f5eee8;
 	letter-spacing: 2px;
 	font-weight: 300;
 `;

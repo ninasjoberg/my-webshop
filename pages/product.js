@@ -1,5 +1,5 @@
 import { withRouter } from 'next/router'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 
 const Wrapper = styled.div`
