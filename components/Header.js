@@ -6,7 +6,6 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
-	font-family: helvetica;
 	background-color: #3c3c3c;
 `;
 
@@ -17,8 +16,6 @@ const LinkWrapper = styled.div`
 
 const LinkStyle = styled.a`
 	color: #1caf99;
-	font-family: helvetica;
-	font-size: 20px;
 	margin: 5px;
 `;
 
@@ -31,11 +28,9 @@ const TitleWrapper = styled.div`
 const Title = styled.h1`
 	margin: 20px 0 0;
 	color: #1caf99;
-	font-size: 40px;
 `;
 
 const SubTitle = styled.p`
-	font-size: 20px;
 	color: #f5eee8;
 	letter-spacing: 2px;
 	font-weight: 300;
@@ -46,7 +41,7 @@ const SubTitle = styled.p`
 const Header = () => (
 	<Wrapper>
 		<LinkWrapper>
-			<Link href="/">
+			<Link href="/" passHref>
 				<LinkStyle>HOME</LinkStyle>
 			</Link>
 			<Link href="/about">

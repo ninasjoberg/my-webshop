@@ -14,23 +14,15 @@ const ProductWrapper = styled.li`
     background-color: #f5eee8;
     padding: 1rem;
     margin: 1rem;
-    text-decoration: none;
-    cursor: pointer;
 `;
 
 const DispalyProduct = styled.a`
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-decoration: none;
     color: #222;
     letter-spacing: 0.6px;
-    font-family: 'nunito_sansextralight';
     font-weight: 200;
-    h2 {
-        font-sizs: 36px;
-        margin-bottom: 0;
-    }
 `;
 
 
@@ -40,16 +32,15 @@ const ProductLink = (props) => (
 	<ProductWrapper>
 		<Link
 			as={`/p/${props.slug}`}
-            href={`/product?title=${props.title}`}
+            href={`/product?title=${props.slug}`}
             passHref
 		>
             <DispalyProduct>
                 <img src={props.img} alt="product picture" height="400" width="400" />
-                <h2>{props.title}</h2>
+                <h3>{props.title}</h3>
                 <p>{props.price} SEK</p>
             </DispalyProduct>
 		</Link>
-
 	</ProductWrapper>
 )
 
@@ -58,7 +49,6 @@ const ProductLink = (props) => (
 export default class Products extends Component {
     render() {
         const productList = this.props.products.map((product) => {
-            console.log(product.slug.current)
             return (
                 <ProductLink id={product._id} title={product.title} slug={product.slug.current} img={product.imageUrls} price={product.price} />
             )
