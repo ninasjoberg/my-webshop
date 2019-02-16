@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react';
 import { withRouter } from 'next/router'
 import styled from 'styled-components'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
+import { saveItemToLocalStorage } from '../utils/localStorage'
 
 
 const Wrapper = styled.div`
@@ -56,7 +57,15 @@ const BuyButton = styled.button`
 
 
 
-class Product extends PureComponent {
+class Product extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cart: [],
+        }
+        this.addProductToCart = this.addProductToCart.bind(this);
+      }
+
     static async getInitialProps({ query: { title } }) {
         const productQuery = `*[_type == 'product' && slug.current == '${title}'][0] {
 			_id,
@@ -73,7 +82,9 @@ class Product extends PureComponent {
         }
     }
 
-
+    addProductToCart(product) {
+        saveItemToLocalStorage(product, 'cartArray')
+    }
 
     render() {
         const { imageUrls, title, price, body } = this.props.product
@@ -83,12 +94,12 @@ class Product extends PureComponent {
                 key > 0 && <img src={imageUrl} alt="product picture" height="100" width="100" />
             )
         })
-        console.log(this.props)
 
         const texArray = body.map((section) => {
-            console.log('textmap', section[0].text)
             return <p>{section[0].text}</p>
         })
+
+        console.log('product', this.props.product)
         return (
             <React.Fragment>
                 <Header />
@@ -101,7 +112,7 @@ class Product extends PureComponent {
                         </SmallImgwrapper>
                         {texArray}
                         <PriceText>{price} SEK</PriceText>
-                        <BuyButton onClick={() => { }}>
+                        <BuyButton onClick={() => { this.addProductToCart(this.props.product)}}>
                             <i class="material-icons">shopping_cart</i>
                             Lägg till
                     </BuyButton>
