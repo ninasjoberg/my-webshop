@@ -1,6 +1,5 @@
 export function saveItemToLocalStorage(product, listName) {
     let cartArray = getItemListFromLocalStorage(listName)
-    console.log(cartArray)
     if (cartArray) {
         cartArray.push(product)
     }

@@ -3,6 +3,8 @@
 //Custom error handling using componentDidCatch
 //Inject additional data into pages (for example by processing GraphQL queries)
 import React from 'react'
+import { initializeStore } from '../store'
+import { Provider } from 'mobx-react'
 import App, { Container } from 'next/app'
 import { createGlobalStyle } from 'styled-components'
 
@@ -49,12 +51,27 @@ const GlobalStyle = createGlobalStyle`
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
-    let pageProps = {}
+    // Get or Create the store with `undefined` as initialState
+    // This allows you to set a custom default initialState
+    const mobxStore = initializeStore()
 
+    // Provide the store to getInitialProps of pages
+    let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
-    return { pageProps }
+    return {
+      pageProps,
+      initialMobxState: mobxStore
+    }
+  }
+
+  constructor(props) {
+    super(props)
+    const isServer = !process.browser;
+    this.mobxStore = isServer
+      ? props.initialMobxState
+      : initializeStore(props.initialMobxState)
   }
 
   render () {
@@ -62,7 +79,9 @@ export default class MyApp extends App {
     return (
       <Container>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <Provider store={this.mobxStore}>
+          <Component {...pageProps} />
+        </Provider>
       </Container>
     )
   }

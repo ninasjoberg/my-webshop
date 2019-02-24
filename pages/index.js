@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 
-class Index extends Component {
+class Index extends React.Component {
 	static async getInitialProps() {
 		const productsQuery = `*[_type == 'product'] {
 			_id,
@@ -33,6 +33,9 @@ class Index extends Component {
 			<Wrapper>
 				<Header />
 				<Products products={this.props.products}/>
+				<div>
+					<p>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg. </p>
+				</div>
 			</Wrapper>
 		)
 	}

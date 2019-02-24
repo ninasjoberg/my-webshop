@@ -36,7 +36,6 @@ class productCare extends Component {
             return <p>{section[0].text}</p>
         })
 
-		console.log('body', body)
 		return (
 			<React.Fragment>
 				<Wrapper>

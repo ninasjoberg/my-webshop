@@ -43,7 +43,6 @@ class about extends Component {
             return <p>{section[0].text}</p>
         })
 
-		console.log('##########', imageUrls)
 		return (
 			<React.Fragment>
 				<Wrapper>

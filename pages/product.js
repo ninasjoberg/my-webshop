@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
+import { inject, observer, action } from 'mobx-react'
+
 import styled from 'styled-components'
 
 import client from '../cmsApi';
@@ -56,7 +58,8 @@ const BuyButton = styled.button`
 `;
 
 
-
+@inject('store')
+@observer
 class Product extends Component {
     constructor(props) {
         super(props);
@@ -84,6 +87,7 @@ class Product extends Component {
 
     addProductToCart(product) {
         saveItemToLocalStorage(product, 'cartArray')
+        this.props.store.addCart(product)
     }
 
     render() {
@@ -99,7 +103,6 @@ class Product extends Component {
             return <p>{section[0].text}</p>
         })
 
-        console.log('product', this.props.product)
         return (
             <React.Fragment>
                 <Header />
@@ -115,7 +118,7 @@ class Product extends Component {
                         <BuyButton onClick={() => { this.addProductToCart(this.props.product)}}>
                             <i class="material-icons">shopping_cart</i>
                             Lägg till
-                    </BuyButton>
+                        </BuyButton>
                     </WrapperContent>
                 </Wrapper>
             </React.Fragment>

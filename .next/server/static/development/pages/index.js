@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -126,45 +126,102 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/link */ "next/link");
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/localStorage */ "./utils/localStorage.js");
+var _dec, _class;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
-var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+
+
+
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
   displayName: "Header__Wrapper",
   componentId: "cec4fj-0"
 })(["display:flex;flex-direction:column;padding:10px;background-color:#3c3c3c;"]);
-var LinkWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
-  displayName: "Header__LinkWrapper",
+var Cart = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+  displayName: "Header__Cart",
   componentId: "cec4fj-1"
-})(["display:flex;justify-content:flex-end;"]);
-var LinkStyle = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.a.withConfig({
-  displayName: "Header__LinkStyle",
+})(["display:flex;align-items:center;color:white;padding:0 50px;"]);
+var LinkWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+  displayName: "Header__LinkWrapper",
   componentId: "cec4fj-2"
-})(["color:#1caf99;margin:5px;"]);
-var TitleWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
-  displayName: "Header__TitleWrapper",
+})(["display:flex;justify-content:flex-end;"]);
+var LinkStyle = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.a.withConfig({
+  displayName: "Header__LinkStyle",
   componentId: "cec4fj-3"
-})(["display:flex;flex-direction:column;align-items:center;"]);
-var Title = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.h1.withConfig({
-  displayName: "Header__Title",
+})(["color:#1caf99;margin:5px;"]);
+var TitleWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+  displayName: "Header__TitleWrapper",
   componentId: "cec4fj-4"
-})(["margin:20px 0 0;color:#1caf99;"]);
-var SubTitle = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.p.withConfig({
-  displayName: "Header__SubTitle",
+})(["display:flex;flex-direction:column;align-items:center;"]);
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.h1.withConfig({
+  displayName: "Header__Title",
   componentId: "cec4fj-5"
+})(["margin:20px 0 0;color:#1caf99;"]);
+var SubTitle = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.p.withConfig({
+  displayName: "Header__SubTitle",
+  componentId: "cec4fj-6"
 })(["color:#f5eee8;letter-spacing:2px;font-weight:300;"]);
+var Header = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["inject"])('store'), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["observer"])(_class =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Header, _Component);
 
-var Header = function Header() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    href: "/",
-    passHref: true
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkStyle, null, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    href: "/about"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkStyle, null, "ABOUT"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TitleWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, null, "BELL PEPPER"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubTitle, null, "925 STERLING SILVER, HANDMADE BY NINA SJ\xD6BERG")));
-};
+  function Header() {
+    _classCallCheck(this, Header);
 
+    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var productsInCart = Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_4__["getItemListFromLocalStorage"])('cartArray');
+      this.props.store.setCart(productsInCart);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var store = this.props.store;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Cart, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        class: "material-icons"
+      }, "shopping_cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, store.cartCount)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        href: "/",
+        passHref: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkStyle, null, "Bell Pepper")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        href: "/about",
+        passHref: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkStyle, null, "Om")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        href: "/product-care",
+        passHref: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinkStyle, null, "Sk\xF6tselr\xE5d"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TitleWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, null, "BELL PEPPER"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubTitle, null, "925 STERLING SILVER, HANDMADE BY NINA SJ\xD6BERG")));
+    }
+  }]);
+
+  return Header;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"])) || _class) || _class);
 /* harmony default export */ __webpack_exports__["default"] = (Header);
 
 /***/ }),
@@ -320,8 +377,8 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withC
 
 var Index =
 /*#__PURE__*/
-function (_Component) {
-  _inherits(Index, _Component);
+function (_React$Component) {
+  _inherits(Index, _React$Component);
 
   function Index() {
     _classCallCheck(this, Index);
@@ -334,7 +391,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Header__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Products_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
         products: this.props.products
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sj\xF6berg. ")));
     }
   }], [{
     key: "getInitialProps",
@@ -374,13 +431,40 @@ function (_Component) {
   }]);
 
   return Index;
-}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);
 
 /***/ }),
 
-/***/ 3:
+/***/ "./utils/localStorage.js":
+/*!*******************************!*\
+  !*** ./utils/localStorage.js ***!
+  \*******************************/
+/*! exports provided: saveItemToLocalStorage, getItemListFromLocalStorage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemToLocalStorage", function() { return saveItemToLocalStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemListFromLocalStorage", function() { return getItemListFromLocalStorage; });
+function saveItemToLocalStorage(product, listName) {
+  var cartArray = getItemListFromLocalStorage(listName);
+
+  if (cartArray) {
+    cartArray.push(product);
+  }
+
+  localStorage.setItem(listName, JSON.stringify(cartArray));
+}
+function getItemListFromLocalStorage(listName) {
+  var storedToDoList = JSON.parse(localStorage.getItem(listName));
+  return storedToDoList || [];
+}
+
+/***/ }),
+
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
@@ -411,6 +495,17 @@ module.exports = require("@babel/runtime/regenerator");
 /***/ (function(module, exports) {
 
 module.exports = require("@sanity/client");
+
+/***/ }),
+
+/***/ "mobx-react":
+/*!*****************************!*\
+  !*** external "mobx-react" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-react");
 
 /***/ }),
 
