@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 
 
-class about extends Component {
+class productCare extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,9 +20,8 @@ class about extends Component {
 	}
 
 	static async getInitialProps() {
-		const pageQuery = `*[_type == 'page' && title == 'About'] {
+		const pageQuery = `*[_type == 'page' && title == 'Product care'] {
 			"body": body.se[].children[],
-			"imageUrls": images[].asset->url,
 		}`;
 		const pageInfo = await client.fetch(pageQuery)
 		return {
@@ -31,26 +30,19 @@ class about extends Component {
 	}
 
 	render() {
-		const { body, imageUrls } = this.props.pageInfo[0]
-
-		const imageArray = imageUrls.map((imageUrl, key) => {
-            return (
-                <img src={imageUrl} alt="product picture" height="500" />
-            )
-        })
+		const { body } = this.props.pageInfo[0]
 
 		const texArray = body.map((section) => {
             return <p>{section[0].text}</p>
         })
 
-		console.log('##########', imageUrls)
+		console.log('body', body)
 		return (
 			<React.Fragment>
 				<Wrapper>
 					<div>
 						<Header />
-						<p>This is the about page</p>
-						{imageArray}
+						<p>Skötselråd</p>
 						{texArray}
 					</div>
 				</Wrapper>
@@ -59,4 +51,4 @@ class about extends Component {
 	}
 }
 
-export default withRouter(about)
+export default withRouter(productCare)

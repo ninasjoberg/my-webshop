@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 
 const Wrapper = styled.div`
@@ -42,10 +42,13 @@ const Header = () => (
 	<Wrapper>
 		<LinkWrapper>
 			<Link href="/" passHref>
-				<LinkStyle>HOME</LinkStyle>
+				<LinkStyle>Bell Pepper</LinkStyle>
 			</Link>
-			<Link href="/about">
-				<LinkStyle>ABOUT</LinkStyle>
+			<Link href="/about" passHref>
+				<LinkStyle>Om</LinkStyle>
+			</Link>
+			<Link href="/product-care" passHref>
+				<LinkStyle>Skötselråd</LinkStyle>
 			</Link>
 		</LinkWrapper>
 		<TitleWrapper>
