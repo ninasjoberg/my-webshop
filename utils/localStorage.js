@@ -6,6 +6,12 @@ export function saveItemToLocalStorage(product, listName) {
     localStorage.setItem(listName, JSON.stringify(cartArray));
 }
 
+export function updateItemListToLocalStorage(productList, listName) {
+    let cartArray = getItemListFromLocalStorage(listName)
+    cartArray = productList
+    localStorage.setItem(listName, JSON.stringify(cartArray));
+}
+
 export function getItemListFromLocalStorage(listName) {
     const storedToDoList = JSON.parse(localStorage.getItem(listName));
     return storedToDoList || [];

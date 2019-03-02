@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
 import { getItemListFromLocalStorage } from '../utils/localStorage'
-
+import CartModal from './CartModal'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -12,11 +12,15 @@ const Wrapper = styled.div`
 	background-color: #3c3c3c;
 `;
 
-const Cart = styled.div`
+const Cart = styled.button`
+	width: 40px;
 	display: flex;
 	align-items: center;
 	color: white;
 	padding: 0 50px;
+	background-color: #3c3c3c;
+	border: none;
+	cursor: pointer;
 `;
 
 const LinkWrapper = styled.div`
@@ -46,22 +50,36 @@ const SubTitle = styled.p`
 	font-weight: 300;
 `;
 
+
+
 @inject('store')
 @observer
 class Header extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            showCart: false,
+        }
+        this.onCartClick = this.onCartClick.bind(this);
+    }
 
 	componentDidMount() {
 		const productsInCart = getItemListFromLocalStorage('cartArray')
+		console.log('productsInCart', productsInCart)
         this.props.store.setCart(productsInCart)
-    }
+	}
+
+	onCartClick() {
+		this.setState({ showCart: !this.state.showCart })
+	}
 
 	render() {
 		const { store } = this.props
 		return (
 			<Wrapper>
 				<LinkWrapper>
-					<Cart>
-						<i class="material-icons">shopping_cart</i>
+					<Cart onClick={() => this.onCartClick()}>
+						<i className="material-icons">shopping_cart</i>
 						<p>{store.cartCount}</p>
 					</Cart>
 					<Link href="/" passHref>
@@ -78,6 +96,9 @@ class Header extends Component {
 					<Title>BELL PEPPER</Title>
 					<SubTitle>925 STERLING SILVER, HANDMADE BY NINA SJÖBERG</SubTitle>
 				</TitleWrapper>
+				{this.state.showCart &&
+					<CartModal />
+				}
 			</Wrapper>
 		)
 	}

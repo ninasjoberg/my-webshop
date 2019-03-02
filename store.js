@@ -1,6 +1,7 @@
 
-import { action, observable, computed } from 'mobx'
+import { action, observable, computed, autorun } from 'mobx'
 import { useStaticRendering } from 'mobx-react'
+import { saveItemToLocalStorage, updateItemListToLocalStorage } from './utils/localStorage'
 
 
 const isServer = !process.browser
@@ -20,8 +21,29 @@ class Store {
     }
 
     @action addCart = (product) => {
-        this.cart.push(product)
+        const foundInCart = this.cart.some((item) => {
+            return item.title === product.title
+        });
+
+        if (foundInCart) {
+            const newCart = this.cart.map((item) => {
+                if (item.title === product.title) {
+                    return {
+                        ...item,
+                        quantity: item.quantity +1
+                    }
+                }
+                return item
+            });
+            this.cart = newCart
+            updateItemListToLocalStorage(newCart, 'cartArray')
+        }
+        else {
+            this.cart.push(product)
+            saveItemToLocalStorage(product, 'cartArray')
+        }
     }
+
 
     @computed get cartCount() {
         return this.cart.length

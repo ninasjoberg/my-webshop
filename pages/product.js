@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
-import { inject, observer, action } from 'mobx-react'
+import { inject, observer, action, autorun } from 'mobx-react'
 
 import styled from 'styled-components'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
-import { saveItemToLocalStorage } from '../utils/localStorage'
 
 
 const Wrapper = styled.div`
@@ -86,8 +85,14 @@ class Product extends Component {
     }
 
     addProductToCart(product) {
-        saveItemToLocalStorage(product, 'cartArray')
-        this.props.store.addCart(product)
+        const productInfo = {
+            id: product._id,
+            title: product.title,
+            images: product.imageUrls,
+            price: product.price,
+            quantity: 1,
+        }
+        this.props.store.addCart(productInfo)
     }
 
     render() {
@@ -116,7 +121,7 @@ class Product extends Component {
                         {texArray}
                         <PriceText>{price} SEK</PriceText>
                         <BuyButton onClick={() => { this.addProductToCart(this.props.product)}}>
-                            <i class="material-icons">shopping_cart</i>
+                            <i className="material-icons">shopping_cart</i>
                             Lägg till
                         </BuyButton>
                     </WrapperContent>
