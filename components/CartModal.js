@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
+import AddressForm from './AddressForm.js'
 
 const CartWrapper = styled.div`
     background-color: #fff;
     position: fixed;
-    margin: 20% auto;
+    margin: 40px auto;
     left: 0;
     right: 0;
-    max-width: 60%;
+    max-width: 650px;
+    max-height: 80vh;
+    overflow-x: scroll;
     padding: 50px;
     border: 1px solid #dce1e2;
     border-color: #dce1e2;
@@ -38,7 +40,7 @@ const ItemWrapper = styled.div`
     margin: 20px 0;
     p {
         flex-basis: 25%;
-
+        text-align: right;
     }
 `;
 
@@ -56,9 +58,15 @@ const ItemText = styled.div`
     align-items: flex-start;
 `;
 
+const TotalCost = styled.p`
+    text-align: right;
+    font-weight: bold;
+`;
+
 const BuyButton = styled.button`
     width: 200px;
     height: 50px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -76,7 +84,33 @@ const BuyButton = styled.button`
 @inject('store')
 @observer
 class CartModal extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            showAddressForm: false,
+            name: 'NIna',
+            street: '',
+            zipcode: '',
+            city: '',
+            email: '',
+        }
+        this.addAddressClick = this.addAddressClick.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
+	addAddressClick() {
+		this.setState({ showAddressForm: true })
+    }
+
+    onChange(e) {
+        console.log(e.target.value, e.target.name)
+
+        this.setState({ [e.target.name]: [e.target.value]})
+    }
+
     render() {
+
+        const { showAddressForm } = this.state
         const productArray = this.props.store.cart.map((item) => {
             return  (
                 <ProductInfo>
@@ -93,7 +127,6 @@ class CartModal extends Component {
                             <p>{item.quantity}</p>
                             <p>{item.price * item.quantity}</p>
                         </ItemWrapper>
-
                 </ProductInfo>
             )
         })
@@ -104,6 +137,8 @@ class CartModal extends Component {
             return item + currentValue
         });
 
+        console.log('STATE', this.state)
+
         return (
             <CartWrapper>
                 <h2>HÄR ÄR DIN VARUKORG</h2>
@@ -113,11 +148,14 @@ class CartModal extends Component {
                     <p>Pris</p>
                 </InfoHeaders>
                 {productArray}
-                <p>totalt: {price} sek</p>
-                <BuyButton onClick={() => {}}>
-                    <i className="material-icons">shopping_cart</i>
-                    Till kassan
+                <TotalCost>totalt: {price} sek</TotalCost>
+                <Divider />
+                <BuyButton onClick={() => {this.addAddressClick()}}>
+                    Leveransadress
                 </BuyButton>
+                {showAddressForm &&
+                    <AddressForm {...this.state} handleChange={this.onChange}/>
+                }
             </CartWrapper>
         )
     }
