@@ -47,12 +47,16 @@ const BuyButton = styled.button`
 `;
 
 
-const AddressForm = ({ name, street, zipcode, city, email, handleChange }) => {
+const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleSubmit }) => {
 
     console.log('namn', name)
     return (
         <Wrapper>
-            <Form onSubmit={() => { }}>
+            <Form
+                onSubmit={e => {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }}>
                 <label>
                     Namn:
                     <input type="text" name='name' value={name} onChange={handleChange} placeholder='Förnamn Efternamn' />

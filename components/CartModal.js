@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
+import 'isomorphic-fetch'
+
 import AddressForm from './AddressForm.js'
 
 const CartWrapper = styled.div`
@@ -84,49 +86,63 @@ const BuyButton = styled.button`
 @inject('store')
 @observer
 class CartModal extends Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             showAddressForm: false,
-            name: 'NIna',
-            street: '',
-            zipcode: '',
-            city: '',
-            email: '',
+            userInformation: {
+                name: '',
+                street: '',
+                zipcode: '',
+                city: '',
+                email: '',
+            },
+            submitted: false,
         }
         this.addAddressClick = this.addAddressClick.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-	addAddressClick() {
-		this.setState({ showAddressForm: true })
+    addAddressClick() {
+        this.setState({ showAddressForm: true })
     }
 
     onChange(e) {
-        console.log(e.target.value, e.target.name)
+        this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
+    }
 
-        this.setState({ [e.target.name]: [e.target.value]})
+    onSubmit() {
+        fetch('/api/address', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.userInformation)
+        }).then((res) => {
+            res.status === 200 ? this.setState({ submitted: true }) : ''
+        })
     }
 
     render() {
-
         const { showAddressForm } = this.state
         const productArray = this.props.store.cart.map((item) => {
-            return  (
+            return (
                 <ProductInfo>
                     <Divider />
-                        <ItemWrapper>
-                            <ProductInfoWrapper>
-                                <img src={item.images[0]} alt="product picture" height="60" width="60" />
-                                <ItemText>
-                                    <p>{item.title}</p>
-                                    <p>{item.variants}</p>
-                                    <p>{item.price}</p>
-                                </ItemText>
-                            </ProductInfoWrapper>
-                            <p>{item.quantity}</p>
-                            <p>{item.price * item.quantity}</p>
-                        </ItemWrapper>
+                    <ItemWrapper>
+                        <ProductInfoWrapper>
+                            <img src={item.images[0]} alt="product picture" height="60" width="60" />
+                            <ItemText>
+                                <p>{item.title}</p>
+                                <p>{item.variants}</p>
+                                <p>{item.price}</p>
+                            </ItemText>
+                        </ProductInfoWrapper>
+                        <p>{item.quantity}</p>
+                        <p>{item.price * item.quantity}</p>
+                    </ItemWrapper>
                 </ProductInfo>
             )
         })
@@ -137,7 +153,7 @@ class CartModal extends Component {
             return item + currentValue
         });
 
-        console.log('STATE', this.state)
+        console.log('STATE', this.state.userInformation)
 
         return (
             <CartWrapper>
@@ -150,11 +166,11 @@ class CartModal extends Component {
                 {productArray}
                 <TotalCost>totalt: {price} sek</TotalCost>
                 <Divider />
-                <BuyButton onClick={() => {this.addAddressClick()}}>
+                <BuyButton onClick={() => { this.addAddressClick() }}>
                     Leveransadress
                 </BuyButton>
                 {showAddressForm &&
-                    <AddressForm {...this.state} handleChange={this.onChange}/>
+                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={this.onSubmit} />
                 }
             </CartWrapper>
         )

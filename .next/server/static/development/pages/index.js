@@ -113,6 +113,88 @@ var client = sanityClient({
 
 /***/ }),
 
+/***/ "./components/AddressForm.js":
+/*!***********************************!*\
+  !*** ./components/AddressForm.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
+  displayName: "AddressForm__Wrapper",
+  componentId: "sc-1g7dwk8-0"
+})([""]);
+var Form = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.form.withConfig({
+  displayName: "AddressForm__Form",
+  componentId: "sc-1g7dwk8-1"
+})(["display:flex;flex-direction:column;label{display:flex;flex-direction:column;align-items:flex-start;margin-top:10px;input{height:40px;width:100%;border-radius:3px;border:1px solid lightgray;margin-bottom:10px;padding:0 10px;font-size:16px;}}p{text-align:left;margin:10px 0;}"]);
+var BuyButton = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.button.withConfig({
+  displayName: "AddressForm__BuyButton",
+  componentId: "sc-1g7dwk8-2"
+})(["width:200px;height:50px;display:flex;align-items:center;justify-content:space-evenly;font-size:18px;letter-spacing:1px;cursor:pointer;background-color:black;color:white;:hover{opacity:0.4;}"]);
+
+var AddressForm = function AddressForm(_ref) {
+  var name = _ref.name,
+      street = _ref.street,
+      zipcode = _ref.zipcode,
+      city = _ref.city,
+      email = _ref.email,
+      handleChange = _ref.handleChange,
+      handleSubmit = _ref.handleSubmit;
+  console.log('namn', name);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Form, {
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Namn:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "name",
+    value: name,
+    onChange: handleChange,
+    placeholder: "F\xF6rnamn Efternamn"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Adress:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "street",
+    value: street,
+    onChange: handleChange,
+    placeholder: "gatauadress"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "zipcode",
+    value: zipcode,
+    onChange: handleChange,
+    placeholder: "postnummer"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "city",
+    value: city,
+    onChange: handleChange,
+    placeholder: "stad"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Mailadress:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "email",
+    value: email,
+    onChange: handleChange,
+    placeholder: "mailadress"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Efter att ordern har skickats till mig s\xE5 kommer jag kontakta dig med vidare instruktioner f\xF6r betalning och leverans. Fram\xF6ver kommer du kunna betala med Stripe, men till dess s\xE5 betalar du f\xF6rslagsvis med Swish i samband med att jag bekr\xE4ftar ordern, exakta instruktioner om betalning och info om leveranstid f\xE5r du via mail s\xE5 snart jag behandlat din order."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BuyButton, {
+    type: "submit",
+    value: "Submit"
+  }, "Skicka order")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (AddressForm);
+
+/***/ }),
+
 /***/ "./components/CartModal.js":
 /*!*********************************!*\
   !*** ./components/CartModal.js ***!
@@ -124,15 +206,22 @@ var client = sanityClient({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/link */ "next/link");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-react */ "mobx-react");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var isomorphic_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! isomorphic-fetch */ "isomorphic-fetch");
+/* harmony import */ var isomorphic_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(isomorphic_fetch__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _AddressForm_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddressForm.js */ "./components/AddressForm.js");
 var _dec, _class;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -142,64 +231,121 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
 
-var CartWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+
+
+var CartWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__CartWrapper",
   componentId: "y8wzf7-0"
-})(["background-color:#fff;position:fixed;margin:20% auto;left:0;right:0;max-width:60%;padding:50px;border:1px solid #dce1e2;border-color:#dce1e2;border-radius:3px;box-shadow:0 0 10px rgba(0,0,0,0.16);"]);
-var InfoHeaders = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+})(["background-color:#fff;position:fixed;margin:40px auto;left:0;right:0;max-width:650px;max-height:80vh;overflow-x:scroll;padding:50px;border:1px solid #dce1e2;border-color:#dce1e2;border-radius:3px;box-shadow:0 0 10px rgba(0,0,0,0.16);"]);
+var InfoHeaders = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__InfoHeaders",
   componentId: "y8wzf7-1"
 })(["display:flex;justify-content:space-between;"]);
-var ProductInfo = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+var ProductInfo = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__ProductInfo",
   componentId: "y8wzf7-2"
 })(["display:flex;flex-direction:column;"]);
-var Divider = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+var Divider = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__Divider",
   componentId: "y8wzf7-3"
 })(["height:1px;width:100%;background-color:lightgray;"]);
-var ItemWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+var ItemWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__ItemWrapper",
   componentId: "y8wzf7-4"
-})(["display:flex;margin:20px 0;p{flex-basis:25%;}"]);
-var ProductInfoWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+})(["display:flex;margin:20px 0;p{flex-basis:25%;text-align:right;}"]);
+var ProductInfoWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__ProductInfoWrapper",
   componentId: "y8wzf7-5"
 })(["display:flex;flex-basis:50%;img{padding-right:20px;}"]);
-var ItemText = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+var ItemText = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "CartModal__ItemText",
   componentId: "y8wzf7-6"
 })(["display:flex;flex-direction:column;align-items:flex-start;"]);
-var BuyButton = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.button.withConfig({
-  displayName: "CartModal__BuyButton",
+var TotalCost = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.p.withConfig({
+  displayName: "CartModal__TotalCost",
   componentId: "y8wzf7-7"
-})(["width:200px;height:50px;display:flex;align-items:center;justify-content:space-evenly;font-size:18px;letter-spacing:1px;cursor:pointer;background-color:black;color:white;:hover{opacity:0.4;}"]);
-var CartModal = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["inject"])('store'), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["observer"])(_class =
+})(["text-align:right;font-weight:bold;"]);
+var BuyButton = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.button.withConfig({
+  displayName: "CartModal__BuyButton",
+  componentId: "y8wzf7-8"
+})(["width:200px;height:50px;margin-top:20px;display:flex;align-items:center;justify-content:space-evenly;font-size:18px;letter-spacing:1px;cursor:pointer;background-color:black;color:white;:hover{opacity:0.4;}"]);
+var CartModal = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["inject"])('store'), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["observer"])(_class =
 /*#__PURE__*/
 function (_Component) {
   _inherits(CartModal, _Component);
 
-  function CartModal() {
+  function CartModal(props) {
+    var _this;
+
     _classCallCheck(this, CartModal);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CartModal).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CartModal).call(this, props));
+    _this.state = {
+      showAddressForm: false,
+      userInformation: {
+        name: '',
+        street: '',
+        zipcode: '',
+        city: '',
+        email: ''
+      },
+      submitted: false
+    };
+    _this.addAddressClick = _this.addAddressClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(CartModal, [{
+    key: "addAddressClick",
+    value: function addAddressClick() {
+      this.setState({
+        showAddressForm: true
+      });
+    }
+  }, {
+    key: "onChange",
+    value: function onChange(e) {
+      this.setState({
+        userInformation: _objectSpread({}, this.state.userInformation, _defineProperty({}, e.target.name, e.target.value))
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit() {
+      var _this2 = this;
+
+      fetch('/api/address', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.state.userInformation)
+      }).then(function (res) {
+        res.status === 200 ? _this2.setState({
+          submitted: true
+        }) : '';
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      var showAddressForm = this.state.showAddressForm;
       var productArray = this.props.store.cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfo, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ItemWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfoWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           src: item.images[0],
@@ -213,11 +359,15 @@ function (_Component) {
       }).reduce(function (item, currentValue) {
         return item + currentValue;
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CartWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "H\xC4R \xC4R DIN VARUKORG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InfoHeaders, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "product"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Antal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pris")), productArray, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "totalt: ", price, " sek"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BuyButton, {
-        onClick: function onClick() {}
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "material-icons"
-      }, "shopping_cart"), "Till kassan"));
+      console.log('STATE', this.state.userInformation);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CartWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "H\xC4R \xC4R DIN VARUKORG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InfoHeaders, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "product"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Antal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pris")), productArray, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TotalCost, null, "totalt: ", price, " sek"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BuyButton, {
+        onClick: function onClick() {
+          _this3.addAddressClick();
+        }
+      }, "Leveransadress"), showAddressForm && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddressForm_js__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({}, this.state, {
+        handleChange: this.onChange,
+        handleSubmit: this.onSubmit
+      })));
     }
   }]);
 
@@ -638,6 +788,17 @@ module.exports = require("@babel/runtime/regenerator");
 /***/ (function(module, exports) {
 
 module.exports = require("@sanity/client");
+
+/***/ }),
+
+/***/ "isomorphic-fetch":
+/*!***********************************!*\
+  !*** external "isomorphic-fetch" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-fetch");
 
 /***/ }),
 
