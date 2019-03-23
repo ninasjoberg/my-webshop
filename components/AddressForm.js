@@ -48,8 +48,6 @@ const BuyButton = styled.button`
 
 
 const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleSubmit }) => {
-
-    console.log('namn', name)
     return (
         <Wrapper>
             <Form

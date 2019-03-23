@@ -62,9 +62,6 @@ const BuyButton = styled.button`
 class Product extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            cart: [],
-        }
         this.addProductToCart = this.addProductToCart.bind(this);
       }
 

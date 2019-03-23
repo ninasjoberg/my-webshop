@@ -113,13 +113,18 @@ class CartModal extends Component {
     }
 
     onSubmit() {
+        const body = {
+            userInfo: this.state.userInformation,
+            order: this.props.store.cart,
+        }
+
         fetch('/api/address', {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.userInformation)
+            body: JSON.stringify(body),
         }).then((res) => {
             res.status === 200 ? this.setState({ submitted: true }) : ''
         })
@@ -152,8 +157,6 @@ class CartModal extends Component {
         }).reduce((item, currentValue) => {
             return item + currentValue
         });
-
-        console.log('STATE', this.state.userInformation)
 
         return (
             <CartWrapper>

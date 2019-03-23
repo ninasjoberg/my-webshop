@@ -65,7 +65,6 @@ class Header extends Component {
 
 	componentDidMount() {
 		const productsInCart = getItemListFromLocalStorage('cartArray')
-		console.log('productsInCart', productsInCart)
         this.props.store.setCart(productsInCart)
 	}
 

@@ -149,7 +149,6 @@ var AddressForm = function AddressForm(_ref) {
       email = _ref.email,
       handleChange = _ref.handleChange,
       handleSubmit = _ref.handleSubmit;
-  console.log('namn', name);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Form, {
     onSubmit: function onSubmit(e) {
       e.preventDefault();
@@ -327,13 +326,17 @@ function (_Component) {
     value: function onSubmit() {
       var _this2 = this;
 
+      var body = {
+        userInfo: this.state.userInformation,
+        order: this.props.store.cart
+      };
       fetch('/api/address', {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(this.state.userInformation)
+        body: JSON.stringify(body)
       }).then(function (res) {
         res.status === 200 ? _this2.setState({
           submitted: true
@@ -359,7 +362,6 @@ function (_Component) {
       }).reduce(function (item, currentValue) {
         return item + currentValue;
       });
-      console.log('STATE', this.state.userInformation);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CartWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "H\xC4R \xC4R DIN VARUKORG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InfoHeaders, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "product"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Antal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pris")), productArray, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TotalCost, null, "totalt: ", price, " sek"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BuyButton, {
         onClick: function onClick() {
           _this3.addAddressClick();
@@ -472,7 +474,6 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var productsInCart = Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_4__["getItemListFromLocalStorage"])('cartArray');
-      console.log('productsInCart', productsInCart);
       this.props.store.setCart(productsInCart);
     }
   }, {
