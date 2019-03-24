@@ -3,7 +3,6 @@
 //Custom error handling using componentDidCatch
 //Inject additional data into pages (for example by processing GraphQL queries)
 import React from 'react'
-import DevTools from 'mobx-react-devtools'
 import { initializeStore } from '../store'
 import { Provider } from 'mobx-react'
 import App, { Container } from 'next/app'
@@ -81,7 +80,6 @@ export default class MyApp extends App {
 		return (
 			<Container>
 				<GlobalStyle />
-				<DevTools />
 				<Provider store={this.mobxStore}>
 					<Component {...pageProps} />
 				</Provider>
