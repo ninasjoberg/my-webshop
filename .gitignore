@@ -3,6 +3,7 @@ dist
 .next/
 .vscode
 .DS_Store
+*.log
 
 # Dependencies
 node_modules/
