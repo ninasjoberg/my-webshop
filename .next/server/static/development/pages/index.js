@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -655,7 +655,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.ul.withCo
 var ProductWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.li.withConfig({
   displayName: "Products__ProductWrapper",
   componentId: "tkn8er-1"
-})(["background-color:#f5eee8;padding:12px;margin:12px;@media (max-width:700px){width:150px;padding:0 0 6px;margin:6px;h3,p{font-size:12px;margin:0;}img{height:150px;width:150px;margin-bottom:8px;}}"]);
+})(["background-color:#f5eee8;padding:12px;margin:12px;@media (max-width:700px){width:45%;padding:0 0 6px;margin:6px;h3,p{font-size:12px;margin:0;}img{height:100%;width:100%;margin-bottom:8px;}}"]);
 var DispalyProduct = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.a.withConfig({
   displayName: "Products__DispalyProduct",
   componentId: "tkn8er-2"
@@ -856,7 +856,7 @@ function getItemListFromLocalStorage(listName) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

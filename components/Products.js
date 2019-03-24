@@ -14,7 +14,7 @@ const ProductWrapper = styled.li`
     padding: 12px;
     margin: 12px;
     @media (max-width: 700px) {
-        width: 150px;
+        width: 45%;
         padding: 0 0 6px;
         margin: 6px;
         h3, p {
@@ -22,8 +22,8 @@ const ProductWrapper = styled.li`
             margin: 0;
         }
         img {
-            height: 150px;
-            width: 150px;
+            height: 100%;
+            width: 100%;
             margin-bottom: 8px;
         }
     }
