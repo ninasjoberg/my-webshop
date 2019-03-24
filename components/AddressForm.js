@@ -11,7 +11,6 @@ const Form = styled.form`
         flex-direction: column;
         align-items: flex-start;
         margin-top: 10px;
-        font-size: 26px;
         color: #51616a;
         input {
             height: 52px;
@@ -19,8 +18,8 @@ const Form = styled.form`
             border-radius: 3px;
             border: 1px solid lightgray;
             margin-bottom: 10px;
-            padding: 0 10px;
-            font-size: 18px;
+            padding: 0 0 0 10px;
+            font-size: 12px;
         }
     }
     p {
@@ -41,7 +40,7 @@ const ErrorInfo = styled.div`
     justify-content: center;
     p {
         color: orange;
-        font-size: 36px;
+
     }
 `
 

@@ -15,21 +15,18 @@ const GlobalStyle = createGlobalStyle`
     text-align: center;
     line-height: 1.5;
     h1 {
-        font-size: 42px;
         font-weight: 100;
         letter-spacing: 2px;
         text-transform: uppercase;
     }
     h2 {
         margin: 16px auto;
-        font-size: 32px;
         font-weight: 100;
         letter-spacing: 2px;
         text-transform: uppercase;
     }
     h3 {
         margin: 16px auto;
-        font-size: 24px;
         font-weight: 100;
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -37,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
     p {
         margin: 0;
         color: #51616a;
-		font-size: 26px;
     }
     ul, li, a {
         text-decoration: none;

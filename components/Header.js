@@ -6,7 +6,7 @@ import { getItemListFromLocalStorage } from '../utils/localStorage'
 import CartModal from './CartModal'
 
 const Wrapper = styled.div`
-	height: 250px;
+	height: 150px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px 50px;
@@ -16,16 +16,14 @@ const Wrapper = styled.div`
 const Cart = styled.button`
 	display: flex;
 	align-items: center;
-	color: white;
+	color: #f5eee8;
 	padding: 0 50px;
 	background-color: #3c3c3c;
 	border: none;
 	cursor: pointer;
-	i {
-		font-size: 40px;
-	}
 	p {
-		font-size: 26px;
+		font-size: 16px;
+		color: #f5eee8;
 	}
 `;
 
@@ -37,7 +35,6 @@ const LinkWrapper = styled.div`
 const LinkStyle = styled.a`
 	color: #1caf99;
 	margin: 10px;
-	font-size: 26px;
 `;
 
 const TitleWrapper = styled.div`
@@ -55,7 +52,6 @@ const SubTitle = styled.p`
 	color: #f5eee8;
 	letter-spacing: 2px;
 	font-weight: 300;
-	font-size: 24px;
 `;
 
 

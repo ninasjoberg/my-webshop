@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components'
 
 const Button = styled.button`
-    width: 200px;
+    width: 150px;
     height: 50px;
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 1px;
     cursor: pointer;
     background-color: black;

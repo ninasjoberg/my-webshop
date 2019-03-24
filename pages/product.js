@@ -13,14 +13,17 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #3c3c3c;
 `;
 
 const WrapperContent = styled.div`
     max-width: 750px;
-    padding: 100px 0;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f5eee8;
+    margin: 32px 0 50px;
 `;
 
 const SmallImgwrapper = styled.div`
@@ -92,7 +95,7 @@ class Product extends Component {
                 <Wrapper>
                     <WrapperContent>
                         <h2>{title}</h2>
-                        <img src={imageUrls[0]} alt="product picture" height="400" width="400" />
+                        <img src={imageUrls[0]} alt="product picture" height="300" width="300" />
                         <SmallImgwrapper>
                             {imageArray}
                         </SmallImgwrapper>

@@ -10,7 +10,7 @@ const CartWrapper = styled.div`
     background-color: #fff;
     position: fixed;
     right: 40px;
-    width: 650px;
+    width: 500px;
     max-height: 80vh;
     overflow-x: scroll;
     padding: 50px;
@@ -26,11 +26,13 @@ const CloseButton = styled.button`
     display: flex;
     align-self: flex-end;
     width: 20px;
-    font-size: 36px;
     border: none;
     cursor: pointer;
     :hover {
         opacity: 0.4;
+    }
+    i {
+        font-size: 24px;
     }
 `;
 
@@ -47,20 +49,23 @@ const ProductInfo = styled.div`
 const RemoveButton = styled.button`
     display: flex;
     justify-content: center;
-    width: 32px;
+    width: 24px;
+    height: 24px;
     border: none;
-    border-radius: 32px;
+    border-radius: 50%;
     background-color: #f5eee8;
-    font-size: 26px;
     color: #51616a;
     cursor: pointer;
     :hover {
         opacity: 0.4;
     }
+    i {
+        font-size: 16px;
+    }
 `;
 
 const Divider = styled.div`
-    height: 2px;
+    height: 1px;
     width: 100%;
     background-color: lightgray;
 `;
@@ -106,6 +111,7 @@ const ItemText = styled.div`
 const TotalCost = styled.p`
     text-align: right;
     font-weight: bold;
+    padding: 10px 0;
 `;
 
 const BuyButton = styled.button`
@@ -115,7 +121,7 @@ const BuyButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    font-size: 18px;
+
     letter-spacing: 1px;
     cursor: pointer;
     background-color: black;
@@ -194,10 +200,9 @@ class CartModal extends Component {
     }
 
     render() {
-
-        console.log('Cart state', this.state)
         const { showAddressForm } = this.state
         const { store, onCartClose } = this.props
+
         const productArray = store.cart.map((item) => {
             return (
                 <ProductInfo>
@@ -212,7 +217,9 @@ class CartModal extends Component {
                         </ProductInfoWrapper>
                         <QuantityWrapper>
                             <p>{item.quantity} st</p>
-                            <RemoveButton onClick={() => this.removeProductFromCart(item)}>x</RemoveButton>
+                            <RemoveButton onClick={() => this.removeProductFromCart(item)}>
+                                <i className="material-icons">close</i>
+                            </RemoveButton>
                         </QuantityWrapper>
                         <PriceTag>{item.price * item.quantity} kr</PriceTag>
                     </ItemWrapper>
@@ -229,12 +236,14 @@ class CartModal extends Component {
 
         return (
             <CartWrapper>
-                <CloseButton onClick={onCartClose}>x</CloseButton>
+                <CloseButton onClick={onCartClose}>
+                    <i className="material-icons">close</i>
+                </CloseButton>
                 <h2>HÄR ÄR DIN VARUKORG</h2>
                 <div>
                     <Divider />
                     <InfoHeaders>
-                        <p>product</p>
+                        <p>Produkt</p>
                         <p>Antal</p>
                         <p>Pris</p>
                     </InfoHeaders>

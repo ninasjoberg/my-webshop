@@ -11,8 +11,8 @@ const Wrapper = styled.ul`
 
 const ProductWrapper = styled.li`
     background-color: #f5eee8;
-    padding: 1rem;
-    margin: 1rem;
+    padding: 12px;
+    margin: 12px;
 `;
 
 const DispalyProduct = styled.a`
@@ -35,7 +35,7 @@ const ProductLink = (props) => (
             passHref
 		>
             <DispalyProduct>
-                <img src={props.img} alt="product picture" height="400" width="400" />
+                <img src={props.img} alt="product picture" height="300" width="300" />
                 <h3>{props.title}</h3>
                 <p>{props.price} SEK</p>
             </DispalyProduct>
