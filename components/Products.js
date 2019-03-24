@@ -4,10 +4,9 @@ import styled from 'styled-components'
 
 
 const Wrapper = styled.ul`
-    background-color: #3c3c3c;
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    justify-content: center;
 `;
 
 const ProductWrapper = styled.li`

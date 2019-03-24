@@ -37,7 +37,8 @@ const GlobalStyle = createGlobalStyle`
     }
     p {
         margin: 0;
-        font-size: 18px;
+        color: #51616a;
+		font-size: 26px;
     }
     ul, li, a {
         text-decoration: none;
@@ -51,40 +52,40 @@ const GlobalStyle = createGlobalStyle`
 
 
 export default class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
-    // Get or Create the store with `undefined` as initialState
-    // This allows you to set a custom default initialState
-    const mobxStore = initializeStore()
+	static async getInitialProps({ Component, router, ctx }) {
+		// Get or Create the store with `undefined` as initialState
+		// This allows you to set a custom default initialState
+		const mobxStore = initializeStore()
 
-    // Provide the store to getInitialProps of pages
-    let pageProps = {}
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-    return {
-      pageProps,
-      initialMobxState: mobxStore
-    }
-  }
+		// Provide the store to getInitialProps of pages
+		let pageProps = {}
+		if (Component.getInitialProps) {
+			pageProps = await Component.getInitialProps(ctx)
+		}
+		return {
+			pageProps,
+			initialMobxState: mobxStore
+		}
+	}
 
-  constructor(props) {
-    super(props)
-    const isServer = !process.browser;
-    this.mobxStore = isServer
-      ? props.initialMobxState
-      : initializeStore(props.initialMobxState)
-  }
+	constructor(props) {
+		super(props)
+		const isServer = !process.browser;
+		this.mobxStore = isServer
+			? props.initialMobxState
+			: initializeStore(props.initialMobxState)
+	}
 
-  render () {
-    const { Component, pageProps } = this.props
-    return (
-      <Container>
-        <GlobalStyle />
-        <DevTools />
-        <Provider store={this.mobxStore}>
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
-    )
-  }
+	render() {
+		const { Component, pageProps } = this.props
+		return (
+			<Container>
+				<GlobalStyle />
+				<DevTools />
+				<Provider store={this.mobxStore}>
+					<Component {...pageProps} />
+				</Provider>
+			</Container>
+		)
+	}
 }

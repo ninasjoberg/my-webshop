@@ -13,8 +13,8 @@ export function updateItemListToLocalStorage(productList, listName) {
 }
 
 export function getItemListFromLocalStorage(listName) {
-    const storedToDoList = JSON.parse(localStorage.getItem(listName));
-    return storedToDoList || [];
+    const storedCartArray = JSON.parse(localStorage.getItem(listName));
+    return storedCartArray || [];
 }
 
 

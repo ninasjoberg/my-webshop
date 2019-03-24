@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import ActionButton from './ActionButton.js'
 
-
-const Wrapper = styled.div`
-
-`;
 
 const Form = styled.form`
     display: flex;
@@ -14,14 +11,16 @@ const Form = styled.form`
         flex-direction: column;
         align-items: flex-start;
         margin-top: 10px;
+        font-size: 26px;
+        color: #51616a;
         input {
-            height: 40px;
+            height: 52px;
             width: 100%;
             border-radius: 3px;
             border: 1px solid lightgray;
             margin-bottom: 10px;
             padding: 0 10px;
-            font-size: 16px;
+            font-size: 18px;
         }
     }
     p {
@@ -30,26 +29,26 @@ const Form = styled.form`
     }
 `;
 
-const BuyButton = styled.button`
-    width: 200px;
-    height: 50px;
+const ErrorInfo = styled.div`
+    position: fixed;
+    top: 36%;
+    background-color: white;
+    width: 650px;
+    height: 131px;
+    border: 3px solid orange;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    font-size: 18px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    :hover {
-        opacity: 0.4;
+    justify-content: center;
+    p {
+        color: orange;
+        font-size: 36px;
     }
-`;
+`
 
 
-const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleSubmit }) => {
+const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleSubmit, errorText }) => {
     return (
-        <Wrapper>
+        <div>
             <Form
                 onSubmit={e => {
                     e.preventDefault()
@@ -71,14 +70,17 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                 </label>
                 <p>
                     Efter att ordern har skickats till mig så kommer jag kontakta dig med vidare instruktioner för betalning och leverans.
-                    Framöver kommer du kunna betala med Stripe, men till dess så betalar du förslagsvis med Swish i samband med att jag bekräftar ordern,
-                    exakta instruktioner om betalning och info om leveranstid får du via mail så snart jag behandlat din order.
+                    Framöver kommer du kunna betala med Stripe, men till dess så betalar du förslagsvis med Swish i samband med att jag bekräftar ordern.
+                    Vidare instruktioner om betalning och info om leveranstid får du via mail så snart jag behandlat din order.
                 </p>
-                <BuyButton type="submit" value="Submit">
-                    Skicka order
-                </BuyButton>
+                <ActionButton buttonText="Skicka order" />
+                {errorText &&
+                    <ErrorInfo>
+                        <p>{errorText}</p>
+                    </ErrorInfo>
+                }
             </Form>
-        </Wrapper>
+        </div>
     )
 }
 

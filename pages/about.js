@@ -6,8 +6,21 @@ import client from '../cmsApi';
 import Header from '../components/Header'
 
 
-const Wrapper = styled.div`
-
+const ContentWrapper = styled.div`
+	background-color: #f5eee8;
+	min-height: 100vh;
+	padding: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	img {
+		width: 500px;
+    	height: auto;
+		margin-bottom: 50px;
+	}
+	p {
+		max-width: 1000px;
+	}
 `;
 
 
@@ -45,14 +58,11 @@ class about extends Component {
 
 		return (
 			<React.Fragment>
-				<Wrapper>
-					<div>
-						<Header />
-						<p>This is the about page</p>
-						{imageArray}
-						{texArray}
-					</div>
-				</Wrapper>
+				<Header />
+				<ContentWrapper>
+					{imageArray}
+					{texArray}
+				</ContentWrapper>
 			</React.Fragment>
 		)
 	}

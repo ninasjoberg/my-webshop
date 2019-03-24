@@ -44,6 +44,27 @@ class Store {
         }
     }
 
+    @action removeFromCart = (product) => {
+        const foundInCart = this.cart.some((item) => {
+            return item.title === product.title
+        });
+
+        if (foundInCart) {
+            const newCart = this.cart.map((item) => {
+                if (item.title === product.title) {
+                    return null
+                }
+                return item
+            }).filter(Boolean);
+            this.cart = newCart
+            updateItemListToLocalStorage(newCart, 'cartArray')
+        }
+        else {
+            this.cart.push(product)
+            saveItemToLocalStorage(product, 'cartArray')
+        }
+    }
+
 
     @computed get cartCount() {
         return this.cart.length

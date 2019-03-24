@@ -8,8 +8,10 @@ import Header from '../components/Header'
 
 
 const Wrapper = styled.div`
+    min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	background-color: #3c3c3c;
 `;
 
 
@@ -33,9 +35,6 @@ class Index extends React.Component {
 			<Wrapper>
 				<Header />
 				<Products products={this.props.products}/>
-				<div>
-					<p>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg. </p>
-				</div>
 			</Wrapper>
 		)
 	}

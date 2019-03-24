@@ -6,11 +6,10 @@ import styled from 'styled-components'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
+import ActionButton from '../components/ActionButton.js'
 
 
 const Wrapper = styled.div`
-    min-height: 100vh;
-    background-color: #f5eee8;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,9 +21,6 @@ const WrapperContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    p {
-        font-size: 22px;
-    }
 `;
 
 const SmallImgwrapper = styled.div`
@@ -38,22 +34,7 @@ const SmallImgwrapper = styled.div`
 
 const PriceText = styled.p`
     color:  #52d7c3;
-`;
-
-const BuyButton = styled.button`
-    width: 200px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    font-size: 18px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    :hover {
-        opacity: 0.4;
-    }
+    margin-top: 20px;
 `;
 
 
@@ -117,10 +98,7 @@ class Product extends Component {
                         </SmallImgwrapper>
                         {texArray}
                         <PriceText>{price} SEK</PriceText>
-                        <BuyButton onClick={() => { this.addProductToCart(this.props.product)}}>
-                            <i className="material-icons">shopping_cart</i>
-                            Lägg till
-                        </BuyButton>
+                        <ActionButton buttonText="Lägg till"  onClick={() => { this.addProductToCart(this.props.product)}} />
                     </WrapperContent>
                 </Wrapper>
             </React.Fragment>

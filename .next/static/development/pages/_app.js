@@ -18368,7 +18368,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  html {\n    font-family: helvetica;\n    text-align: center;\n    line-height: 1.5;\n    h1 {\n        font-size: 42px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    h2 {\n        margin: 16px auto;\n        font-size: 32px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    h3 {\n        margin: 16px auto;\n        font-size: 24px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    p {\n        margin: 0;\n        font-size: 18px;\n    }\n    ul, li, a {\n        text-decoration: none;\n        list-style-type: none;\n    }\n    button:focus {\n        outline: 0;\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  html {\n    font-family: helvetica;\n    text-align: center;\n    line-height: 1.5;\n    h1 {\n        font-size: 42px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    h2 {\n        margin: 16px auto;\n        font-size: 32px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    h3 {\n        margin: 16px auto;\n        font-size: 24px;\n        font-weight: 100;\n        letter-spacing: 2px;\n        text-transform: uppercase;\n    }\n    p {\n        margin: 0;\n        color: #51616a;\n\t\tfont-size: 26px;\n    }\n    ul, li, a {\n        text-decoration: none;\n        list-style-type: none;\n    }\n    button:focus {\n        outline: 0;\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -18509,7 +18509,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 /* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/localStorage */ "./utils/localStorage.js");
-var _class, _descriptor, _descriptor2, _descriptor3, _temp;
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -18545,6 +18545,8 @@ function () {
     _initializerDefineProperty(this, "setCart", _descriptor2, this);
 
     _initializerDefineProperty(this, "addCart", _descriptor3, this);
+
+    _initializerDefineProperty(this, "removeFromCart", _descriptor4, this);
 
     //this.cart = !!initialData.cart
     this.cart;
@@ -18608,6 +18610,36 @@ function () {
       }
     };
   }
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "removeFromCart", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this3 = this;
+
+    return function (product) {
+      var foundInCart = _this3.cart.some(function (item) {
+        return item.title === product.title;
+      });
+
+      if (foundInCart) {
+        var newCart = _this3.cart.map(function (item) {
+          if (item.title === product.title) {
+            return null;
+          }
+
+          return item;
+        }).filter(Boolean);
+
+        _this3.cart = newCart;
+        Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
+      } else {
+        _this3.cart.push(product);
+
+        Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["saveItemToLocalStorage"])(product, 'cartArray');
+      }
+    };
+  }
 }), _applyDecoratedDescriptor(_class.prototype, "cartCount", [mobx__WEBPACK_IMPORTED_MODULE_0__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, "cartCount"), _class.prototype)), _class);
 var store = null;
 function initializeStore(initialData) {
@@ -18652,8 +18684,8 @@ function updateItemListToLocalStorage(productList, listName) {
   localStorage.setItem(listName, JSON.stringify(cartArray));
 }
 function getItemListFromLocalStorage(listName) {
-  var storedToDoList = JSON.parse(localStorage.getItem(listName));
-  return storedToDoList || [];
+  var storedCartArray = JSON.parse(localStorage.getItem(listName));
+  return storedCartArray || [];
 }
 
 /***/ }),
