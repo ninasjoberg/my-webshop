@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
-import styled from 'styled-components'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
-
-
-const ContentWrapper = styled.div`
-	background-color: #f5eee8;
-	min-height: 100vh;
-	padding: 100px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	p {
-		max-width: 1000px;
-	}
-`;
+import PageContent from '../components/PageContent'
 
 
 class productCare extends Component {
@@ -46,10 +33,7 @@ class productCare extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<ContentWrapper>
-					<p>Skötselråd</p>
-					{texArray}
-				</ContentWrapper>
+				<PageContent texArray={texArray} />
 			</React.Fragment>
 		)
 	}

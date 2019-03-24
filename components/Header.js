@@ -6,24 +6,30 @@ import { getItemListFromLocalStorage } from '../utils/localStorage'
 import CartModal from './CartModal'
 
 const Wrapper = styled.div`
-	height: 150px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px 50px;
 	background-color: #3c3c3c;
+	@media (max-width: 700px) {
+		padding: 12px 6px;
+	}
 `;
 
 const Cart = styled.button`
 	display: flex;
 	align-items: center;
 	color: #f5eee8;
-	padding: 0 50px;
 	background-color: #3c3c3c;
 	border: none;
 	cursor: pointer;
 	p {
 		font-size: 16px;
 		color: #f5eee8;
+	}
+	@media (max-width: 700px) {
+		p, i {
+			font-size: 12px;
+		}
 	}
 `;
 
@@ -33,8 +39,11 @@ const LinkWrapper = styled.div`
 `;
 
 const LinkStyle = styled.a`
-	color: #1caf99;
+	color: #06d0b2;
 	margin: 10px;
+	@media (max-width: 700px) {
+		font-size: 12px;
+	}
 `;
 
 const TitleWrapper = styled.div`
@@ -44,14 +53,19 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-	margin: 20px 0;
-	color: #1caf99;
+	color: #06d0b2;
+	@media (max-width: 700px) {
+		margin: 6px;
+	}
 `;
 
 const SubTitle = styled.p`
 	color: #f5eee8;
 	letter-spacing: 2px;
 	font-weight: 300;
+	@media (max-width: 700px) {
+		font-size: 12px;
+	}
 `;
 
 

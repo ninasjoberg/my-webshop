@@ -38,10 +38,14 @@ const GlobalStyle = createGlobalStyle`
     ul, li, a {
         text-decoration: none;
         list-style-type: none;
+		padding: 0;
     }
     button:focus {
         outline: 0;
     }
+	a {
+		font-size: 16px;
+	}
   }
 `;
 

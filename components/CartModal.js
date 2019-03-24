@@ -20,6 +20,12 @@ const CartWrapper = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
     display: flex;
     flex-direction: column;
+    @media (max-width: 700px) {
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 85%;
+        padding: 20px;
+    }
 `;
 
 const CloseButton = styled.button`
@@ -28,6 +34,8 @@ const CloseButton = styled.button`
     width: 20px;
     border: none;
     cursor: pointer;
+    padding: 0;
+    background-color: white;
     :hover {
         opacity: 0.4;
     }
@@ -84,6 +92,15 @@ const ProductInfoWrapper = styled.div`
     img {
         padding-right: 20px;
     }
+    @media (max-width: 700px) {
+        p {
+            text-align: left;
+            font-size: 14px;
+        }
+        img {
+            padding-right: 10px;
+        }
+    }
 `;
 
 const QuantityWrapper = styled.div`
@@ -113,24 +130,6 @@ const TotalCost = styled.p`
     font-weight: bold;
     padding: 10px 0;
 `;
-
-const BuyButton = styled.button`
-    width: 200px;
-    height: 50px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-
-    letter-spacing: 1px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    :hover {
-        opacity: 0.4;
-    }
-`;
-
 
 @inject('store')
 @observer
@@ -177,7 +176,7 @@ class CartModal extends Component {
 
     onSubmit() {
         if (Object.values(this.state.userInformation).includes('')) {
-            this.setState({errorText: 'fyll i adress och email'})
+            this.setState({errorText: 'Du måste fylla i adress och email.'})
             return
         }
         const body = {
@@ -193,7 +192,6 @@ class CartModal extends Component {
             },
             body: JSON.stringify(body),
         }).then((res) => {
-            console.log('Res status', res.status)
             res.status === 200 ? this.setState({ submitted: true }) : ''
         })
         this.props.onCartClose()
@@ -205,7 +203,7 @@ class CartModal extends Component {
 
         const productArray = store.cart.map((item) => {
             return (
-                <ProductInfo>
+                <ProductInfo key={item._id}>
                     <ItemWrapper>
                         <ProductInfoWrapper>
                             <img src={item.images[0]} alt="product picture" height="60" width="60" />
@@ -241,12 +239,12 @@ class CartModal extends Component {
                 </CloseButton>
                 <h2>HÄR ÄR DIN VARUKORG</h2>
                 <div>
-                    <Divider />
                     <InfoHeaders>
                         <p>Produkt</p>
                         <p>Antal</p>
                         <p>Pris</p>
                     </InfoHeaders>
+                    <Divider />
                     {productArray}
                     <TotalCost>totalt: {price} sek</TotalCost>
                     <Divider />

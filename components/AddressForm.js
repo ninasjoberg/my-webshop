@@ -31,16 +31,17 @@ const Form = styled.form`
 const ErrorInfo = styled.div`
     position: fixed;
     top: 36%;
+    left: 50%;
     background-color: white;
-    width: 650px;
-    height: 131px;
+    width: 400px;
+    height: 100px;
     border: 3px solid orange;
     display: flex;
     align-items: center;
     justify-content: center;
     p {
         color: orange;
-
+        font-size: 24px;
     }
 `
 

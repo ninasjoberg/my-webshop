@@ -28,6 +28,8 @@ export default class MyDocument extends Document {
     return (
         <html>
             <Head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>bell pepper</title>
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
             </Head>

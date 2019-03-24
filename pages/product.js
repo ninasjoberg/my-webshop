@@ -36,7 +36,7 @@ const SmallImgwrapper = styled.div`
 `;
 
 const PriceText = styled.p`
-    color:  #52d7c3;
+    color:  #06d0b2;
     margin-top: 20px;
 `;
 

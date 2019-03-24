@@ -76,7 +76,7 @@ var Form = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].form.withCo
 var ErrorInfo = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
   displayName: "AddressForm__ErrorInfo",
   componentId: "sc-1g7dwk8-1"
-})(["position:fixed;top:36%;background-color:white;width:650px;height:131px;border:3px solid orange;display:flex;align-items:center;justify-content:center;p{color:orange;}"]);
+})(["position:fixed;top:36%;left:50%;background-color:white;width:400px;height:100px;border:3px solid orange;display:flex;align-items:center;justify-content:center;p{color:orange;font-size:24px;}"]);
 
 var AddressForm = function AddressForm(_ref) {
   var name = _ref.name,
@@ -183,11 +183,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 var CartWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div.withConfig({
   displayName: "CartModal__CartWrapper",
   componentId: "y8wzf7-0"
-})(["background-color:#fff;position:fixed;right:40px;width:500px;max-height:80vh;overflow-x:scroll;padding:50px;border:1px solid #dce1e2;border-color:#dce1e2;border-radius:3px;box-shadow:0 0 10px rgba(0,0,0,0.16);display:flex;flex-direction:column;"]);
+})(["background-color:#fff;position:fixed;right:40px;width:500px;max-height:80vh;overflow-x:scroll;padding:50px;border:1px solid #dce1e2;border-color:#dce1e2;border-radius:3px;box-shadow:0 0 10px rgba(0,0,0,0.16);display:flex;flex-direction:column;@media (max-width:700px){left:50%;transform:translate(-50%,0);width:85%;padding:20px;}"]);
 var CloseButton = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].button.withConfig({
   displayName: "CartModal__CloseButton",
   componentId: "y8wzf7-1"
-})(["display:flex;align-self:flex-end;width:20px;border:none;cursor:pointer;:hover{opacity:0.4;}i{font-size:24px;}"]);
+})(["display:flex;align-self:flex-end;width:20px;border:none;cursor:pointer;padding:0;background-color:white;:hover{opacity:0.4;}i{font-size:24px;}"]);
 var InfoHeaders = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div.withConfig({
   displayName: "CartModal__InfoHeaders",
   componentId: "y8wzf7-2"
@@ -211,7 +211,7 @@ var ItemWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div.
 var ProductInfoWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div.withConfig({
   displayName: "CartModal__ProductInfoWrapper",
   componentId: "y8wzf7-7"
-})(["display:flex;flex-basis:50%;align-items:center;img{padding-right:20px;}"]);
+})(["display:flex;flex-basis:50%;align-items:center;img{padding-right:20px;}@media (max-width:700px){p{text-align:left;font-size:14px;}img{padding-right:10px;}}"]);
 var QuantityWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div.withConfig({
   displayName: "CartModal__QuantityWrapper",
   componentId: "y8wzf7-8"
@@ -228,10 +228,6 @@ var TotalCost = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].p.with
   displayName: "CartModal__TotalCost",
   componentId: "y8wzf7-11"
 })(["text-align:right;font-weight:bold;padding:10px 0;"]);
-var BuyButton = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].button.withConfig({
-  displayName: "CartModal__BuyButton",
-  componentId: "y8wzf7-12"
-})(["width:200px;height:50px;margin-top:20px;display:flex;align-items:center;justify-content:space-evenly;letter-spacing:1px;cursor:pointer;background-color:black;color:white;:hover{opacity:0.4;}"]);
 var CartModal = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["inject"])('store'), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["observer"])(_class =
 /*#__PURE__*/
 function (_Component) {
@@ -298,7 +294,7 @@ function (_Component) {
 
       if (Object.values(this.state.userInformation).includes('')) {
         this.setState({
-          errorText: 'fyll i adress och email'
+          errorText: 'Du måste fylla i adress och email.'
         });
         return;
       }
@@ -315,7 +311,6 @@ function (_Component) {
         },
         body: JSON.stringify(body)
       }).then(function (res) {
-        console.log('Res status', res.status);
         res.status === 200 ? _this2.setState({
           submitted: true
         }) : '';
@@ -332,7 +327,9 @@ function (_Component) {
           store = _this$props.store,
           onCartClose = _this$props.onCartClose;
       var productArray = store.cart.map(function (item) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfo, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ItemWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfoWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfo, {
+          key: item._id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ItemWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductInfoWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           src: item.images[0],
           alt: "product picture",
           height: "60",
@@ -354,7 +351,7 @@ function (_Component) {
         onClick: onCartClose
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "material-icons"
-      }, "close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "H\xC4R \xC4R DIN VARUKORG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InfoHeaders, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Produkt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Antal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pris")), productArray, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TotalCost, null, "totalt: ", price, " sek"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButton_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, "close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "H\xC4R \xC4R DIN VARUKORG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InfoHeaders, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Produkt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Antal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pris")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), productArray, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TotalCost, null, "totalt: ", price, " sek"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Divider, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButton_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
         buttonText: "Leveransadress",
         onClick: function onClick() {
           _this3.addAddressClick();
@@ -418,11 +415,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "Header__Wrapper",
   componentId: "cec4fj-0"
-})(["height:150px;display:flex;flex-direction:column;padding:20px 50px;background-color:#3c3c3c;"]);
+})(["display:flex;flex-direction:column;padding:20px 50px;background-color:#3c3c3c;@media (max-width:700px){padding:12px 6px;}"]);
 var Cart = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].button.withConfig({
   displayName: "Header__Cart",
   componentId: "cec4fj-1"
-})(["display:flex;align-items:center;color:#f5eee8;padding:0 50px;background-color:#3c3c3c;border:none;cursor:pointer;p{font-size:16px;color:#f5eee8;}"]);
+})(["display:flex;align-items:center;color:#f5eee8;background-color:#3c3c3c;border:none;cursor:pointer;p{font-size:16px;color:#f5eee8;}@media (max-width:700px){p,i{font-size:12px;}}"]);
 var LinkWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "Header__LinkWrapper",
   componentId: "cec4fj-2"
@@ -430,7 +427,7 @@ var LinkWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.
 var LinkStyle = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].a.withConfig({
   displayName: "Header__LinkStyle",
   componentId: "cec4fj-3"
-})(["color:#1caf99;margin:10px;"]);
+})(["color:#06d0b2;margin:10px;@media (max-width:700px){font-size:12px;}"]);
 var TitleWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "Header__TitleWrapper",
   componentId: "cec4fj-4"
@@ -438,11 +435,11 @@ var TitleWrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].h1.withConfig({
   displayName: "Header__Title",
   componentId: "cec4fj-5"
-})(["margin:20px 0;color:#1caf99;"]);
+})(["color:#06d0b2;@media (max-width:700px){margin:6px;}"]);
 var SubTitle = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].p.withConfig({
   displayName: "Header__SubTitle",
   componentId: "cec4fj-6"
-})(["color:#f5eee8;letter-spacing:2px;font-weight:300;"]);
+})(["color:#f5eee8;letter-spacing:2px;font-weight:300;@media (max-width:700px){font-size:12px;}"]);
 var Header = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["inject"])('store'), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["observer"])(_class =
 /*#__PURE__*/
 function (_Component) {
@@ -558,7 +555,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].ul.withC
 var ProductWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].li.withConfig({
   displayName: "Products__ProductWrapper",
   componentId: "tkn8er-1"
-})(["background-color:#f5eee8;padding:12px;margin:12px;"]);
+})(["background-color:#f5eee8;padding:12px;margin:12px;@media (max-width:700px){width:150px;padding:0 0 6px;margin:6px;h3,p{font-size:12px;margin:0;}img{height:150px;width:150px;margin-bottom:8px;}}"]);
 var DispalyProduct = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].a.withConfig({
   displayName: "Products__DispalyProduct",
   componentId: "tkn8er-2"
@@ -593,6 +590,7 @@ function (_Component) {
     value: function render() {
       var productList = this.props.products.map(function (product) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProductLink, {
+          key: product._id,
           id: product._id,
           title: product.title,
           slug: product.slug.current,
@@ -25983,7 +25981,7 @@ function getItemListFromLocalStorage(listName) {
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
@@ -26008,5 +26006,5 @@ module.exports = dll_831a3634f66cb1dada0c;
 
 /***/ })
 
-},[[5,"static/runtime/webpack.js"]]]));;
+},[[4,"static/runtime/webpack.js"]]]));;
 //# sourceMappingURL=index.js.map

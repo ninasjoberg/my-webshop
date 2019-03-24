@@ -1,28 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
-import styled from 'styled-components'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
-
-
-const ContentWrapper = styled.div`
-	background-color: #f5eee8;
-	min-height: 100vh;
-	padding: 100px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	img {
-		width: 500px;
-    	height: auto;
-		margin-bottom: 50px;
-	}
-	p {
-		max-width: 1000px;
-	}
-`;
-
+import PageContent from '../components/PageContent'
 
 
 class about extends Component {
@@ -46,7 +27,7 @@ class about extends Component {
 	render() {
 		const { body, imageUrls } = this.props.pageInfo[0]
 
-		const imageArray = imageUrls.map((imageUrl, key) => {
+		const imageArray = imageUrls.map((imageUrl) => {
             return (
                 <img src={imageUrl} alt="product picture" height="500" />
             )
@@ -59,10 +40,7 @@ class about extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<ContentWrapper>
-					{imageArray}
-					{texArray}
-				</ContentWrapper>
+				<PageContent imageArray={imageArray} texArray={texArray} />
 			</React.Fragment>
 		)
 	}
