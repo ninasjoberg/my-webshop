@@ -6,14 +6,12 @@ import Products from '../components/Products.js'
 import Header from '../components/Header'
 
 
-
 const Wrapper = styled.div`
     min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: #3c3c3c;
 `;
-
 
 class Index extends React.Component {
 	static async getInitialProps() {
@@ -28,7 +26,7 @@ class Index extends React.Component {
 		return {
 			products
 		}
-	  }
+	}
 
 	render() {
 		return (
@@ -39,7 +37,6 @@ class Index extends React.Component {
 		)
 	}
 }
-
 
 export default Index
 

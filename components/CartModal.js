@@ -90,6 +90,7 @@ const ProductInfoWrapper = styled.div`
     flex-basis: 50%;
     align-items: center;
     img {
+        width: auto;
         padding-right: 20px;
     }
     @media (max-width: 700px) {
@@ -248,8 +249,8 @@ class CartModal extends Component {
                     {productArray}
                     <TotalCost>totalt: {price} sek</TotalCost>
                     <Divider />
-                    <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
                 </div>
+                <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
                 {showAddressForm &&
                     <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={this.onSubmit} />
                 }

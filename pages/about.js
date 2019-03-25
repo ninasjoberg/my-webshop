@@ -9,8 +9,6 @@ import PageContent from '../components/PageContent'
 class about extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		}
 	}
 
 	static async getInitialProps() {

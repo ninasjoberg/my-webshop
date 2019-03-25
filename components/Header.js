@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router'
 import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
 	padding: 20px 50px;
 	background-color: #3c3c3c;
 	@media (max-width: 700px) {
-		padding: 12px 6px;
+		padding: 12px;
 	}
 `;
 
@@ -44,6 +45,10 @@ const LinkStyle = styled.a`
 	@media (max-width: 700px) {
 		font-size: 12px;
 	}
+
+	${({ active }) => active && `
+		color: #f5eee8;
+	`}
 `;
 
 const TitleWrapper = styled.div`
@@ -65,10 +70,9 @@ const SubTitle = styled.p`
 	font-weight: 300;
 	@media (max-width: 700px) {
 		font-size: 12px;
+		font-weight: 200;
 	}
 `;
-
-
 
 @inject('store')
 @observer
@@ -96,19 +100,21 @@ class Header extends Component {
     }
 
 	render() {
-		const { store } = this.props
+		const { store, router: { asPath = '/' } = {} } = this.props
+
+
 		return (
 			<Wrapper>
 				<LinkWrapper>
 					<div>
 						<Link href="/" passHref>
-							<LinkStyle>Bell Pepper</LinkStyle>
+							<LinkStyle active={asPath === '/'}>Bell Pepper</LinkStyle>
 						</Link>
 						<Link href="/about" passHref>
-							<LinkStyle>Om</LinkStyle>
+							<LinkStyle active={asPath === '/about'}>Om</LinkStyle>
 						</Link>
 						<Link href="/product-care" passHref>
-							<LinkStyle>Skötselråd</LinkStyle>
+							<LinkStyle active={asPath === '/product-care'}>Skötselråd</LinkStyle>
 						</Link>
 					</div>
 					<Cart onClick={() => this.onCartClick()}>
@@ -128,4 +134,4 @@ class Header extends Component {
 	}
 }
 
-export default Header
+export default withRouter(Header)

@@ -10,43 +10,46 @@ import { createGlobalStyle } from 'styled-components'
 
 
 const GlobalStyle = createGlobalStyle`
-  html {
-    font-family: helvetica;
-    text-align: center;
-    line-height: 1.5;
-    h1 {
-        font-weight: 100;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-    h2 {
-        margin: 16px auto;
-        font-weight: 100;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-    h3 {
-        margin: 16px auto;
-        font-weight: 100;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-    p {
-        margin: 0;
-        color: #51616a;
-    }
-    ul, li, a {
-        text-decoration: none;
-        list-style-type: none;
-		padding: 0;
-    }
-    button:focus {
-        outline: 0;
-    }
-	a {
-		font-size: 16px;
+	* {
+		box-sizing: border-box;
 	}
-  }
+	html {
+		font-family: helvetica;
+		text-align: center;
+		line-height: 1.5;
+		h1 {
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		h2 {
+			margin: 16px auto;
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		h3 {
+			margin: 16px auto;
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		p {
+			margin: 0;
+			color: #51616a;
+		}
+		ul, li, a {
+			text-decoration: none;
+			list-style-type: none;
+			padding: 0;
+		}
+		button:focus {
+			outline: 0;
+		}
+		a {
+			font-size: 16px;
+		}
+	}
 `;
 
 

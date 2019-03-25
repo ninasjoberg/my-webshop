@@ -17,21 +17,41 @@ const Wrapper = styled.div`
 `;
 
 const WrapperContent = styled.div`
-    max-width: 750px;
-    padding: 25px;
+    max-width: 800px;
+    padding: 25px 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #f5eee8;
-    margin: 32px 0 50px;
+    margin: 32px 0;
+    text-align: left;
+    @media (max-width: 700px) {
+        padding: 25px;
+        p {
+            font-weight: 200;
+            margin-bottom: 6px;
+        }
+    }
 `;
 
-const SmallImgwrapper = styled.div`
-    margin: 1rem;
+const BigImage = styled.img`
+    max-width: 100%;
+    @media (max-width: 700px) {
+        max-width: 100%;
+    }
+`;
+
+const SmallImgWrapper = styled.div`
     display: flex;
-    align-items: center;
+    flex-flow: wrap;
+    width: 100%;
+    margin-bottom: 16px;
     img {
-        margin: 0.5rem;
+        margin: 16px 12px 0px 0px;
+        cursor: pointer;
+        &:last-child {
+            margin-right: 0px;
+        }
     }
 `;
 
@@ -46,7 +66,11 @@ const PriceText = styled.p`
 class Product extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            bigImage: '',
+		}
         this.addProductToCart = this.addProductToCart.bind(this);
+        this.selectImg = this.selectImg.bind(this);
       }
 
     static async getInitialProps({ query: { title } }) {
@@ -65,6 +89,10 @@ class Product extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({ bigImage: this.props.product.imageUrls[0] })
+    }
+
     addProductToCart(product) {
         const productInfo = {
             id: product._id,
@@ -76,12 +104,17 @@ class Product extends Component {
         this.props.store.addCart(productInfo)
     }
 
+    selectImg(e) {
+        this.setState({ bigImage: e.target.src })
+    }
+
     render() {
         const { imageUrls, title, price, body } = this.props.product
+        const { bigImage } = this.state
 
         const imageArray = imageUrls.map((imageUrl, key) => {
             return (
-                key > 0 && <img src={imageUrl} alt="product picture" height="100" width="100" />
+                <img src={imageUrl} onClick={this.selectImg} alt="product picture" height="100" width="100" />
             )
         })
 
@@ -95,10 +128,12 @@ class Product extends Component {
                 <Wrapper>
                     <WrapperContent>
                         <h2>{title}</h2>
-                        <img src={imageUrls[0]} alt="product picture" height="300" width="300" />
-                        <SmallImgwrapper>
+                        <div>
+                            <BigImage src={bigImage} alt="product picture" />
+                        </div>
+                        <SmallImgWrapper>
                             {imageArray}
-                        </SmallImgwrapper>
+                        </SmallImgWrapper>
                         {texArray}
                         <PriceText>{price} SEK</PriceText>
                         <ActionButton buttonText="Lägg till"  onClick={() => { this.addProductToCart(this.props.product)}} />

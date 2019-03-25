@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
+
 const ContentWrapper = styled.div`
 	background-color: #f5eee8;
 	min-height: 100vh;
