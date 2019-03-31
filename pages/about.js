@@ -4,6 +4,7 @@ import { withRouter } from 'next/router'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import PageContent from '../components/PageContent'
+import Footer from '../components/Footer'
 
 
 class about extends Component {
@@ -39,6 +40,7 @@ class about extends Component {
 			<React.Fragment>
 				<Header />
 				<PageContent imageArray={imageArray} texArray={texArray} />
+				<Footer />
 			</React.Fragment>
 		)
 	}

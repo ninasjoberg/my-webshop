@@ -26,6 +26,7 @@ const Cart = styled.button`
 	p {
 		font-size: 16px;
 		color: #f5eee8;
+		font-weight: 100;
 	}
 	@media (max-width: 700px) {
 		p, i {
@@ -37,11 +38,12 @@ const Cart = styled.button`
 const LinkWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
+	flex-flow: wrap;
 `;
 
 const LinkStyle = styled.a`
 	color: #06d0b2;
-	margin: 10px;
+	margin: 6px;
 	@media (max-width: 700px) {
 		font-size: 12px;
 	}
@@ -116,6 +118,9 @@ class Header extends Component {
 						<Link href="/product-care" passHref>
 							<LinkStyle active={asPath === '/product-care'}>Skötselråd</LinkStyle>
 						</Link>
+						{/* <Link href="/conditions" passHref>
+							<LinkStyle active={asPath === '/conditions'}>Köpvillkor</LinkStyle>
+						</Link> */}
 					</div>
 					<Cart onClick={() => this.onCartClick()}>
 						<i className="material-icons">shopping_cart</i>

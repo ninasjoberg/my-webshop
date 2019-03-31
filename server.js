@@ -24,10 +24,13 @@ app.prepare()
         server.post('/api/address', (req, res) => {
             const { name, street, zipcode, city, email } = req.body.userInfo
 
-            const orderHTML = req.body.order.map(({ title, images, price, quantity }) => {
+            const orderHTML = req.body.order.map(({ title, images, price, quantity, variant }) => {
                 return `
                     <div style="border: 1px dotted black; padding 10px;">
                         <h4>${title}</h4>
+                        <p>
+                            ${variant}
+                        </p>
                         <p>
                             ${quantity}st ${price}kr
                         </p>

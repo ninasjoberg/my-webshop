@@ -15,9 +15,8 @@ class productCare extends Component {
 	}
 
 	static async getInitialProps() {
-		const pageQuery = `*[_type == 'page' && title == 'Product care'] {
+		const pageQuery = `*[_type == 'page' && title == 'Conditions'] {
 			"body": body.se[].children[],
-			"imageUrls": images[].asset->url,
 		}`;
 		const pageInfo = await client.fetch(pageQuery)
 		return {
@@ -26,24 +25,16 @@ class productCare extends Component {
 	}
 
 	render() {
-		const { body, imageUrls } = this.props.pageInfo[0]
-
-		console.log('imageUrls', imageUrls)
+		const { body } = this.props.pageInfo[0]
 
 		const texArray = body.map((section) => {
 			return <p>{section[0].text}</p>
 		})
 
-		const imageArray= imageUrls.map((imageUrl) => {
-            return (
-                <img src={imageUrl} alt="product picture" height="500" />
-            )
-        })
-
 		return (
 			<React.Fragment>
 				<Header />
-				<PageContent texArray={texArray} imageArray={imageArray}/>
+				<PageContent texArray={texArray} />
 				<Footer />
 			</React.Fragment>
 		)

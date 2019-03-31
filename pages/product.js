@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import ActionButton from '../components/ActionButton.js'
+import Footer from '../components/Footer'
+
 
 
 const Wrapper = styled.div`
@@ -46,19 +48,37 @@ const SmallImgWrapper = styled.div`
     flex-flow: wrap;
     width: 100%;
     margin-bottom: 16px;
-    img {
-        margin: 16px 12px 0px 0px;
-        cursor: pointer;
-        &:last-child {
-            margin-right: 0px;
-        }
-    }
 `;
+
+const SmallImg = styled.img`
+    margin: 16px 12px 0px 0px;
+    cursor: pointer;
+    &:last-child {
+        margin-right: 0px;
+    }
+    ${({ active }) => active && `
+        opacity: 0.3
+        border: 1px solid grey;
+	`}
+`
 
 const PriceText = styled.p`
     color:  #06d0b2;
     margin-top: 20px;
 `;
+
+const DropdownT = styled.select`
+    color: #51616a;
+    border-radius: 6px;
+    height: 36px;
+    min-width: 200px;
+    font-size: 16px;
+    margin-top: 12px;
+    padding-left: 6px;
+    :focus {
+        outline: 0;
+    }
+`
 
 
 @inject('store')
@@ -68,10 +88,12 @@ class Product extends Component {
         super(props);
         this.state = {
             bigImage: '',
-		}
+            selectedVariant: '',
+        }
         this.addProductToCart = this.addProductToCart.bind(this);
         this.selectImg = this.selectImg.bind(this);
-      }
+        this.selectVariant = this.selectVariant.bind(this);
+    }
 
     static async getInitialProps({ query: { title } }) {
         const productQuery = `*[_type == 'product' && slug.current == '${title}'][0] {
@@ -80,6 +102,7 @@ class Product extends Component {
 			slug,
             price,
             images,
+            variants,
             "imageUrls": images[].asset->url,
             "body": body.se[].children[],
 		}`;
@@ -91,6 +114,9 @@ class Product extends Component {
 
     componentDidMount() {
         this.setState({ bigImage: this.props.product.imageUrls[0] })
+        if(this.props.product.variants) {
+            this.setState({ selectedVariant: this.props.product.variants[0].title })
+        }
     }
 
     addProductToCart(product) {
@@ -100,21 +126,34 @@ class Product extends Component {
             images: product.imageUrls,
             price: product.price,
             quantity: 1,
+            variant: this.state.selectedVariant,
         }
         this.props.store.addCart(productInfo)
     }
 
     selectImg(e) {
         this.setState({ bigImage: e.target.src })
+
+    }
+
+    selectVariant(e) {
+        this.setState({ selectedVariant: e.target.value })
     }
 
     render() {
-        const { imageUrls, title, price, body } = this.props.product
+        const { imageUrls, title, price, body, variants } = this.props.product
         const { bigImage } = this.state
 
+        const variant = variants ?
+            variants.map((item, index) => {
+                return <option key={item._key} selected={index === 0 ? 'selected': ''} value={item.title}>{item.title}</option>
+            })
+        : ''
+
         const imageArray = imageUrls.map((imageUrl, key) => {
+            const active = imageUrl === this.state.bigImage
             return (
-                <img src={imageUrl} onClick={this.selectImg} alt="product picture" height="100" width="100" />
+                <SmallImg active={active} src={imageUrl} onClick={this.selectImg} alt="product picture" height="100" width="100" />
             )
         })
 
@@ -135,10 +174,16 @@ class Product extends Component {
                             {imageArray}
                         </SmallImgWrapper>
                         {texArray}
+                        {variant &&
+                            <DropdownT onChange={this.selectVariant}>
+                                {variant}
+                            </DropdownT>
+                        }
                         <PriceText>{price} SEK</PriceText>
-                        <ActionButton buttonText="Lägg till"  onClick={() => { this.addProductToCart(this.props.product)}} />
+                        <ActionButton buttonText="Lägg till" onClick={() => { this.addProductToCart(this.props.product) }} />
                     </WrapperContent>
                 </Wrapper>
+                <Footer />
             </React.Fragment>
         )
     }

@@ -20,11 +20,13 @@ const CartWrapper = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
     display: flex;
     flex-direction: column;
+    z-index: 1;
     @media (max-width: 700px) {
         left: 50%;
         transform: translate(-50%, 0);
-        width: 85%;
-        padding: 20px;
+        width: 95%;
+        padding: 20px 20px 60px;
+        max-height: 100vh;
     }
 `;
 
@@ -157,11 +159,8 @@ class CartModal extends Component {
 
     removeProductFromCart(item) {
         const productInfo = {
-            id: item._id,
-            title: item.title,
-            images: item.imageUrls,
-            price: item.price,
-            quantity: 1,
+            id: item.id,
+            variant: item.variant,
         }
         this.props.store.removeFromCart(productInfo)
     }
@@ -203,28 +202,32 @@ class CartModal extends Component {
         const { store, onCartClose } = this.props
 
         const productArray = store.cart.map((item) => {
-            return (
-                <ProductInfo key={item._id}>
-                    <ItemWrapper>
-                        <ProductInfoWrapper>
-                            <img src={item.images[0]} alt="product picture" height="60" width="60" />
-                            <ItemText>
-                                <p>{item.title}</p>
-                                <p>{item.variants}</p>
-                                <p>{item.price}</p>
-                            </ItemText>
-                        </ProductInfoWrapper>
-                        <QuantityWrapper>
-                            <p>{item.quantity} st</p>
-                            <RemoveButton onClick={() => this.removeProductFromCart(item)}>
-                                <i className="material-icons">close</i>
-                            </RemoveButton>
-                        </QuantityWrapper>
-                        <PriceTag>{item.price * item.quantity} kr</PriceTag>
-                    </ItemWrapper>
-                    <Divider />
-                </ProductInfo>
-            )
+            console.log(item.id)
+            if(item.images) {
+                return (
+                    <ProductInfo key={item._id}>
+                        <ItemWrapper>
+                            <ProductInfoWrapper>
+                                <img src={item.images[0]} alt="product picture" height="60" width="60" />
+                                <ItemText>
+                                    <p>{item.title}</p>
+                                    <p>{item.variant}</p>
+                                    <p>{item.price}</p>
+                                </ItemText>
+                            </ProductInfoWrapper>
+                            <QuantityWrapper>
+                                <p>{item.quantity} st</p>
+                                <RemoveButton onClick={() => this.removeProductFromCart(item)}>
+                                    <i className="material-icons">close</i>
+                                </RemoveButton>
+                            </QuantityWrapper>
+                            <PriceTag>{item.price * item.quantity} kr</PriceTag>
+                        </ItemWrapper>
+                        <Divider />
+                    </ProductInfo>
+                )
+            }
+            else return null
         })
 
         const price = store.cart.map((item) => {
@@ -250,7 +253,9 @@ class CartModal extends Component {
                     <TotalCost>totalt: {price} sek</TotalCost>
                     <Divider />
                 </div>
-                <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
+                <div>
+                    <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
+                </div>
                 {showAddressForm &&
                     <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={this.onSubmit} />
                 }

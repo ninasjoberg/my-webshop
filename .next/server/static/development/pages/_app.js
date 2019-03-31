@@ -340,12 +340,12 @@ function () {
 
     return function (product) {
       var foundInCart = _this2.cart.some(function (item) {
-        return item.title === product.title;
+        return item.id === product.id && item.variant === product.variant;
       });
 
       if (foundInCart) {
         var newCart = _this2.cart.map(function (item) {
-          if (item.title === product.title) {
+          if (item.id === product.id && item.variant === product.variant) {
             return _objectSpread({}, item, {
               quantity: item.quantity + 1
             });
@@ -371,26 +371,22 @@ function () {
     var _this3 = this;
 
     return function (product) {
-      var foundInCart = _this3.cart.some(function (item) {
-        return item.title === product.title;
-      });
+      console.log('product remove', product);
 
-      if (foundInCart) {
-        var newCart = _this3.cart.map(function (item) {
-          if (item.title === product.title) {
-            return null;
-          }
+      var newCart = _this3.cart.map(function (item) {
+        console.log(item.variant, product.variant);
 
-          return item;
-        }).filter(Boolean);
+        if (item.id === product.id && item.variant === product.variant) {
+          console.log('Remove item', item);
+          return null;
+        }
 
-        _this3.cart = newCart;
-        Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
-      } else {
-        _this3.cart.push(product);
+        return item;
+      }).filter(Boolean);
 
-        Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["saveItemToLocalStorage"])(product, 'cartArray');
-      }
+      _this3.cart = newCart;
+      console.log(newCart, 'newCart');
+      Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
     };
   }
 }), _applyDecoratedDescriptor(_class.prototype, "cartCount", [mobx__WEBPACK_IMPORTED_MODULE_0__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, "cartCount"), _class.prototype)), _class);

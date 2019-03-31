@@ -22,12 +22,12 @@ class Store {
 
     @action addCart = (product) => {
         const foundInCart = this.cart.some((item) => {
-            return item.title === product.title
+            return item.id === product.id && item.variant === product.variant
         });
 
         if (foundInCart) {
             const newCart = this.cart.map((item) => {
-                if (item.title === product.title) {
+                if (item.id === product.id && item.variant === product.variant) {
                     return {
                         ...item,
                         quantity: item.quantity +1
@@ -45,24 +45,19 @@ class Store {
     }
 
     @action removeFromCart = (product) => {
-        const foundInCart = this.cart.some((item) => {
-            return item.title === product.title
-        });
 
-        if (foundInCart) {
+        console.log('product remove', product )
             const newCart = this.cart.map((item) => {
-                if (item.title === product.title) {
+                console.log(item.variant , product.variant)
+                if (item.id === product.id && item.variant === product.variant) {
+                    console.log('Remove item', item)
                     return null
                 }
                 return item
             }).filter(Boolean);
             this.cart = newCart
+            console.log(newCart, 'newCart')
             updateItemListToLocalStorage(newCart, 'cartArray')
-        }
-        else {
-            this.cart.push(product)
-            saveItemToLocalStorage(product, 'cartArray')
-        }
     }
 
 

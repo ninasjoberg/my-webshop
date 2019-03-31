@@ -11,19 +11,11 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/index": [
+    "/conditions": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
     "/about": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/product-care": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

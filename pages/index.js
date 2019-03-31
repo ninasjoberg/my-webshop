@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import client from '../cmsApi';
 import Products from '../components/Products.js'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 
 const Wrapper = styled.div`
@@ -33,6 +34,7 @@ class Index extends React.Component {
 			<Wrapper>
 				<Header />
 				<Products products={this.props.products}/>
+				<Footer />
 			</Wrapper>
 		)
 	}
