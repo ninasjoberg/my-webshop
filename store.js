@@ -62,7 +62,14 @@ class Store {
 
 
     @computed get cartCount() {
-        return this.cart.length
+        const quantity = this.cart.map((item) => {
+            console.log('item.quantity', item.quantity)
+            return item.quantity
+        }).reduce((item, currentValue) => {
+            return item + currentValue
+        }, 0);
+        console.log('quantity', quantity)
+        return quantity
     }
 }
 

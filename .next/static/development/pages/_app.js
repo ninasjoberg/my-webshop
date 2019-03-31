@@ -18541,7 +18541,14 @@ function () {
   _createClass(Store, [{
     key: "cartCount",
     get: function get() {
-      return this.cart.length;
+      var quantity = this.cart.map(function (item) {
+        console.log('item.quantity', item.quantity);
+        return item.quantity;
+      }).reduce(function (item, currentValue) {
+        return item + currentValue;
+      }, 0);
+      console.log('quantity', quantity);
+      return quantity;
     }
   }]);
 

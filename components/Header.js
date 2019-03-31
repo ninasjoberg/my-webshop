@@ -118,13 +118,13 @@ class Header extends Component {
 						<Link href="/product-care" passHref>
 							<LinkStyle active={asPath === '/product-care'}>Skötselråd</LinkStyle>
 						</Link>
-						{/* <Link href="/conditions" passHref>
+						<Link href="/conditions" passHref>
 							<LinkStyle active={asPath === '/conditions'}>Köpvillkor</LinkStyle>
-						</Link> */}
+						</Link>
 					</div>
 					<Cart onClick={() => this.onCartClick()}>
 						<i className="material-icons">shopping_cart</i>
-						<p>{store.cartCount} produkter</p>
+						<p>{store.cartCount} st</p>
 					</Cart>
 				</LinkWrapper>
 				<TitleWrapper>
