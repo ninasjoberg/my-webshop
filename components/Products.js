@@ -33,7 +33,7 @@ const DispalyProduct = styled.a`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #222;
+    color: #51616a;
     letter-spacing: 0.6px;
     font-weight: 200;
 `;

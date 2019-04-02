@@ -35,6 +35,8 @@ const WrapperContent = styled.div`
         padding: 25px;
         p {
             margin-bottom: 6px;
+            font-weight: normal;
+            letter-spacing: 0.8px;
         }
     }
 `;
@@ -80,6 +82,7 @@ const Dropdown = styled.select`
     font-size: 16px;
     margin-bottom: 12px;
     padding-left: 6px;
+    background-color: white;
     :focus {
         outline: 0;
     }
