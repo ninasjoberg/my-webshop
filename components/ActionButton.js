@@ -12,7 +12,8 @@ const Button = styled.button`
     cursor: pointer;
     background-color: black;
     color: white;
-    border-radius: 6px;
+    border-radius: 4px;
+    border: 1px solid rgb(203, 207, 209);
     :hover {
         opacity: 0.4;
     }

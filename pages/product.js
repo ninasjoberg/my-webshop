@@ -23,14 +23,17 @@ const WrapperContent = styled.div`
     padding: 25px 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     background-color: #f5eee8;
     margin: 32px 0;
     text-align: left;
+    p {
+        font-weight: 200;
+        margin-bottom: 10px;
+    }
     @media (max-width: 700px) {
         padding: 25px;
         p {
-            font-weight: 200;
             margin-bottom: 6px;
         }
     }
@@ -64,19 +67,24 @@ const SmallImg = styled.img`
 
 const PriceText = styled.p`
     color:  #06d0b2;
-    margin-top: 20px;
+    font-size: 18px;
+    margin: 12px 0;
 `;
 
-const DropdownT = styled.select`
+const Dropdown = styled.select`
     color: #51616a;
-    border-radius: 6px;
+    border-radius: 2px;
+    border: 1px solid rgb(203, 207, 209);
     height: 36px;
-    min-width: 200px;
+    width: 200px;
     font-size: 16px;
-    margin-top: 12px;
+    margin-bottom: 12px;
     padding-left: 6px;
     :focus {
         outline: 0;
+    }
+    @media (max-width: 700px) {
+        width: 100%;
     }
 `
 
@@ -174,12 +182,12 @@ class Product extends Component {
                             {imageArray}
                         </SmallImgWrapper>
                         {texArray}
-                        {variant &&
-                            <DropdownT onChange={this.selectVariant}>
-                                {variant}
-                            </DropdownT>
-                        }
                         <PriceText>{price} SEK</PriceText>
+                        {variant &&
+                            <Dropdown onChange={this.selectVariant}>
+                                {variant}
+                            </Dropdown>
+                        }
                         <ActionButton buttonText="Lägg till" onClick={() => { this.addProductToCart(this.props.product) }} />
                     </WrapperContent>
                 </Wrapper>

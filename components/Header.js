@@ -42,14 +42,15 @@ const LinkWrapper = styled.div`
 `;
 
 const LinkStyle = styled.a`
-	color: #06d0b2;
+	color: #f5eee8;
 	margin: 6px;
+	font-weight: 100;
 	@media (max-width: 700px) {
 		font-size: 12px;
 	}
 
 	${({ active }) => active && `
-		color: #f5eee8;
+		color: #06d0b2;
 	`}
 `;
 
@@ -69,10 +70,9 @@ const Title = styled.h1`
 const SubTitle = styled.p`
 	color: #f5eee8;
 	letter-spacing: 2px;
-	font-weight: 300;
+	font-weight: 100;
 	@media (max-width: 700px) {
 		font-size: 12px;
-		font-weight: 200;
 	}
 `;
 
