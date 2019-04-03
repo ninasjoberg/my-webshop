@@ -174,7 +174,9 @@ class CartModal extends Component {
         this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
     }
 
-    onSubmit() {
+    onSubmit(event, priceTotal) {
+        event.preventDefault();
+
         if (Object.values(this.state.userInformation).includes('')) {
             this.setState({errorText: 'Du måste fylla i adress och email.'})
             return
@@ -182,6 +184,7 @@ class CartModal extends Component {
         const body = {
             userInfo: this.state.userInformation,
             order: this.props.store.cart,
+            priceTotal,
         }
 
         fetch('/api/address', {
@@ -202,7 +205,6 @@ class CartModal extends Component {
         const { store, onCartClose } = this.props
 
         const productArray = store.cart.map((item) => {
-            console.log(item.id)
             if(item.images) {
                 return (
                     <ProductInfo key={item._id}>
@@ -230,7 +232,7 @@ class CartModal extends Component {
             else return null
         })
 
-        const price = store.cart.map((item) => {
+        const priceTotal = store.cart.map((item) => {
             return item.price * item.quantity
         }).reduce((item, currentValue) => {
             return item + currentValue
@@ -250,14 +252,14 @@ class CartModal extends Component {
                     </InfoHeaders>
                     <Divider />
                     {productArray}
-                    <TotalCost>totalt: {price} sek</TotalCost>
+                    <TotalCost>totalt: {priceTotal} sek</TotalCost>
                     <Divider />
                 </div>
                 <div>
                     <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
                 </div>
                 {showAddressForm &&
-                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={this.onSubmit} />
+                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={(event) =>this.onSubmit(event, priceTotal)} />
                 }
             </CartWrapper>
         )

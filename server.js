@@ -26,14 +26,11 @@ app.prepare()
 
             const orderHTML = req.body.order.map(({ title, images, price, quantity, variant }) => {
                 return `
-                    <div style="border: 1px dotted black; padding 10px;">
-                        <h4>${title}</h4>
-                        <p>
-                            ${variant}
-                        </p>
-                        <p>
+                    <div style="border-bottom:1px solid grey; width:300px;">
+                        <h4>${title}, ${variant}</h4>
+                        <h4>
                             ${quantity}st ${price}kr
-                        </p>
+                        </h4>
                         <div>
                             <img width="100" src="${images[0]}"/>
                         </div>
@@ -62,7 +59,9 @@ app.prepare()
                     <h3>Order:</h3>
                     <br />
                     ${orderHTML}
-                `,
+                    <br />
+                    <h4>Totalt: ${req.body.priceTotal}kr</h4>
+                `
             };
             sgMail.send(msg);
 

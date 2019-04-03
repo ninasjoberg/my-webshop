@@ -69,9 +69,8 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                     <input type="text" name='email' value={email} onChange={handleChange} placeholder='mailadress' />
                 </label>
                 <p>
-                    Efter att ordern har skickats till mig så kommer jag kontakta dig med vidare instruktioner för betalning och leverans.
-                    Framöver kommer du kunna betala med Stripe, men till dess så betalar du förslagsvis med Swish i samband med att jag bekräftar ordern.
-                    Vidare instruktioner om betalning och info om leveranstid får du via mail så snart jag behandlat din order.
+                    Betalning sker via Swish efter att ordern bekräftats.
+                    Vidare info fås tillsammans med orderbekräftelse.
                 </p>
                 <ActionButton buttonText="Skicka order" />
                 {errorText &&
