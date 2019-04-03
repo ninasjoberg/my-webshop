@@ -147,6 +147,7 @@ class CartModal extends Component {
                 zipcode: '',
                 city: '',
                 email: '',
+                message: '',
             },
             errorText: '',
             submitted: false,

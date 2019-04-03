@@ -12,7 +12,7 @@ const Form = styled.form`
         align-items: flex-start;
         margin-top: 10px;
         color: #51616a;
-        input {
+        input, textarea {
             height: 52px;
             width: 100%;
             border-radius: 3px;
@@ -20,6 +20,10 @@ const Form = styled.form`
             margin-bottom: 10px;
             padding: 0 0 0 10px;
             font-size: 12px;
+        }
+        textarea {
+            height: 100px;
+            padding-top: 10px;
         }
     }
     p {
@@ -29,11 +33,10 @@ const Form = styled.form`
 `;
 
 const ErrorInfo = styled.div`
-    position: fixed;
-    top: 36%;
-    left: 50%;
+    position: relative;
+    bottom: 215px;
     background-color: white;
-    width: 400px;
+    max-width: 400px;
     height: 100px;
     border: 3px solid orange;
     display: flex;
@@ -67,6 +70,10 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                 <label>
                     Mailadress:
                     <input type="text" name='email' value={email} onChange={handleChange} placeholder='mailadress' />
+                </label>
+                <label>
+                    Meddelande:
+                    <textarea type="text" name='message' value={email} onChange={handleChange} />
                 </label>
                 <p>
                     Betalning sker via Swish efter att ordern bekräftats.

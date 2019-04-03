@@ -1,27 +1,45 @@
 {
-  "devFiles": [
-    "static/development/dll/dll_0a5735af42686c2a38b2.js"
-  ],
+  "devFiles": [],
   "pages": {
     "/_app": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/_error": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/index": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
     ],
     "/about": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
+    ],
+    "/conditions": [
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
+    ],
+    "/index": [
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
+    ],
+    "/product-care": [
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
+    ],
+    "/product": [
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
+    ],
+    "/_error": [
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
     ],
     "/": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
+      "static/runtime/webpack-42652fa8b82c329c0559.js",
+      "static/chunks/commons.3332a9c823b26d421706.js",
+      "static/runtime/main-9bcbae5688da1206d053.js"
     ]
   }
 }
