@@ -197,6 +197,7 @@ class CartModal extends Component {
         }).then((res) => {
             res.status === 200 ? this.setState({ submitted: true }) : ''
         })
+        this.props.store.clearCart()
         this.props.onCartClose()
     }
 

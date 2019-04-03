@@ -12,7 +12,6 @@ class Store {
     @observable cart = []
 
     constructor(isServer, initialData = {}) {
-        //this.cart = !!initialData.cart
         this.cart
     }
 
@@ -45,30 +44,27 @@ class Store {
     }
 
     @action removeFromCart = (product) => {
+        const newCart = this.cart.map((item) => {
+            if (item.id === product.id && item.variant === product.variant) {
+                return null
+            }
+            return item
+        }).filter(Boolean);
+        this.cart = newCart
+        updateItemListToLocalStorage(newCart, 'cartArray')
+    }
 
-        console.log('product remove', product )
-            const newCart = this.cart.map((item) => {
-                console.log(item.variant , product.variant)
-                if (item.id === product.id && item.variant === product.variant) {
-                    console.log('Remove item', item)
-                    return null
-                }
-                return item
-            }).filter(Boolean);
-            this.cart = newCart
-            console.log(newCart, 'newCart')
-            updateItemListToLocalStorage(newCart, 'cartArray')
+    @action clearCart = () => {
+        updateItemListToLocalStorage([], 'cartArray')
     }
 
 
     @computed get cartCount() {
         const quantity = this.cart.map((item) => {
-            console.log('item.quantity', item.quantity)
             return item.quantity
         }).reduce((item, currentValue) => {
             return item + currentValue
         }, 0);
-        console.log('quantity', quantity)
         return quantity
     }
 }

@@ -18495,7 +18495,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 /* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/localStorage */ "./utils/localStorage.js");
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -18534,7 +18534,8 @@ function () {
 
     _initializerDefineProperty(this, "removeFromCart", _descriptor4, this);
 
-    //this.cart = !!initialData.cart
+    _initializerDefineProperty(this, "clearCart", _descriptor5, this);
+
     this.cart;
   }
 
@@ -18542,12 +18543,10 @@ function () {
     key: "cartCount",
     get: function get() {
       var quantity = this.cart.map(function (item) {
-        console.log('item.quantity', item.quantity);
         return item.quantity;
       }).reduce(function (item, currentValue) {
         return item + currentValue;
       }, 0);
-      console.log('quantity', quantity);
       return quantity;
     }
   }]);
@@ -18611,13 +18610,8 @@ function () {
     var _this3 = this;
 
     return function (product) {
-      console.log('product remove', product);
-
       var newCart = _this3.cart.map(function (item) {
-        console.log(item.variant, product.variant);
-
         if (item.id === product.id && item.variant === product.variant) {
-          console.log('Remove item', item);
           return null;
         }
 
@@ -18625,8 +18619,16 @@ function () {
       }).filter(Boolean);
 
       _this3.cart = newCart;
-      console.log(newCart, 'newCart');
       Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
+    };
+  }
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "clearCart", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return function () {
+      Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])([], 'cartArray');
     };
   }
 }), _applyDecoratedDescriptor(_class.prototype, "cartCount", [mobx__WEBPACK_IMPORTED_MODULE_0__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, "cartCount"), _class.prototype)), _class);

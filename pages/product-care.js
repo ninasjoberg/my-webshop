@@ -28,8 +28,6 @@ class productCare extends Component {
 	render() {
 		const { body, imageUrls } = this.props.pageInfo[0]
 
-		console.log('imageUrls', imageUrls)
-
 		const texArray = body.map((section) => {
 			return <p>{section[0].text}</p>
 		})
