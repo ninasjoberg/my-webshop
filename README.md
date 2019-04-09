@@ -14,4 +14,5 @@ This will hopefully be my new webshop for my silversmithing project
 
 
 ## Get started:
-`npm run dev`
+`npm run build`
+`npm i && npm run dev`
