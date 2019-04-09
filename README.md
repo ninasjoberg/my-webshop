@@ -1,5 +1,5 @@
 # my-webshop
-This will hopefully be my new webshop for my silversmithing project
+webshop for my silversmithing project
 
 ## Languages and techniques:
 - Next.js (frontend)
