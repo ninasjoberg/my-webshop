@@ -33,6 +33,7 @@ const WrapperContent = styled.div`
     }
     @media (max-width: 700px) {
         padding: 25px;
+        margin: 0;
         p {
             margin-bottom: 6px;
             font-weight: normal;
@@ -80,7 +81,6 @@ const Dropdown = styled.select`
     height: 36px;
     width: 200px;
     font-size: 16px;
-    margin-bottom: 12px;
     padding-left: 6px;
     background-color: white;
     :focus {

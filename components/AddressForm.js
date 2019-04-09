@@ -28,7 +28,6 @@ const Form = styled.form`
     }
     p {
         text-align: left;
-        margin: 10px 0;
     }
 `;
 
@@ -76,8 +75,10 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                     <textarea type="text" name='message' value={email} onChange={handleChange} />
                 </label>
                 <p>
-                    Betalning sker via Swish efter att ordern bekräftats.
-                    Vidare info fås tillsammans med orderbekräftelse.
+                    Betalning sker via Swish i samband med leveransbekräftelse.
+                </p>
+                <p>
+                    Vidare info och orderbekräftelsen fås via mail.
                 </p>
                 <ActionButton buttonText="Skicka order" />
                 {errorText &&

@@ -9,6 +9,8 @@ This will hopefully be my new webshop for my silversmithing project
 - Styled-components (styling)
 - Sendgrid (email)
 
+- Heroku (hosting)
+- CloudFlare (enable https)
 
 
 ## Get started:

@@ -167,7 +167,7 @@ class CartModal extends Component {
     }
 
     addAddressClick() {
-        this.setState({ showAddressForm: true })
+        this.setState({ showAddressForm: !this.state.showAddressForm })
     }
 
     onChange(e) {

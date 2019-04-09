@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 		font-family: helvetica;
 		text-align: center;
 		line-height: 1.5;
+		background-color: #bf9caa;
 		h1 {
 			font-weight: 100;
 			letter-spacing: 2px;
@@ -45,6 +46,7 @@ const GlobalStyle = createGlobalStyle`
 		}
 		button:focus {
 			outline: 0;
+			opacity: 1;
 		}
 		a {
 			font-size: 16px;

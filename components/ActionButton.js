@@ -9,14 +9,19 @@ const Button = styled.button`
     justify-content: space-evenly;
     font-size: 16px;
     letter-spacing: 1px;
+    margin-top: 12px;
     cursor: pointer;
     background-color: black;
     color: white;
     border-radius: 4px;
     border: 1px solid rgb(203, 207, 209);
     :hover {
+        border: 1px solid #3c3c3c;
+    }
+    :active {
         opacity: 0.4;
     }
+
 `;
 
 

@@ -24,7 +24,7 @@ const ContentWrapper = styled.div`
 	p {
 		text-align: left;
 		width: 100%;
-		padding-bottom: 12px;
+		padding: 0 12px 12px;
 	}
 	@media (max-width: 700px) {
         padding: 16px 0 0;
