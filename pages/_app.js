@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
 		font-family: helvetica;
 		text-align: center;
 		line-height: 1.5;
-		background-color: #bf9caa;
+		background-color: #eed2c4;;
 		h1 {
 			font-weight: 100;
 			letter-spacing: 2px;

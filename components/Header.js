@@ -48,7 +48,7 @@ const Cart = styled.button`
 	}
 	@media (max-width: 700px) {
 		p, i {
-			font-size: 12px;
+			font-size: 14px;
 		}
 	}
 `;
@@ -58,7 +58,7 @@ const LinkStyle = styled.a`
 	margin: 6px;
 	font-weight: 100;
 	@media (max-width: 700px) {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	${({ active }) => active && `
@@ -116,14 +116,13 @@ class Header extends Component {
 	render() {
 		const { store, router: { asPath = '/' } = {} } = this.props
 
-
 		return (
 			<React.Fragment>
 				<TopHeader>
 					<LinkWrapper>
 						<div>
 							<Link href="/" passHref>
-								<LinkStyle active={asPath === '/'}>Bell Pepper</LinkStyle>
+								<LinkStyle active={asPath === '/'}>Produkter</LinkStyle>
 							</Link>
 							<Link href="/about" passHref>
 								<LinkStyle active={asPath === '/about'}>Om</LinkStyle>
