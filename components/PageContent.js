@@ -55,7 +55,7 @@ const PageContent = ({ imageArray, texArray }) => {
 				{imageArray && imageArray}
 				{texArray}
 				<ContactLinks>
-					<a href="mailto: nina.sjoberg@gmail.com"><span>email</span></a>
+					<a href="mailto: bellpepperstore@gmail.com"><span>email</span></a>
 					<a href="https://www.instagram.com/bellpepperse/"><span>instagram</span></a>
 					<a href="https://www.linkedin.com/in/nina-sj%C3%B6berg-9aa71b22/" target="_blank"><span>linkedIn</span></a>
 					<a href="https://github.com/ninasjoberg" target="_blank"><span>gitHub</span></a>

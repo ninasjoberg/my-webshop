@@ -10,6 +10,7 @@ const CartWrapper = styled.div`
     background-color: #fff;
     position: fixed;
     right: 40px;
+    top: 40px;
     width: 500px;
     max-height: 80vh;
     overflow-x: scroll;
@@ -24,9 +25,9 @@ const CartWrapper = styled.div`
     @media (max-width: 700px) {
         left: 50%;
         transform: translate(-50%, 0);
-        width: 95%;
-        padding: 20px 20px 60px;
-        max-height: 100vh;
+        width: 100%;
+        max-height: none;
+        height: 100%;
     }
 `;
 
@@ -147,8 +148,8 @@ class CartModal extends Component {
                 zipcode: '',
                 city: '',
                 email: '',
-                message: '',
             },
+            message: '',
             errorText: '',
             submitted: false,
         }
@@ -172,7 +173,11 @@ class CartModal extends Component {
 
     onChange(e) {
         this.setState({errorText: ''})
-        this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
+        if (e.target.name === 'message') {
+            this.setState({message: e.target.value})
+        } else {
+            this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
+        }
     }
 
     onSubmit(event, priceTotal) {
@@ -184,6 +189,7 @@ class CartModal extends Component {
         }
         const body = {
             userInfo: this.state.userInformation,
+            message: this.state.message,
             order: this.props.store.cart,
             priceTotal,
         }

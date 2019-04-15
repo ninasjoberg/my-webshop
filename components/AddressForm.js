@@ -6,25 +6,26 @@ import ActionButton from './ActionButton.js'
 const Form = styled.form`
     display: flex;
     flex-direction: column;
+    padding-bottom: 50px;
     label {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         margin-top: 10px;
         color: #51616a;
-        input, textarea {
-            height: 52px;
-            width: 100%;
-            border-radius: 3px;
-            border: 1px solid lightgray;
-            margin-bottom: 10px;
-            padding: 0 0 0 10px;
-            font-size: 12px;
-        }
-        textarea {
-            height: 100px;
-            padding-top: 10px;
-        }
+    }
+    input, textarea {
+        height: 52px;
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid lightgray;
+        margin-bottom: 10px;
+        padding: 0 0 0 10px;
+        font-size: 12px;
+    }
+    textarea {
+        height: 100px;
+        padding-top: 10px;
     }
     p {
         text-align: left;
@@ -56,30 +57,18 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                     e.preventDefault()
                     handleSubmit(e)
                   }}>
-                <label>
-                    Namn:
-                    <input type="text" name='name' value={name} onChange={handleChange} placeholder='Förnamn Efternamn' />
-                </label>
-                <label>
-                    Adress:
-                    <input type="text" name='street' value={street} onChange={handleChange} placeholder='gatauadress' />
-                    <input type="text" name='zipcode' value={zipcode} onChange={handleChange} placeholder='postnummer'/>
-                    <input type="text" name='city' value={city} onChange={handleChange} placeholder='stad' />
-                </label>
-                <label>
-                    Mailadress:
-                    <input type="text" name='email' value={email} onChange={handleChange} placeholder='mailadress' />
-                </label>
-                <label>
-                    Meddelande:
-                    <textarea type="text" name='message' value={email} onChange={handleChange} />
-                </label>
-                <p>
-                    Betalning sker via Swish i samband med leveransbekräftelse.
-                </p>
-                <p>
-                    Vidare info och orderbekräftelsen fås via mail.
-                </p>
+                <label>Namn:</label>
+                <input type="text" name='name' value={name} onChange={handleChange} placeholder='Förnamn Efternamn' />
+                <label>Adress:</label>
+                <input type="text" name='street' value={street} onChange={handleChange} placeholder='gatauadress' />
+                <input type="text" name='zipcode' value={zipcode} onChange={handleChange} placeholder='postnummer'/>
+                <input type="text" name='city' value={city} onChange={handleChange} placeholder='stad' />
+                <label>Mailadress:</label>
+                <input type="text" name='email' value={email} onChange={handleChange} placeholder='mailadress' />
+                <label>Meddelande:</label>
+                <textarea type="text" name='message' value={email} onChange={handleChange} />
+                <p>Betalning sker via Swish i samband med leveransbekräftelse.</p>
+                <p>Vidare info och orderbekräftelsen fås via mail.</p>
                 <ActionButton buttonText="Skicka order" />
                 {errorText &&
                     <ErrorInfo>

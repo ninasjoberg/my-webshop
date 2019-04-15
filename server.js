@@ -61,7 +61,7 @@ app.prepare()
                     ${orderHTML}
                     <br />
                     <h4>Totalt: ${req.body.priceTotal}kr</h4>
-                    <strong>Meddelande: ${message}</strong>
+                    <strong>Meddelande: ${req.body.message}</strong>
                 `
             };
             sgMail.send(msg);
