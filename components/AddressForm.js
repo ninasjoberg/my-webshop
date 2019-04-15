@@ -21,7 +21,7 @@ const Form = styled.form`
         border: 1px solid lightgray;
         margin-bottom: 10px;
         padding: 0 0 0 10px;
-        font-size: 12px;
+        font-size: 16px;
     }
     textarea {
         height: 100px;
