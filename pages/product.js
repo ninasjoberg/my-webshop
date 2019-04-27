@@ -152,7 +152,7 @@ class Product extends Component {
     }
 
     render() {
-        const { imageUrls, title, price, body, variants } = this.props.product
+        const { imageUrls, title, price, body, variants, images } = this.props.product
         const { bigImage } = this.state
 
         const variant = variants ?
@@ -164,7 +164,7 @@ class Product extends Component {
         const imageArray = imageUrls.map((imageUrl, key) => {
             const active = imageUrl === this.state.bigImage
             return (
-                <SmallImg active={active} src={imageUrl} onClick={this.selectImg} alt="product picture" height="100" width="100" />
+                <SmallImg active={active} src={imageUrl} onClick={this.selectImg} alt={images[key].alt || 'produktbild silversmycke'} height="100" width="100" />
             )
         })
 
@@ -179,7 +179,7 @@ class Product extends Component {
                     <WrapperContent>
                         <h2>{title}</h2>
                         <div>
-                            <BigImage src={bigImage} alt="product picture" />
+                            <BigImage src={bigImage} alt="selected product picture" />
                         </div>
                         <SmallImgWrapper>
                             {imageArray}

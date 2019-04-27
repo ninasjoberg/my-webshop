@@ -51,7 +51,7 @@ const ProductLink = (props) => (
             passHref
 		>
             <DispalyProduct>
-                <img src={props.img} alt="product picture" height="300px" width="300px" />
+                <img src={props.img} alt={props.alt || 'produktbild silversmycke'} height="300px" width="300px" />
                 <h3>{props.title}</h3>
                 <p>{props.price} SEK</p>
             </DispalyProduct>
@@ -65,7 +65,7 @@ export default class Products extends Component {
     render() {
         const productList = this.props.products.map((product) => {
             return (
-                <ProductLink key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.imageUrls} price={product.price} />
+                <ProductLink key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
             )
         })
         return(

@@ -20,8 +20,9 @@ class Index extends React.Component {
 			_id,
 			title,
 			slug,
+			images,
 			price,
-			"imageUrls": images[0].asset->url
+			"firstImageUrl": images[0].asset->url
 		}`;
 		const products = await client.fetch(productsQuery)
 		return {
