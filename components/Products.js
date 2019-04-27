@@ -17,15 +17,6 @@ const ProductWrapper = styled.li`
         width: 45%;
         padding: 0 0 6px;
         margin: 6px;
-        h3, p {
-            font-size: 12px;
-            margin: 0;
-        }
-        img {
-            height: 100%;
-            width: 100%;
-            margin-bottom: 8px;
-        }
     }
 `;
 
@@ -36,6 +27,17 @@ const DispalyProduct = styled.a`
     color: #51616a;
     letter-spacing: 0.6px;
     font-weight: 200;
+    @media (max-width: 700px) {
+        h3, p {
+            font-size: 12px;
+            margin: 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 8px;
+        }
+    }
 `;
 
 
@@ -49,7 +51,7 @@ const ProductLink = (props) => (
             passHref
 		>
             <DispalyProduct>
-                <img src={props.img} alt="product picture" height="300" width="300" />
+                <img src={props.img} alt="product picture" height="300px" width="300px" />
                 <h3>{props.title}</h3>
                 <p>{props.price} SEK</p>
             </DispalyProduct>
