@@ -30,6 +30,7 @@ export default class MyDocument extends Document {
             <Head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" />
+                <meta name="google-site-verification" content="P62ChL8wEUwp2QCClCPZzZ5Apk4xZm1sIfI9T-z0fsE" />
                 <title>bell pepper</title>
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
             </Head>
