@@ -15,7 +15,7 @@ app.prepare()
 
         server.use(bodyParser.json())
 
-        server.get('/p/:id', (req, res) => {
+        server.get('/product/:id', (req, res) => {
             const actualPage = '/product'
             const queryParams = { title: req.params.id }
             app.render(req, res, actualPage, queryParams)

@@ -46,7 +46,7 @@ const DispalyProduct = styled.a`
 const ProductLink = (props) => (
 	<ProductWrapper>
 		<Link
-			as={`/p/${props.slug}`}
+			as={`/product/${props.slug}`}
             href={`/product?title=${props.slug}`}
             passHref
 		>

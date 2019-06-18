@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
-import { inject, observer, action, autorun } from 'mobx-react'
+import Link from 'next/link'
+import { inject, observer } from 'mobx-react'
 
 import styled from 'styled-components'
 
@@ -20,6 +21,7 @@ const Wrapper = styled.div`
 
 const WrapperContent = styled.div`
     max-width: 800px;
+    min-height: 450px;
     padding: 25px 100px;
     display: flex;
     flex-direction: column;
@@ -39,6 +41,14 @@ const WrapperContent = styled.div`
             font-weight: normal;
             letter-spacing: 0.8px;
         }
+    }
+`;
+
+const NotFoundLink = styled.p`
+    cursor: pointer;
+    :hover {
+        color: #06d0b2;
+        opacity: 0.7;
     }
 `;
 
@@ -124,7 +134,9 @@ class Product extends Component {
     }
 
     componentDidMount() {
-        this.setState({ bigImage: this.props.product.imageUrls[0] })
+        if(this.props.product.imageUrls) {
+            this.setState({ bigImage: this.props.product.imageUrls[0] })
+        }
         if(this.props.product.variants) {
             this.setState({ selectedVariant: this.props.product.variants[0].title })
         }
@@ -155,6 +167,24 @@ class Product extends Component {
         const { imageUrls, title, price, body, variants, images } = this.props.product
         const { bigImage } = this.state
 
+
+        if(Object.keys(this.props.product).length === 0 && this.props.product.constructor === Object) {
+            return (
+                <React.Fragment>
+                    <Header />
+                    <Wrapper>
+                        <WrapperContent>
+                            <h3>Denna produkt finns tyvärr inte.</h3>
+                            <Link href={'/'}>
+                                <NotFoundLink>se alla produkter från bellpepper.se</NotFoundLink>
+                            </Link>
+                        </WrapperContent>
+                        </Wrapper>
+                    <Footer />
+                </React.Fragment>
+            )
+        }
+        else {
         const variant = variants ?
             variants.map((item, index) => {
                 return <option key={item._key} selected={index === 0 ? 'selected': ''} value={item.title}>{item.title}</option>
@@ -197,6 +227,7 @@ class Product extends Component {
                 <Footer />
             </React.Fragment>
         )
+        }
     }
 }
 

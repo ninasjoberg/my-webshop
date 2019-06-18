@@ -172,7 +172,10 @@ function (_Document) {
       }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("meta", {
         name: "viewport",
         content: "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("title", null, "bell pepper"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("link", {
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("meta", {
+        name: "google-site-verification",
+        content: "P62ChL8wEUwp2QCClCPZzZ5Apk4xZm1sIfI9T-z0fsE"
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("link", {
         href: "https://fonts.googleapis.com/icon?family=Material+Icons",
         rel: "stylesheet"
       })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("body", {
