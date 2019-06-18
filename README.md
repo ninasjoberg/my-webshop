@@ -1,6 +1,8 @@
 # my-webshop
 webshop for my silversmithing project
 
+bellpepper.se
+
 ## Languages and techniques:
 - Next.js (frontend)
 - Express (server)
