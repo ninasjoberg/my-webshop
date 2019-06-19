@@ -15,9 +15,9 @@ const redirects = [
     { from: '/product/halsband-silver-kvinnosymbol', to: '/product/halsband-silver-kvinnosymbol-s' },
     { from: '/p/halsband-silver-kvinnosymbol-xl', to: '/product/halsband-silver-kvinnosymbol-xl' },
     { from: '/p/halsband-silver-svala', to: '/product/halsband-silver-svala' },
-    { from: '/products/arkipelag/örhängen', to: '/'},
     { from: '/p/armband-silver-kvinnosymbol', to: '/product/armband-silver-kvinnosymbol'},
     { from: '/p/*', to: '/' },
+    { from: '/products/*', to: '/' },
 ]
 
 app.prepare()
