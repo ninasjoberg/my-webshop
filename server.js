@@ -9,11 +9,28 @@ const port = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+
+const redirects = [
+    { from: '/p/halsband-silver-kvinnosymbol', to: '/product/halsband-silver-kvinnosymbol-m' },
+    { from: '/product/halsband-silver-kvinnosymbol', to: '/product/halsband-silver-kvinnosymbol-s' },
+    { from: '/p/halsband-silver-kvinnosymbol-xl', to: '/product/halsband-silver-kvinnosymbol-xl' },
+    { from: '/p/halsband-silver-svala', to: '/product/halsband-silver-svala' },
+    { from: '/products/arkipelag/örhängen', to: '/'},
+    { from: '/p/armband-silver-kvinnosymbol', to: '/product/armband-silver-kvinnosymbol'},
+    { from: '/p/*', to: '/' },
+]
+
 app.prepare()
     .then(() => {
         const server = express()
 
         server.use(bodyParser.json())
+
+        redirects.forEach(({ from, to, type = 301, method = 'get' }) => {
+            server[method](from, (req, res) => {
+              res.redirect(type, to)
+            })
+        })
 
         server.get('/product/:id', (req, res) => {
             const actualPage = '/product'
