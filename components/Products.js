@@ -27,14 +27,17 @@ const DispalyProduct = styled.a`
     color: #51616a;
     letter-spacing: 0.6px;
     font-weight: 200;
+    max-width: 300px;
+    img{
+        max-width: 100%;
+        max-height: 100%;
+    }
     @media (max-width: 700px) {
         h3, p {
             font-size: 12px;
             margin: 0;
         }
         img {
-            max-width: 100%;
-            height: auto;
             margin-bottom: 8px;
         }
     }
@@ -51,7 +54,7 @@ const ProductLink = (props) => (
             passHref
 		>
             <DispalyProduct>
-                <img src={props.img} alt={props.alt || 'produktbild silversmycke'} height="300px" width="300px" />
+                <img src={props.img} alt={props.alt || 'produktbild silversmycke'} />
                 <h3>{props.title}</h3>
                 <p>{props.price} SEK</p>
             </DispalyProduct>
