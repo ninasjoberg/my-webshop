@@ -88,6 +88,16 @@ const SubTitle = styled.p`
 	}
 `;
 
+const AwayMessage = styled.div`
+    background-color: #f5eee8;
+	margin: auto;
+    padding: 12px;
+	h4 {
+		color: #51616a;
+		margin: 6px auto;
+	}
+`
+
 @inject('store')
 @observer
 class Header extends Component {
@@ -150,6 +160,11 @@ class Header extends Component {
 						<CartModal onCartClose={this.onCartClose} />
 					}
 				</Wrapper>
+				<AwayMessage>
+					<h4>Semester tom 12 augusti!</h4>
+					<p>Ordrar som läggs innan dess kommer att skickas i turordning efter 12:e aug.</p>
+					<p>Trevlig sommar!</p>
+				</AwayMessage>
 			</React.Fragment>
 		)
 	}
