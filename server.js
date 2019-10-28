@@ -39,7 +39,7 @@ app.prepare()
         })
 
         server.post('/api/address', (req, res) => {
-            const { name, street, zipcode, city, email, message } = req.body.userInfo
+            const { name, street, zipcode, city, email } = req.body.userInfo
 
             const orderHTML = req.body.order.map(({ title, images, price, quantity, variant }) => {
                 return `

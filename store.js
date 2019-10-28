@@ -54,10 +54,11 @@ class Store {
         updateItemListToLocalStorage(newCart, 'cartArray')
     }
 
+    //will be done when an order has been placed/sent
     @action clearCart = () => {
+        this.cart = []
         updateItemListToLocalStorage([], 'cartArray')
     }
-
 
     @computed get cartCount() {
         const quantity = this.cart.map((item) => {

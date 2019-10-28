@@ -152,6 +152,7 @@ class CartModal extends Component {
             message: '',
             errorText: '',
             submitted: false,
+            errorSendingMail: false,
         }
         this.addAddressClick = this.addAddressClick.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -172,9 +173,9 @@ class CartModal extends Component {
     }
 
     onChange(e) {
-        this.setState({errorText: ''})
+        this.setState({ errorText: '' })
         if (e.target.name === 'message') {
-            this.setState({message: e.target.value})
+            this.setState({ message: e.target.value })
         } else {
             this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
         }
@@ -184,7 +185,7 @@ class CartModal extends Component {
         event.preventDefault();
 
         if (Object.values(this.state.userInformation).includes('')) {
-            this.setState({errorText: 'Du måste fylla i adress och email.'})
+            this.setState({ errorText: 'Du måste fylla i adress och email.' })
             return
         }
         const body = {
@@ -202,18 +203,22 @@ class CartModal extends Component {
             },
             body: JSON.stringify(body),
         }).then((res) => {
-            res.status === 200 ? this.setState({ submitted: true }) : ''
+            if (res.status === 200) {
+                this.setState({ submitted: true })
+                this.props.store.clearCart()
+            }
+            else {
+                this.setState({ errorSendingMail: true })
+            }
         })
-        this.props.store.clearCart()
-        this.props.onCartClose()
     }
 
     render() {
-        const { showAddressForm } = this.state
+        const { showAddressForm, submitted, errorSendingMail } = this.state
         const { store, onCartClose } = this.props
 
         const productArray = store.cart.map((item) => {
-            if(item.images) {
+            if (item.images) {
                 return (
                     <ProductInfo key={item._id}>
                         <ItemWrapper>
@@ -246,6 +251,26 @@ class CartModal extends Component {
             return item + currentValue
         }, 0);
 
+        if (submitted) {
+            return (
+                <CartWrapper>
+                    <p>Tack! Din order har nu skickats</p>
+                    <p>En orderbekräftelse kommer tilldig per mail så snart jag behandlat din order.</p>
+                    <button onClick={onCartClose()}>Stäng</button>
+                </CartWrapper>
+            )
+        }
+
+        if(errorSendingMail) {
+            return (
+                <CartWrapper>
+                    <p>Något gick fel..</p>
+                    <p>Tyvärr skickades inte din order iväg, vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
+                    <button onClick={onCartClose()}>Stäng</button>
+                </CartWrapper>
+            )
+        }
+
         return (
             <CartWrapper>
                 <CloseButton onClick={onCartClose}>
@@ -264,10 +289,10 @@ class CartModal extends Component {
                     <Divider />
                 </div>
                 <div>
-                    <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }}/>
+                    <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }} />
                 </div>
                 {showAddressForm &&
-                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={(event) =>this.onSubmit(event, priceTotal)} />
+                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={(event) => this.onSubmit(event, priceTotal)} />
                 }
             </CartWrapper>
         )
