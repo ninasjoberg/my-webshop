@@ -203,7 +203,7 @@ class CartModal extends Component {
             },
             body: JSON.stringify(body),
         }).then((res) => {
-            if (res === 'success') {
+            if (res.status === 200) {
                 this.setState({ submitted: true })
                 this.props.store.clearCart()
             }
@@ -256,7 +256,7 @@ class CartModal extends Component {
                 <CartWrapper>
                     <p>Tack! Din order har nu skickats</p>
                     <p>En orderbekräftelse kommer tilldig per mail så snart jag behandlat din order.</p>
-                    <button onClick={onCartClose()}>Stäng</button>
+                    <button onClick={onCartClose}>Stäng</button>
                 </CartWrapper>
             )
         }
@@ -266,7 +266,7 @@ class CartModal extends Component {
                 <CartWrapper>
                     <p>Något gick fel..</p>
                     <p>Tyvärr skickades inte din order iväg, vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
-                    <button onClick={onCartClose()}>Stäng</button>
+                    <button onClick={onCartClose}>Stäng</button>
                 </CartWrapper>
             )
         }
