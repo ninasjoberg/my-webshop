@@ -203,7 +203,7 @@ class CartModal extends Component {
             },
             body: JSON.stringify(body),
         }).then((res) => {
-            if (res.status === 200) {
+            if (res === 'success') {
                 this.setState({ submitted: true })
                 this.props.store.clearCart()
             }
