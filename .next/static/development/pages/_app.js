@@ -18627,7 +18627,10 @@ function () {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
+    var _this4 = this;
+
     return function () {
+      _this4.cart = [];
       Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])([], 'cartArray');
     };
   }

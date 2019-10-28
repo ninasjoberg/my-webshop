@@ -21,6 +21,12 @@ const CartWrapper = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
     display: flex;
     flex-direction: column;
+    ${({ confirmation }) => confirmation && `
+        align-items: center;
+        p {
+            margin-bottom: 12px;
+        }
+	`}
     z-index: 1;
     @media (max-width: 700px) {
         left: 50%;
@@ -253,20 +259,22 @@ class CartModal extends Component {
 
         if (submitted) {
             return (
-                <CartWrapper>
-                    <p>Tack! Din order har nu skickats</p>
-                    <p>En orderbekräftelse kommer tilldig per mail så snart jag behandlat din order.</p>
-                    <button onClick={onCartClose}>Stäng</button>
+                <CartWrapper confirmation>
+                    <h2>TACK!</h2>
+                    <p>Din order har nu skickats!</p>
+                    <p>En orderbekräftelse kommer skickas till dig per mail, så snart jag behandlat din order.</p>
+                    <ActionButton buttonText="Stäng" onClick={onCartClose} />
                 </CartWrapper>
             )
         }
 
         if(errorSendingMail) {
             return (
-                <CartWrapper>
-                    <p>Något gick fel..</p>
-                    <p>Tyvärr skickades inte din order iväg, vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
-                    <button onClick={onCartClose}>Stäng</button>
+                <CartWrapper confirmation>
+                    <h2>Något gick fel..</h2>
+                    <p>Tyvärr skickades inte din order iväg korrrekt.</p>
+                    <p>Vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
+                    <ActionButton buttonText="Stäng" onClick={onCartClose} />
                 </CartWrapper>
             )
         }
@@ -289,7 +297,7 @@ class CartModal extends Component {
                     <Divider />
                 </div>
                 <div>
-                    <ActionButton buttonText="Leveransadress" onClick={() => { this.addAddressClick() }} />
+                    <ActionButton buttonText="Leveransadress" onClick={this.addAddressClick} />
                 </div>
                 {showAddressForm &&
                     <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={(event) => this.onSubmit(event, priceTotal)} />
