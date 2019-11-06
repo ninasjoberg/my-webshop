@@ -8,12 +8,6 @@ import Footer from '../components/Footer'
 
 
 class productCare extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		}
-	}
-
 	static async getInitialProps() {
 		const pageQuery = `*[_type == 'page' && title == 'Product care'] {
 			"body": body.se[].children[],

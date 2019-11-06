@@ -151,7 +151,6 @@ class Header extends Component {
 					</LinkWrapper>
 				</TopHeader>
 				<Wrapper>
-
 					<TitleWrapper>
 						<Title>BELL PEPPER</Title>
 						<SubTitle>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg.</SubTitle>

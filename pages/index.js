@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 
 import client from '../cmsApi';
-import Products from '../components/Products.js'
 import Header from '../components/Header'
+import Products from '../components/Products.js'
+import Categories from '../components/Categories'
 import Footer from '../components/Footer'
 
 
@@ -14,7 +15,15 @@ const Wrapper = styled.div`
 	background-color: #3c3c3c;
 `;
 
-class Index extends React.Component {
+class Index extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			selectedCategory: 'Alla produkter',
+		}
+		this.handleCategoryClick = this.handleCategoryClick.bind(this);
+	}
+
 	static async getInitialProps() {
 		const productsQuery = `*[_type == 'product'] {
 			_id,
@@ -22,19 +31,32 @@ class Index extends React.Component {
 			slug,
 			images,
 			price,
-			"firstImageUrl": images[0].asset->url
+			"firstImageUrl": images[0].asset->url,
+			"categories": categories[]->title,
 		}`;
 		const products = await client.fetch(productsQuery)
+
+		const categoryQuery = `*[_type == 'category'] {
+			title,
+		}`;
+		const categories = await client.fetch(categoryQuery)
+		categories.unshift({title: 'Alla produkter'} )
+
 		return {
-			products
+			products, categories
 		}
+	}
+
+	handleCategoryClick(title) {
+		this.setState({selectedCategory: title})
 	}
 
 	render() {
 		return (
 			<Wrapper>
 				<Header />
-				<Products products={this.props.products}/>
+				<Categories categories={this.props.categories} onClick={this.handleCategoryClick} selectedCategory={this.state.selectedCategory}/>
+				<Products products={this.props.products} selectedCategory={this.state.selectedCategory}/>
 				<Footer />
 			</Wrapper>
 		)

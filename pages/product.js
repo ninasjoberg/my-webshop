@@ -137,7 +137,7 @@ class Product extends Component {
         if(this.props.product.imageUrls) {
             this.setState({ bigImage: this.props.product.imageUrls[0] })
         }
-        if(this.props.product.variants) {
+        if(this.props.product.variants && this.props.product.variants.lenght > 0) { //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
             this.setState({ selectedVariant: this.props.product.variants[0].title })
         }
     }

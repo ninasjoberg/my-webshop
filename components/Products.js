@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Link from 'next/link'
 import styled from 'styled-components'
-
 
 const Wrapper = styled.ul`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 0px;
 `;
 
 const ProductWrapper = styled.li`
@@ -18,6 +18,9 @@ const ProductWrapper = styled.li`
         padding: 0 0 6px;
         margin: 6px;
     }
+    ${({ hidden }) => hidden && `
+		display: none;
+	`}
 `;
 
 const DispalyProduct = styled.a`
@@ -46,17 +49,17 @@ const DispalyProduct = styled.a`
 
 
 
-const ProductLink = (props) => (
-	<ProductWrapper>
+const ProductLink = ({ slug, img, alt, title, price, hidden}) => (
+	<ProductWrapper hidden={hidden}>
 		<Link
-			as={`/product/${props.slug}`}
-            href={`/product?title=${props.slug}`}
+			as={`/product/${slug}`}
+            href={`/product?title=${slug}`}
             passHref
 		>
             <DispalyProduct>
-                <img src={props.img} alt={props.alt || 'produktbild silversmycke'} />
-                <h3>{props.title}</h3>
-                <p>{props.price} SEK</p>
+                <img src={img} alt={alt || 'produktbild silversmycke'} />
+                <h3>{title}</h3>
+                <p>{price} SEK</p>
             </DispalyProduct>
 		</Link>
 	</ProductWrapper>
@@ -64,17 +67,19 @@ const ProductLink = (props) => (
 
 
 
-export default class Products extends Component {
-    render() {
-        const productList = this.props.products.map((product) => {
-            return (
-                <ProductLink key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
-            )
-        })
-        return(
-            <Wrapper>
-                {productList}
-            </Wrapper>
+const Products = ({ products, selectedCategory }) => {
+    const productList = products.map((product) => {
+        const isHidden = selectedCategory === 'Alla produkter' ? false : !product.categories.includes(selectedCategory)
+        return (
+            <ProductLink hidden={isHidden} key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
         )
-    }
+    })
+    productList.reverse()
+    return(
+        <Wrapper>
+            {productList}
+        </Wrapper>
+    )
 }
+
+export default Products

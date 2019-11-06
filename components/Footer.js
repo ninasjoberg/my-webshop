@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'next/router'
 
 import styled from 'styled-components'
@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     justify-content: flex-end;
     align-items: center;
     padding: 20px;
+    margin: auto 0px 0px;
 	p  {
 		color: #f5eee8;
         font-weight: 100;
