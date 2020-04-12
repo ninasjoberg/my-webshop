@@ -207,7 +207,7 @@ class Product extends Component {
                 <Header />
                 <Wrapper>
                     <WrapperContent>
-                        <h2>{title}</h2>
+                        <h3>{title}</h3>
                         <div>
                             <BigImage src={bigImage} alt="selected product picture" />
                         </div>

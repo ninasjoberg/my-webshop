@@ -76,14 +76,14 @@ const Title = styled.h1`
 	color: #06d0b2;
 	cursor: pointer;
 	&:hover {
-		color: #f5eee8;
+		color: #eed2c4;
 	}
 	@media (max-width: 700px) {
 		margin: 6px;
 	}
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.h2`
 	color: #f5eee8;
 	letter-spacing: 2px;
 	font-weight: 100;

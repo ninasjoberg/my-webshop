@@ -260,7 +260,7 @@ class CartModal extends Component {
         if (submitted) {
             return (
                 <CartWrapper confirmation>
-                    <h2>TACK!</h2>
+                    <h3>TACK!</h3>
                     <p>Din order har nu skickats!</p>
                     <p>En orderbekräftelse kommer skickas till dig per mail, så snart jag behandlat din order.</p>
                     <ActionButton buttonText="Stäng" onClick={onCartClose} />
@@ -271,7 +271,7 @@ class CartModal extends Component {
         if(errorSendingMail) {
             return (
                 <CartWrapper confirmation>
-                    <h2>Något gick fel..</h2>
+                    <h3>Något gick fel..</h3>
                     <p>Tyvärr skickades inte din order iväg korrrekt.</p>
                     <p>Vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
                     <ActionButton buttonText="Stäng" onClick={onCartClose} />
@@ -284,7 +284,7 @@ class CartModal extends Component {
                 <CloseButton onClick={onCartClose}>
                     <i className="material-icons">close</i>
                 </CloseButton>
-                <h2>HÄR ÄR DIN VARUKORG</h2>
+                <h3>HÄR ÄR DIN VARUKORG</h3>
                 <div>
                     <InfoHeaders>
                         <p>Produkt</p>

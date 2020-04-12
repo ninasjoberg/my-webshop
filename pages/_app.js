@@ -24,10 +24,10 @@ const GlobalStyle = createGlobalStyle`
 			text-transform: uppercase;
 		}
 		h2 {
-			margin: 16px auto;
+			margin: 12px auto;
+			font-size: 16px;
 			font-weight: 100;
 			letter-spacing: 2px;
-			text-transform: uppercase;
 		}
 		h3 {
 			margin: 16px auto;
