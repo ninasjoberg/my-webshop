@@ -74,6 +74,10 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
 	color: #06d0b2;
+	cursor: pointer;
+	&:hover {
+		color: #f5eee8;
+	}
 	@media (max-width: 700px) {
 		margin: 6px;
 	}
@@ -152,7 +156,9 @@ class Header extends Component {
 				</TopHeader>
 				<Wrapper>
 					<TitleWrapper>
-						<Title>BELL PEPPER</Title>
+						<Link href="/" passHref>
+							<Title>BELL PEPPER</Title>
+						</Link>
 						<SubTitle>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg.</SubTitle>
 					</TitleWrapper>
 					{this.state.showCart &&

@@ -1,12 +1,11 @@
 # Build Output
 dist
-.next/
+.next
 .vscode
 .DS_Store
 *.log
 
 # Dependencies
 node_modules/
-package-lock.json
 config.json
 sendgrid.env
