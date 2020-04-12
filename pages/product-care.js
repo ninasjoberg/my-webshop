@@ -23,12 +23,12 @@ class productCare extends Component {
 		const { body, imageUrls } = this.props.pageInfo[0]
 
 		const texArray = body.map((section) => {
-			return <p>{section[0].text}</p>
+			return <p key={section[0]._key}>{section[0].text}</p>
 		})
 
-		const imageArray= imageUrls.map((imageUrl) => {
+		const imageArray= imageUrls.map((imageUrl, index) => {
             return (
-                <img src={imageUrl} alt="product picture" height="500" />
+                <img key={index} src={imageUrl} alt="product picture" height="500" />
             )
         })
 

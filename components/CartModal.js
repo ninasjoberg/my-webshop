@@ -223,10 +223,10 @@ class CartModal extends Component {
         const { showAddressForm, submitted, errorSendingMail } = this.state
         const { store, onCartClose } = this.props
 
-        const productArray = store.cart.map((item) => {
+        const productArray = store.cart.map((item, index) => {
             if (item.images) {
                 return (
-                    <ProductInfo key={item._id}>
+                    <ProductInfo key={index}>
                         <ItemWrapper>
                             <ProductInfoWrapper>
                                 <img src={item.images[0]} alt="product picture" height="60" width="60" />

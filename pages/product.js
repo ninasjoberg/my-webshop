@@ -137,7 +137,7 @@ class Product extends Component {
         if(this.props.product.imageUrls) {
             this.setState({ bigImage: this.props.product.imageUrls[0] })
         }
-        if(this.props.product.variants && this.props.product.variants.lenght > 0) { //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
+        if(this.props.product.variants && this.props.product.variants.length > 0) { //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
             this.setState({ selectedVariant: this.props.product.variants[0].title })
         }
     }
@@ -185,21 +185,21 @@ class Product extends Component {
             )
         }
         else {
-        const variant = variants ?
-            variants.map((item, index) => {
-                return <option key={item._key} selected={index === 0 ? 'selected': ''} value={item.title}>{item.title}</option>
+        //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
+        const variant = variants && variants.length > 0 &&
+            variants.map((item) => {
+                return <option key={item._key} value={item.title}>{item.title}</option>
             })
-        : ''
 
-        const imageArray = imageUrls.map((imageUrl, key) => {
+        const imageArray = imageUrls.map((imageUrl, index) => {
             const active = imageUrl === this.state.bigImage
             return (
-                <SmallImg active={active} src={imageUrl} onClick={this.selectImg} alt={images[key].alt || 'produktbild silversmycke'} height="100" width="100" />
+                <SmallImg key={index} active={active} src={imageUrl} onClick={this.selectImg} alt={images[index].alt || 'produktbild silversmycke'} height="100" width="100" />
             )
         })
 
         const texArray = body.map((section) => {
-            return <p>{section[0].text}</p>
+            return <p key={section[0]._key}>{section[0].text}</p>
         })
 
         return (
@@ -217,7 +217,7 @@ class Product extends Component {
                         {texArray}
                         <PriceText>{price} SEK</PriceText>
                         {variant &&
-                            <Dropdown onChange={this.selectVariant}>
+                            <Dropdown onChange={this.selectVariant} defaultValue={variants[0].title}>
                                 {variant}
                             </Dropdown>
                         }

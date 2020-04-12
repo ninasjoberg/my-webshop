@@ -33,8 +33,8 @@ const Space = styled.div`
 const Categories = ({ categories, onClick, selectedCategory }) => {
 	return (
 		<Wrapper>
-			{categories.map((category) => {
-				return <CategoryButton onClick={() => onClick(category.title)} selected={selectedCategory === category.title}>{category.title}</CategoryButton>
+			{categories.map((category, index) => {
+				return <CategoryButton key={index} onClick={() => onClick(category.title)} selected={selectedCategory === category.title}>{category.title}</CategoryButton>
 			})}
 			<Space />
 		</Wrapper>

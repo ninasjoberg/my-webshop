@@ -71,7 +71,7 @@ const Products = ({ products, selectedCategory }) => {
     const productList = products.map((product) => {
         const isHidden = selectedCategory === 'Alla produkter' ? false : !product.categories.includes(selectedCategory)
         return (
-            <ProductLink hidden={isHidden} key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
+            <ProductLink key={product._id} hidden={isHidden} key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
         )
     })
     productList.reverse()

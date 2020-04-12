@@ -28,7 +28,7 @@ class productCare extends Component {
 		const { body } = this.props.pageInfo[0]
 
 		const texArray = body.map((section) => {
-			return <p>{section[0].text}</p>
+			return <p key={section[0]._key}>{section[0].text}</p>
 		})
 
 		return (
