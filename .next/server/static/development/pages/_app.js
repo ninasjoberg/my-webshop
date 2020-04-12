@@ -93,6 +93,306 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
+/***/ "./node_modules/next/app.js":
+/*!**********************************!*\
+  !*** ./node_modules/next/app.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./dist/pages/_app */ "./node_modules/next/dist/pages/_app.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/next/dist/next-server/lib/utils.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/next/dist/next-server/lib/utils.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const url_1 = __webpack_require__(/*! url */ "url");
+/**
+ * Utils
+ */
+
+
+function execOnce(fn) {
+  let used = false;
+  let result = null;
+  return (...args) => {
+    if (!used) {
+      used = true;
+      result = fn.apply(this, args);
+    }
+
+    return result;
+  };
+}
+
+exports.execOnce = execOnce;
+
+function getLocationOrigin() {
+  const {
+    protocol,
+    hostname,
+    port
+  } = window.location;
+  return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+}
+
+exports.getLocationOrigin = getLocationOrigin;
+
+function getURL() {
+  const {
+    href
+  } = window.location;
+  const origin = getLocationOrigin();
+  return href.substring(origin.length);
+}
+
+exports.getURL = getURL;
+
+function getDisplayName(Component) {
+  return typeof Component === 'string' ? Component : Component.displayName || Component.name || 'Unknown';
+}
+
+exports.getDisplayName = getDisplayName;
+
+function isResSent(res) {
+  return res.finished || res.headersSent;
+}
+
+exports.isResSent = isResSent;
+
+async function loadGetInitialProps(App, ctx) {
+  var _a;
+
+  if (true) {
+    if ((_a = App.prototype) === null || _a === void 0 ? void 0 : _a.getInitialProps) {
+      const message = `"${getDisplayName(App)}.getInitialProps()" is defined as an instance method - visit https://err.sh/zeit/next.js/get-initial-props-as-an-instance-method for more information.`;
+      throw new Error(message);
+    }
+  } // when called from _app `ctx` is nested in `ctx`
+
+
+  const res = ctx.res || ctx.ctx && ctx.ctx.res;
+
+  if (!App.getInitialProps) {
+    if (ctx.ctx && ctx.Component) {
+      // @ts-ignore pageProps default
+      return {
+        pageProps: await loadGetInitialProps(ctx.Component, ctx.ctx)
+      };
+    }
+
+    return {};
+  }
+
+  const props = await App.getInitialProps(ctx);
+
+  if (res && isResSent(res)) {
+    return props;
+  }
+
+  if (!props) {
+    const message = `"${getDisplayName(App)}.getInitialProps()" should resolve to an object. But found "${props}" instead.`;
+    throw new Error(message);
+  }
+
+  if (true) {
+    if (Object.keys(props).length === 0 && !ctx.ctx) {
+      console.warn(`${getDisplayName(App)} returned an empty object from \`getInitialProps\`. This de-optimizes and prevents automatic static optimization. https://err.sh/zeit/next.js/empty-object-getInitialProps`);
+    }
+  }
+
+  return props;
+}
+
+exports.loadGetInitialProps = loadGetInitialProps;
+exports.urlObjectKeys = ['auth', 'hash', 'host', 'hostname', 'href', 'path', 'pathname', 'port', 'protocol', 'query', 'search', 'slashes'];
+
+function formatWithValidation(url, options) {
+  if (true) {
+    if (url !== null && typeof url === 'object') {
+      Object.keys(url).forEach(key => {
+        if (exports.urlObjectKeys.indexOf(key) === -1) {
+          console.warn(`Unknown key passed via urlObject into url.format: ${key}`);
+        }
+      });
+    }
+  }
+
+  return url_1.format(url, options);
+}
+
+exports.formatWithValidation = formatWithValidation;
+exports.SP = typeof performance !== 'undefined';
+exports.ST = exports.SP && typeof performance.mark === 'function' && typeof performance.measure === 'function';
+
+/***/ }),
+
+/***/ "./node_modules/next/dist/pages/_app.js":
+/*!**********************************************!*\
+  !*** ./node_modules/next/dist/pages/_app.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.Container = Container;
+exports.createUrl = createUrl;
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+
+var _utils = __webpack_require__(/*! ../next-server/lib/utils */ "./node_modules/next/dist/next-server/lib/utils.js");
+
+exports.AppInitialProps = _utils.AppInitialProps;
+/**
+* `App` component is used for initialize of pages. It allows for overwriting and full control of the `page` initialization.
+* This allows for keeping state between navigation, custom error handling, injecting additional data.
+*/
+
+async function appGetInitialProps(_ref) {
+  var {
+    Component,
+    ctx
+  } = _ref;
+  var pageProps = await (0, _utils.loadGetInitialProps)(Component, ctx);
+  return {
+    pageProps
+  };
+}
+
+class App extends _react.default.Component {
+  // Kept here for backwards compatibility.
+  // When someone ended App they could call `super.componentDidCatch`.
+  // @deprecated This method is no longer needed. Errors are caught at the top level
+  componentDidCatch(error, _errorInfo) {
+    throw error;
+  }
+
+  render() {
+    var {
+      router,
+      Component,
+      pageProps,
+      __N_SSG,
+      __N_SSP
+    } = this.props;
+    return _react.default.createElement(Component, Object.assign({}, pageProps, // we don't add the legacy URL prop if it's using non-legacy
+    // methods like getStaticProps and getServerSideProps
+    !(__N_SSG || __N_SSP) ? {
+      url: createUrl(router)
+    } : {}));
+  }
+
+}
+
+exports.default = App;
+App.origGetInitialProps = appGetInitialProps;
+App.getInitialProps = appGetInitialProps;
+var warnContainer;
+var warnUrl;
+
+if (true) {
+  warnContainer = (0, _utils.execOnce)(() => {
+    console.warn("Warning: the `Container` in `_app` has been deprecated and should be removed. https://err.sh/zeit/next.js/app-container-deprecated");
+  });
+  warnUrl = (0, _utils.execOnce)(() => {
+    console.error("Warning: the 'url' property is deprecated. https://err.sh/zeit/next.js/url-deprecated");
+  });
+} // @deprecated noop for now until removal
+
+
+function Container(p) {
+  if (true) warnContainer();
+  return p.children;
+}
+
+function createUrl(router) {
+  // This is to make sure we don't references the router object at call time
+  var {
+    pathname,
+    asPath,
+    query
+  } = router;
+  return {
+    get query() {
+      if (true) warnUrl();
+      return query;
+    },
+
+    get pathname() {
+      if (true) warnUrl();
+      return pathname;
+    },
+
+    get asPath() {
+      if (true) warnUrl();
+      return asPath;
+    },
+
+    back: () => {
+      if (true) warnUrl();
+      router.back();
+    },
+    push: (url, as) => {
+      if (true) warnUrl();
+      return router.push(url, as);
+    },
+    pushTo: (href, as) => {
+      if (true) warnUrl();
+      var pushRoute = as ? href : '';
+      var pushUrl = as || href;
+      return router.push(pushRoute, pushUrl);
+    },
+    replace: (url, as) => {
+      if (true) warnUrl();
+      return router.replace(url, as);
+    },
+    replaceTo: (href, as) => {
+      if (true) warnUrl();
+      var replaceRoute = as ? href : '';
+      var replaceUrl = as || href;
+      return router.replace(replaceRoute, replaceUrl);
+    }
+  };
+}
+
+/***/ }),
+
 /***/ "./pages/_app.js":
 /*!***********************!*\
   !*** ./pages/_app.js ***!
@@ -103,57 +403,16 @@ module.exports =
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MyApp; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./store.js");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mobx-react */ "mobx-react");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var next_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! next/app */ "next/app");
-/* harmony import */ var next_app__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_app__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n\t* {\n\t\tbox-sizing: border-box;\n\t}\n\thtml {\n\t\tfont-family: helvetica;\n\t\ttext-align: center;\n\t\tline-height: 1.5;\n\t\tbackground-color: #eed2c4;;\n\t\th1 {\n\t\t\tfont-weight: 100;\n\t\t\tletter-spacing: 2px;\n\t\t\ttext-transform: uppercase;\n\t\t}\n\t\th2 {\n\t\t\tmargin: 16px auto;\n\t\t\tfont-weight: 100;\n\t\t\tletter-spacing: 2px;\n\t\t\ttext-transform: uppercase;\n\t\t}\n\t\th3 {\n\t\t\tmargin: 16px auto;\n\t\t\tfont-weight: 100;\n\t\t\tletter-spacing: 2px;\n\t\t\ttext-transform: uppercase;\n\t\t}\n\t\tp {\n\t\t\tmargin: 0;\n\t\t\tcolor: #51616a;\n\t\t}\n\t\tul, li, a {\n\t\t\ttext-decoration: none;\n\t\t\tlist-style-type: none;\n\t\t\tpadding: 0;\n\t\t}\n\t\tbutton:focus {\n\t\t\toutline: 0;\n\t\t\topacity: 1;\n\t\t}\n\t\ta {\n\t\t\tfont-size: 16px;\n\t\t}\n\t}\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./store.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var next_app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! next/app */ "./node_modules/next/app.js");
+/* harmony import */ var next_app__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_app__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 //Persisting layout between page changes
 //Keeping state when navigating pages
 //Custom error handling using componentDidCatch
@@ -163,89 +422,89 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_5__["createGlobalStyle"])(_templateObject());
+const GlobalStyle = styled_components__WEBPACK_IMPORTED_MODULE_4__["createGlobalStyle"]`
+	* {
+		box-sizing: border-box;
+	}
+	html {
+		font-family: helvetica;
+		text-align: center;
+		line-height: 1.5;
+		background-color: #eed2c4;;
+		h1 {
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		h2 {
+			margin: 16px auto;
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		h3 {
+			margin: 16px auto;
+			font-weight: 100;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+		p {
+			margin: 0;
+			color: #51616a;
+		}
+		ul, li, a {
+			text-decoration: none;
+			list-style-type: none;
+			padding: 0;
+		}
+		button:focus {
+			outline: 0;
+			opacity: 1;
+		}
+		a {
+			font-size: 16px;
+		}
+	}
+`;
+class MyApp extends next_app__WEBPACK_IMPORTED_MODULE_3___default.a {
+  static async getInitialProps({
+    Component,
+    router,
+    ctx
+  }) {
+    // Get or Create the store with `undefined` as initialState
+    // This allows you to set a custom default initialState
+    const mobxStore = Object(_store__WEBPACK_IMPORTED_MODULE_1__["initializeStore"])(); // Provide the store to getInitialProps of pages
 
-var MyApp = /*#__PURE__*/function (_App) {
-  _inherits(MyApp, _App);
+    let pageProps = {};
 
-  var _super = _createSuper(MyApp);
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
 
-  _createClass(MyApp, null, [{
-    key: "getInitialProps",
-    value: function () {
-      var _getInitialProps = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-        var Component, router, ctx, mobxStore, pageProps;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                Component = _ref.Component, router = _ref.router, ctx = _ref.ctx;
-                // Get or Create the store with `undefined` as initialState
-                // This allows you to set a custom default initialState
-                mobxStore = Object(_store__WEBPACK_IMPORTED_MODULE_2__["initializeStore"])(); // Provide the store to getInitialProps of pages
-
-                pageProps = {};
-
-                if (!Component.getInitialProps) {
-                  _context.next = 7;
-                  break;
-                }
-
-                _context.next = 6;
-                return Component.getInitialProps(ctx);
-
-              case 6:
-                pageProps = _context.sent;
-
-              case 7:
-                return _context.abrupt("return", {
-                  pageProps: pageProps,
-                  initialMobxState: mobxStore
-                });
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function getInitialProps(_x) {
-        return _getInitialProps.apply(this, arguments);
-      }
-
-      return getInitialProps;
-    }()
-  }]);
-
-  function MyApp(props) {
-    var _this;
-
-    _classCallCheck(this, MyApp);
-
-    _this = _super.call(this, props);
-    var isServer = !false;
-    _this.mobxStore = isServer ? props.initialMobxState : Object(_store__WEBPACK_IMPORTED_MODULE_2__["initializeStore"])(props.initialMobxState);
-    return _this;
+    return {
+      pageProps,
+      initialMobxState: mobxStore
+    };
   }
 
-  _createClass(MyApp, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          Component = _this$props.Component,
-          pageProps = _this$props.pageProps;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_4__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(GlobalStyle, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(mobx_react__WEBPACK_IMPORTED_MODULE_3__["Provider"], {
-        store: this.mobxStore
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, pageProps)));
-    }
-  }]);
+  constructor(props) {
+    super(props);
+    const isServer = !false;
+    this.mobxStore = isServer ? props.initialMobxState : Object(_store__WEBPACK_IMPORTED_MODULE_1__["initializeStore"])(props.initialMobxState);
+  }
 
-  return MyApp;
-}(next_app__WEBPACK_IMPORTED_MODULE_4___default.a);
+  render() {
+    const {
+      Component,
+      pageProps
+    } = this.props;
+    return __jsx(next_app__WEBPACK_IMPORTED_MODULE_3__["Container"], null, __jsx(GlobalStyle, null), __jsx(mobx_react__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
+      store: this.mobxStore
+    }, __jsx(Component, pageProps)));
+  }
 
-
+}
 
 /***/ }),
 
@@ -266,17 +525,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/localStorage */ "./utils/localStorage.js");
 var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? Object(arguments[i]) : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
@@ -285,14 +540,10 @@ function _initializerWarningHelper(descriptor, context) { throw new Error('Decor
 
 
 
-var isServer = !false;
+const isServer = !false;
 Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["useStaticRendering"])(isServer);
-var Store = (_class = (_temp = /*#__PURE__*/function () {
-  function Store(isServer) {
-    var initialData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    _classCallCheck(this, Store);
-
+let Store = (_class = (_temp = class Store {
+  constructor(isServer, initialData = {}) {
     _initializerDefineProperty(this, "cart", _descriptor, this);
 
     _initializerDefineProperty(this, "setCart", _descriptor2, this);
@@ -306,51 +557,43 @@ var Store = (_class = (_temp = /*#__PURE__*/function () {
     this.cart;
   }
 
-  _createClass(Store, [{
-    key: "cartCount",
-    get: function get() {
-      var quantity = this.cart.map(function (item) {
-        return item.quantity;
-      }).reduce(function (item, currentValue) {
-        return item + currentValue;
-      }, 0);
-      return quantity;
-    }
-  }]);
+  get cartCount() {
+    const quantity = this.cart.map(item => {
+      return item.quantity;
+    }).reduce((item, currentValue) => {
+      return item + currentValue;
+    }, 0);
+    return quantity;
+  }
 
-  return Store;
-}(), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "cart", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "cart", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
-  initializer: function initializer() {
+  initializer: function () {
     return [];
   }
 }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "setCart", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
   configurable: true,
   enumerable: true,
   writable: true,
-  initializer: function initializer() {
-    var _this = this;
-
-    return function (cartFromLocalStorage) {
-      _this.cart = cartFromLocalStorage;
+  initializer: function () {
+    return cartFromLocalStorage => {
+      this.cart = cartFromLocalStorage;
     };
   }
 }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "addCart", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
   configurable: true,
   enumerable: true,
   writable: true,
-  initializer: function initializer() {
-    var _this2 = this;
-
-    return function (product) {
-      var foundInCart = _this2.cart.some(function (item) {
+  initializer: function () {
+    return product => {
+      const foundInCart = this.cart.some(item => {
         return item.id === product.id && item.variant === product.variant;
       });
 
       if (foundInCart) {
-        var newCart = _this2.cart.map(function (item) {
+        const newCart = this.cart.map(item => {
           if (item.id === product.id && item.variant === product.variant) {
             return _objectSpread({}, item, {
               quantity: item.quantity + 1
@@ -359,12 +602,10 @@ var Store = (_class = (_temp = /*#__PURE__*/function () {
 
           return item;
         });
-
-        _this2.cart = newCart;
+        this.cart = newCart;
         Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
       } else {
-        _this2.cart.push(product);
-
+        this.cart.push(product);
         Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["saveItemToLocalStorage"])(product, 'cartArray');
       }
     };
@@ -373,19 +614,16 @@ var Store = (_class = (_temp = /*#__PURE__*/function () {
   configurable: true,
   enumerable: true,
   writable: true,
-  initializer: function initializer() {
-    var _this3 = this;
-
-    return function (product) {
-      var newCart = _this3.cart.map(function (item) {
+  initializer: function () {
+    return product => {
+      const newCart = this.cart.map(item => {
         if (item.id === product.id && item.variant === product.variant) {
           return null;
         }
 
         return item;
       }).filter(Boolean);
-
-      _this3.cart = newCart;
+      this.cart = newCart;
       Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])(newCart, 'cartArray');
     };
   }
@@ -393,16 +631,14 @@ var Store = (_class = (_temp = /*#__PURE__*/function () {
   configurable: true,
   enumerable: true,
   writable: true,
-  initializer: function initializer() {
-    var _this4 = this;
-
-    return function () {
-      _this4.cart = [];
+  initializer: function () {
+    return () => {
+      this.cart = [];
       Object(_utils_localStorage__WEBPACK_IMPORTED_MODULE_2__["updateItemListToLocalStorage"])([], 'cartArray');
     };
   }
 }), _applyDecoratedDescriptor(_class.prototype, "cartCount", [mobx__WEBPACK_IMPORTED_MODULE_0__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, "cartCount"), _class.prototype)), _class);
-var store = null;
+let store = null;
 function initializeStore(initialData) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
@@ -431,7 +667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateItemListToLocalStorage", function() { return updateItemListToLocalStorage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemListFromLocalStorage", function() { return getItemListFromLocalStorage; });
 function saveItemToLocalStorage(product, listName) {
-  var cartArray = getItemListFromLocalStorage(listName);
+  let cartArray = getItemListFromLocalStorage(listName);
 
   if (cartArray) {
     cartArray.push(product);
@@ -440,37 +676,26 @@ function saveItemToLocalStorage(product, listName) {
   localStorage.setItem(listName, JSON.stringify(cartArray));
 }
 function updateItemListToLocalStorage(productList, listName) {
-  var cartArray = getItemListFromLocalStorage(listName);
+  let cartArray = getItemListFromLocalStorage(listName);
   cartArray = productList;
   localStorage.setItem(listName, JSON.stringify(cartArray));
 }
 function getItemListFromLocalStorage(listName) {
-  var storedCartArray = JSON.parse(localStorage.getItem(listName));
+  const storedCartArray = JSON.parse(localStorage.getItem(listName));
   return storedCartArray || [];
 }
 
 /***/ }),
 
 /***/ 0:
-/*!*****************************!*\
-  !*** multi ./pages/_app.js ***!
-  \*****************************/
+/*!****************************************!*\
+  !*** multi private-next-pages/_app.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./pages/_app.js */"./pages/_app.js");
+module.exports = __webpack_require__(/*! private-next-pages/_app.js */"./pages/_app.js");
 
-
-/***/ }),
-
-/***/ "@babel/runtime/regenerator":
-/*!*********************************************!*\
-  !*** external "@babel/runtime/regenerator" ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/regenerator");
 
 /***/ }),
 
@@ -496,17 +721,6 @@ module.exports = require("mobx-react");
 
 /***/ }),
 
-/***/ "next/app":
-/*!***************************!*\
-  !*** external "next/app" ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("next/app");
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -526,6 +740,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("styled-components");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("url");
 
 /***/ })
 
