@@ -1,7 +1,7 @@
 # my-webshop
 webshop for my silversmithing project
 
-https://bellpepper.se
+https://www.bellpepper.se
 
 ## Languages and techniques:
 - Next.js (frontend)
