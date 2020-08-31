@@ -1,6 +1,4 @@
 import React from 'react';
-import { withRouter } from 'next/router'
-
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -25,4 +23,4 @@ const Footer = () => {
     )
 }
 
-export default withRouter(Footer)
+export default Footer

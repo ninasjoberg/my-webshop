@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
@@ -46,4 +45,4 @@ class about extends Component {
 	}
 }
 
-export default withRouter(about)
+export default about

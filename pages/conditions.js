@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router'
 
 import client from '../cmsApi';
 import Header from '../components/Header'
@@ -41,4 +40,4 @@ class productCare extends Component {
 	}
 }
 
-export default withRouter(productCare)
+export default productCare

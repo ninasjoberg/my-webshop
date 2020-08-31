@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router'
 import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 
@@ -231,4 +230,4 @@ class Product extends Component {
     }
 }
 
-export default withRouter(Product)
+export default Product
