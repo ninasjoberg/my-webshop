@@ -169,8 +169,8 @@ class Index extends Component {
 					<>
 						{firstSection ?
 							<Link
-								as={`/products`}
-								href={`/products`}
+								as={`/shop`}
+								href={`/shop`}
 								passHref
 							>
 								<img key={index} src={imageUrl} height="100" width="100" />
