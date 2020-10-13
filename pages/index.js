@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 import Link from 'next/link'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-
-
+import CarouselArrows from '../components/CarouselArrows'
 const Wrapper = styled.div`
     min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: #3c3c3c;
 `;
+
+const FirsImageRowWrapper = styled.div`
+	position: relative;
+`
 
 const ContentWrapper = styled.div`
 	display: flex;
@@ -21,9 +24,7 @@ const ContentWrapper = styled.div`
 	width: 100%;
 	max-width: 1000px;
 	margin: 0 auto;
-	${({ style }) => style === 1 && `
-		margin: 0 auto;
-	`}
+	position: relative;
 	${({ style }) => style === 2 && `
 		flex-direction: row;
 		background-color: #f5eee8;
@@ -50,6 +51,7 @@ const ImageDiv = styled.div`
 		height: 400px;
 		width: auto;
 	}
+
 	${({ style }) => style === 1 && `
 		margin: 0 auto;
 		overflow-x: scroll;
@@ -70,6 +72,7 @@ const ImageDiv = styled.div`
 			justify-content: start;
 		}
 	`}
+
 	${({ style }) => style === 2 && `
 		flex-direction: column;
 		img {
@@ -88,6 +91,7 @@ const ImageDiv = styled.div`
 			}
 		}
 	`}
+
 	${({ style }) => style === 3 && `
 		flex-flow: row wrap;
 		padding-right: 0px;
@@ -136,80 +140,92 @@ const Text = styled.div`
 `
 
 
-class Index extends Component {
-	constructor(props) {
-		super(props);
-	}
+const Index = (props)  => {
+	const { pageInfo } = props
+	const sortedArray = pageInfo.sort((a, b) => {
+		return a.order-b.order
+	})
 
-	static async getInitialProps() {
-		const pageQuery = `*[_type == 'startPage'] {
-			title,
-			order,
-			images,
-			"imageUrls": images[].asset->url,
-            "body": body.se[].children[],
-		}`;
-		const pageInfo = await client.fetch(pageQuery)
-		return {
-			pageInfo
-		}
-	}
 
-	render() {
-		const { pageInfo } = this.props
-		const sortedArray = pageInfo.sort((a, b) => {
-			return a.order-b.order
-		})
+	const pageContent = sortedArray.map((section) => {
+		const firstSection = section.order === 1
 
-		const pageContent = sortedArray.map((section) => {
-			const firstSection = section.order === 1
+		const imageArray = section.imageUrls ? section.imageUrls.map((imageUrl, index) => {
 
-			const imageArray = section.imageUrls ? section.imageUrls.map((imageUrl, index) => {
-				return (
-					<>
-						{firstSection ?
-							<Link
-								as={`/shop`}
-								href={`/shop`}
-								passHref
-							>
-								<img key={index} src={imageUrl} height="100" width="100" />
-							</Link>
-						:
-							<img key={index} src={imageUrl} height="100" width="100" />
-						}
-					</>
-				)
-			}) : ''
-
-			const textArray = section.body ? section.body.map((section) => {
-				return <p key={section[0]._key}>{section[0].text}</p>
-			}) : ''
+			const elementId = index === 0 ? 'observe' : ''
 
 			return (
 				<>
 					{firstSection ?
-						<ImageDiv style={section.order}>{imageArray}</ImageDiv>
+						<Link
+							as={`/shop`}
+							href={`/shop`}
+							passHref
+						>
+							<img key={index} id={elementId} src={imageUrl} height="100" width="100" />
+						</Link>
 					:
-						<ContentWrapper style={section.order}>
-							<ImageDiv style={section.order}>{imageArray}</ImageDiv>
-							<TextWrapper>
-								{section.title && <TextHeading>{section.title}</TextHeading>}
-								{textArray && <Text>{textArray}</Text>}
-							</TextWrapper>
-						</ContentWrapper>
+						<img key={index} src={imageUrl} height="100" width="100" />
 					}
 				</>
 			)
-		})
+		}) : ''
+
+		const textArray = section.body ? section.body.map((section) => {
+			return <p key={section[0]._key}>{section[0].text}</p>
+		}) : ''
 
 		return (
-			<Wrapper>
-				<Header />
-					{pageContent}
-				<Footer />
-			</Wrapper>
+			<>
+				{firstSection ?
+					<FirsImageRowWrapper>
+						<ImageDiv style={section.order}>
+							<CarouselArrows order={section.order}>
+								{imageArray}
+							</CarouselArrows>
+						</ImageDiv>
+					</FirsImageRowWrapper>
+
+				:
+					<ContentWrapper style={section.order}>
+							<ImageDiv style={section.order}>
+								<CarouselArrows order={section.order}>
+								{imageArray}
+								</CarouselArrows>
+							</ImageDiv>
+						<TextWrapper>
+							{section.title && <TextHeading>{section.title}</TextHeading>}
+							{textArray && <Text>{textArray}</Text>}
+						</TextWrapper>
+					</ContentWrapper>
+				}
+			</>
 		)
+	})
+
+
+
+	return (
+		<Wrapper>
+			<Header />
+				{pageContent}
+			<Footer />
+		</Wrapper>
+	)
+}
+
+
+Index.getInitialProps = async() => {
+	const pageQuery = `*[_type == 'startPage'] {
+		title,
+		order,
+		images,
+		"imageUrls": images[].asset->url,
+		"body": body.se[].children[],
+	}`;
+	const pageInfo = await client.fetch(pageQuery)
+	return {
+		pageInfo
 	}
 }
 
