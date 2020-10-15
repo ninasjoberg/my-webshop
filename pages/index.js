@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'
-import Link from 'next/link'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CarouselArrows from '../components/CarouselArrows'
+
+
 const Wrapper = styled.div`
     min-height: 100vh;
 	display: flex;
@@ -46,6 +47,7 @@ const ImageDiv = styled.div`
 	padding-right: 10px;
 	display: flex;
 	max-width: 100%;
+	scroll-behavior: smooth;
 	img {
 		padding-bottom: 12px;
 		height: 400px;
@@ -146,28 +148,18 @@ const Index = (props)  => {
 		return a.order-b.order
 	})
 
+	const arrowClick = (direction) => {
+        scrollImageArray.current.scrollBy(120*direction, 0);
+    }
+
 
 	const pageContent = sortedArray.map((section) => {
 		const firstSection = section.order === 1
 
 		const imageArray = section.imageUrls ? section.imageUrls.map((imageUrl, index) => {
-
 			const elementId = index === 0 ? 'observe' : ''
-
 			return (
-				<>
-					{firstSection ?
-						<Link
-							as={`/shop`}
-							href={`/shop`}
-							passHref
-						>
-							<img key={index} id={elementId} src={imageUrl} height="100" width="100" />
-						</Link>
-					:
-						<img key={index} src={imageUrl} height="100" width="100" />
-					}
-				</>
+				<img key={index} id={elementId} src={imageUrl} height="100" width="100" />
 			)
 		}) : ''
 
@@ -180,7 +172,7 @@ const Index = (props)  => {
 				{firstSection ?
 					<FirsImageRowWrapper>
 						<ImageDiv style={section.order}>
-							<CarouselArrows order={section.order}>
+							<CarouselArrows order={section.order} onClick={arrowClick}>
 								{imageArray}
 							</CarouselArrows>
 						</ImageDiv>
@@ -189,9 +181,7 @@ const Index = (props)  => {
 				:
 					<ContentWrapper style={section.order}>
 							<ImageDiv style={section.order}>
-								<CarouselArrows order={section.order}>
 								{imageArray}
-								</CarouselArrows>
 							</ImageDiv>
 						<TextWrapper>
 							{section.title && <TextHeading>{section.title}</TextHeading>}

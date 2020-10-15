@@ -10,10 +10,10 @@ const Arrow = styled.div`
 		border: 2px solid white;
 		position: absolute;
         ${props => props.dir === 'left' && `
-        	right: 2px;
+        	right: 6px;
         `}
          ${props => props.dir === 'right' && `
-        	left: 2px;
+        	left: 6px;
         `}
         ${props => props.order === 1 && `
         	top: 40%;
@@ -32,24 +32,25 @@ const Arrow = styled.div`
 		padding: 3px;
 		top: 8px;
 		position: absolute;
-        right: 9px;
         ${props => props.dir === 'left' && `
         	transform: rotate(-45deg);
             -webkit-transform: rotate(-45deg);
+            right: 10px;
         `}
          ${props => props.dir === 'right' && `
         	transform: rotate(135deg);
             -webkit-transform: rotate(135deg);
+            right: 9px;
         `}
 	}
 `
 
-const CarouselArrows = ({children, order}) => {
+const CarouselArrows = ({children, order, onClick}) => {
     const [firstImgInView, setFirstImgInView] = useState(false)
     const [secondImgInView, setSecondImgInView] = useState(false)
 
     const observerRefFirst = useRef()
-	const observerRefSecond = useRef()
+    const observerRefSecond = useRef()
 
 	const createCallback = (setInView) => (entries, observer) => {
 		entries.forEach(entry => {
@@ -69,7 +70,9 @@ const CarouselArrows = ({children, order}) => {
 			const observer = new window.IntersectionObserver(createCallback(setSecondImgInView), {threshold: [0.1]});
 			observer.observe(observerRefSecond.current);
 		}
-	}, [observerRefSecond])
+    }, [observerRefSecond])
+
+
 
 
     return (
@@ -77,8 +80,8 @@ const CarouselArrows = ({children, order}) => {
         	<div style={{paddingRight: '1px'}} ref={observerRefFirst}></div>
                 {children}
             <div style={{paddingRight: '1px'}} ref={observerRefSecond}></div>
-            {!firstImgInView && <Arrow dir='right' order={order}></Arrow>}
-            {!secondImgInView && <Arrow dir='left'order={order}></Arrow>}
+            {!firstImgInView && <Arrow dir='right' order={order} onClick={() => onClick(-1)}></Arrow>}
+            {!secondImgInView && <Arrow dir='left'order={order} onClick={() => onClick(1)}></Arrow>}
         </>
     )
 
