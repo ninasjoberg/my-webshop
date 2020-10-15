@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components'
 import client from '../cmsApi';
 import Header from '../components/Header'
@@ -147,6 +147,7 @@ const Index = (props)  => {
 	const sortedArray = pageInfo.sort((a, b) => {
 		return a.order-b.order
 	})
+	const scrollImageArray = useRef()
 
 	const arrowClick = (direction) => {
         scrollImageArray.current.scrollBy(120*direction, 0);
@@ -171,7 +172,7 @@ const Index = (props)  => {
 			<>
 				{firstSection ?
 					<FirsImageRowWrapper>
-						<ImageDiv style={section.order}>
+						<ImageDiv style={section.order} ref={scrollImageArray}>
 							<CarouselArrows order={section.order} onClick={arrowClick}>
 								{imageArray}
 							</CarouselArrows>
