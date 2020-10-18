@@ -9,20 +9,12 @@ const Arrow = styled.div`
         background-color: rgba(0, 0, 0, 0.05);
 		border: 2px solid white;
 		position: absolute;
+        top: 40%;
         ${props => props.dir === 'left' && `
         	right: 6px;
         `}
          ${props => props.dir === 'right' && `
         	left: 6px;
-        `}
-        ${props => props.order === 1 && `
-        	top: 40%;
-        `}
-        ${props => props.order === 2 && `
-        	top: 10.3%;
-        `}
-        ${props => props.order === 3 && `
-        	top: 76%;
         `}
 	&::after {
 		content: '';

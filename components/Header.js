@@ -57,6 +57,9 @@ const LinkStyle = styled.a`
 	color: #f5eee8;
 	margin: 6px;
 	font-weight: 100;
+	&:hover{
+		color: #eed2c4;;
+	}
 	@media (max-width: 700px) {
 		font-size: 14px;
 	}

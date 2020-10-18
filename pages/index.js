@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import CarouselArrows from '../components/CarouselArrows'
-
+import ImageCarouselManual from '../components/ImageCarouselManual'
 
 const Wrapper = styled.div`
     min-height: 100vh;
@@ -12,10 +11,6 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	background-color: #3c3c3c;
 `;
-
-const FirsImageRowWrapper = styled.div`
-	position: relative;
-`
 
 const ContentWrapper = styled.div`
 	display: flex;
@@ -54,27 +49,6 @@ const ImageDiv = styled.div`
 		width: auto;
 	}
 
-	${({ style }) => style === 1 && `
-		margin: 0 auto;
-		overflow-x: scroll;
-		width: 100vw;
-		justify-content: center;
-		cursor: pointer;
-		img {
-			margin-right: 10px;
-			height: 250px;
-			&:last-child {
-				margin-right: 0px;
-			}
-			@media (max-width: 700px) {
-				height: 150px;
-			}
-		}
-		@media (max-width: 1200px) {
-			justify-content: start;
-		}
-	`}
-
 	${({ style }) => style === 2 && `
 		flex-direction: column;
 		img {
@@ -91,21 +65,6 @@ const ImageDiv = styled.div`
 					margin-right: 0px;
    				}
 			}
-		}
-	`}
-
-	${({ style }) => style === 3 && `
-		flex-flow: row wrap;
-		padding-right: 0px;
-		margin-top: 10px;
-		img {
-			margin-right: 10px;
-			height: 200px;
-		}
-		@media (max-width: 700px) {
-			flex-flow: row;
-			overflow-x: scroll;
-			width: 100vw;
 		}
 	`}
 `
@@ -134,6 +93,10 @@ const Text = styled.div`
 		text-align: left;
 		width: 100%;
 		padding-bottom: 10px;
+		@media (max-width: 700px) {
+            font-weight: normal;
+        }
+    }
 	}
 	h3 {
 		font-size: 18px;
@@ -147,12 +110,6 @@ const Index = (props)  => {
 	const sortedArray = pageInfo.sort((a, b) => {
 		return a.order-b.order
 	})
-	const scrollImageArray = useRef()
-
-	const arrowClick = (direction) => {
-        scrollImageArray.current.scrollBy(120*direction, 0);
-    }
-
 
 	const pageContent = sortedArray.map((section) => {
 		const firstSection = section.order === 1
@@ -171,19 +128,16 @@ const Index = (props)  => {
 		return (
 			<>
 				{firstSection ?
-					<FirsImageRowWrapper>
-						<ImageDiv style={section.order} ref={scrollImageArray}>
-							<CarouselArrows order={section.order} onClick={arrowClick}>
-								{imageArray}
-							</CarouselArrows>
-						</ImageDiv>
-					</FirsImageRowWrapper>
-
+					<ImageCarouselManual imageArray={imageArray} order={section.order}/>
 				:
 					<ContentWrapper style={section.order}>
+						{section.order === 3 ?
+							<ImageCarouselManual imageArray={imageArray} order={section.order} />
+							:
 							<ImageDiv style={section.order}>
 								{imageArray}
 							</ImageDiv>
+						}
 						<TextWrapper>
 							{section.title && <TextHeading>{section.title}</TextHeading>}
 							{textArray && <Text>{textArray}</Text>}
