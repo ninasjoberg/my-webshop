@@ -2,18 +2,21 @@ import React, { useRef }  from 'react'
 import styled from 'styled-components'
 import CarouselArrows from './/CarouselArrows'
 
-const FirsImageRowWrapper = styled.div`
+const ImageRowWrapper = styled.div`
     position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 `
 
 const ImageDiv = styled.div`
 	padding-right: 10px;
 	display: flex;
-	max-width: 100%;
+    width: 100%;
+	max-width: 1000px;
 	scroll-behavior: smooth;
 	margin: 0 auto;
     overflow-x: scroll;
-    width: 100vw;
     justify-content: start;
     cursor: pointer;
     img {
@@ -29,11 +32,6 @@ const ImageDiv = styled.div`
             height: 150px;
         }
 	}
-    ${({ style }) => style === 1 && `
-		@media (min-width: 1200px) {
-            justify-content: center;
-        }
-	`}
 	${({ style }) => style === 3 && `
 		flex-flow: row wrap;
 		padding-right: 0px;
@@ -45,7 +43,7 @@ const ImageDiv = styled.div`
 		@media (max-width: 700px) {
 			flex-flow: row;
 			overflow-x: scroll;
-			width: 100vw;
+			width: 100%;
 		}
 	`}
 `
@@ -59,13 +57,13 @@ const ImageCarouselManual = ({imageArray, order}) => {
 
     console.log(imageArray)
     return (
-        <FirsImageRowWrapper>
+        <ImageRowWrapper>
             <ImageDiv ref={scrollImageArray} style={order}>
                 <CarouselArrows onClick={arrowClick}>
                     {imageArray}
                 </CarouselArrows>
             </ImageDiv>
-        </FirsImageRowWrapper>
+        </ImageRowWrapper>
     )
 
 }

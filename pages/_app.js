@@ -13,6 +13,12 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
 	* {
 		box-sizing: border-box;
+		:focus {
+			-webkit-tap-highlight-color: transparent;
+			outline: none;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+		}
 	}
 	html {
 		font-family: helvetica;
