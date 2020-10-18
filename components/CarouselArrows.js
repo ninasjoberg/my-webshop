@@ -10,12 +10,16 @@ const Arrow = styled.div`
 		border: 2px solid white;
 		position: absolute;
         top: 40%;
+        cursor: pointer;
         ${props => props.dir === 'left' && `
         	right: 6px;
         `}
          ${props => props.dir === 'right' && `
         	left: 6px;
         `}
+        :hover {
+            background-color: rgb(245 238 232 / 50%);;
+        }
 	&::after {
 		content: '';
 		border: solid white;

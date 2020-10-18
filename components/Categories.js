@@ -24,6 +24,9 @@ const CategoryButton = styled.button`
 	${({ selected }) => selected && `
 		border-bottom: 2px solid #06d0b2;
 	`}
+	&:hover{
+		color: #eed2c4;;
+	}
 `
 
 const Space = styled.div`

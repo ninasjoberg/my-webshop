@@ -18,7 +18,6 @@ const ImageDiv = styled.div`
 	margin: 0 auto;
     overflow-x: scroll;
     justify-content: start;
-    cursor: pointer;
     img {
 		padding-bottom: 12px;
 		height: 400px;
@@ -55,7 +54,6 @@ const ImageCarouselManual = ({imageArray, order}) => {
         scrollImageArray.current.scrollBy(120*direction, 0);
 	}
 
-    console.log(imageArray)
     return (
         <ImageRowWrapper>
             <ImageDiv ref={scrollImageArray} style={order}>
