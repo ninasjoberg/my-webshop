@@ -13,6 +13,7 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
 	* {
 		box-sizing: border-box;
+		-webkit-tap-highlight-color: transparent;
 		:focus {
 			-webkit-tap-highlight-color: transparent;
 			outline: none;
