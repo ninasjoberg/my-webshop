@@ -25,7 +25,7 @@ class Shop extends Component {
 	}
 
 	static async getInitialProps() {
-		const productsQuery = `*[_type == 'product'] {
+		const productsQuery = `*[_type == 'product'] | order(order asc) {
 			_id,
 			title,
 			slug,

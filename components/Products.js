@@ -74,7 +74,6 @@ const Products = ({ products, selectedCategory }) => {
             <ProductLink key={product._id} hidden={isHidden} key={product._id} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
         )
     })
-    productList.reverse()
     return(
         <Wrapper>
             {productList}
