@@ -72,8 +72,7 @@ const SmallImg = styled.img`
         margin-right: 0px;
     }
     ${({ active }) => active && `
-        opacity: 0.3
-        border: 1px solid grey;
+        opacity: 0.5;
 	`}
 `
 

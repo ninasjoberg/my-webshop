@@ -13,6 +13,9 @@ const ProductWrapper = styled.li`
     background-color: #f5eee8;
     padding: 12px;
     margin: 12px;
+    :hover{
+        filter: brightness(120%);
+    }
     @media (max-width: 700px) {
         width: 45%;
         padding: 0 0 6px;
