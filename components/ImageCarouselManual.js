@@ -31,7 +31,7 @@ const ImageDiv = styled.div`
             height: 150px;
         }
 	}
-	${({ style }) => style === 3 && `
+	${({ order }) => order === 2 && `
 		flex-flow: row wrap;
 		padding-right: 0px;
 		margin-top: 10px;
@@ -52,11 +52,11 @@ const ImageCarouselManual = ({imageArray, order}) => {
 
 	const arrowClick = (direction) => {
         scrollImageArray.current.scrollBy(120*direction, 0);
-	}
+    }
 
     return (
         <ImageRowWrapper>
-            <ImageDiv ref={scrollImageArray} style={order}>
+            <ImageDiv ref={scrollImageArray} order={order}>
                 <CarouselArrows onClick={arrowClick}>
                     {imageArray}
                 </CarouselArrows>

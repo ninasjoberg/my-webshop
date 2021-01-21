@@ -21,18 +21,18 @@ const ContentWrapper = styled.div`
 	max-width: 1000px;
 	margin: 0 auto;
 	position: relative;
-	${({ style }) => style === 2 && `
+	${({ order }) => order === 1 && `
 		flex-direction: row;
 		background-color: #f5eee8;
 		@media (max-width: 700px) {
 			flex-direction: column;
 		}
 	`}
-	${({ style }) => style === 3 && `
+	${({ order }) => order === 2 && `
 		background-color: #f5eee8;
 		flex-flow: column-reverse;
 	`}
-	${({ style }) => style === 4 && `
+	${({ order }) => order === 3 && `
 		background-color: #f5eee8;
 
 	`}
@@ -49,7 +49,7 @@ const ImageDiv = styled.div`
 		width: auto;
 	}
 
-	${({ style }) => style === 2 && `
+	${({ order }) => order === 1 && `
 		flex-direction: column;
 		img {
 			height: 350px;
@@ -112,7 +112,7 @@ const Index = (props)  => {
 	})
 
 	const pageContent = sortedArray.map((section) => {
-		const firstSection = section.order === 1
+		const firstSection = section.order === 0
 
 		const imageArray = section.imageUrls ? section.imageUrls.map((imageUrl, index) => {
 			const elementId = index === 0 ? 'observe' : ''
@@ -125,16 +125,18 @@ const Index = (props)  => {
 			return <p key={section[0]._key}>{section[0].text}</p>
 		}) : ''
 
+		console.log(textArray)
+
 		return (
 			<>
 				{firstSection ?
 					<ImageCarouselManual imageArray={imageArray} order={section.order}/>
 				:
-					<ContentWrapper style={section.order}>
-						{section.order === 3 ?
+					<ContentWrapper order={section.order}>
+						{section.order === 2 ?
 							<ImageCarouselManual imageArray={imageArray} order={section.order} />
 							:
-							<ImageDiv style={section.order}>
+							<ImageDiv order={section.order}>
 								{imageArray}
 							</ImageDiv>
 						}
