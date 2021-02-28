@@ -139,10 +139,7 @@ class Header extends Component {
 					<LinkWrapper>
 						<div>
 							<Link href="/" passHref>
-								<LinkStyle active={asPath === '/'}>Start</LinkStyle>
-							</Link>
-							<Link href="/shop" passHref>
-								<LinkStyle active={asPath === '/shop'}>Produkter</LinkStyle>
+								<LinkStyle active={asPath === '/'}>Produkter</LinkStyle>
 							</Link>
 							<Link href="/about" passHref>
 								<LinkStyle active={asPath === '/about'}>Om</LinkStyle>

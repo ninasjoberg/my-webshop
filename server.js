@@ -18,6 +18,7 @@ const redirects = [
     { from: '/p/armband-silver-kvinnosymbol', to: '/product/armband-silver-kvinnosymbol'},
     { from: '/p/*', to: '/' },
     { from: '/products/*', to: '/' },
+    { from: '/shop', to: '/' },
 ]
 
 app.prepare()

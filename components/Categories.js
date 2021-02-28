@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -11,21 +12,20 @@ const Wrapper = styled.div`
 	}
 `;
 
-const CategoryButton = styled.button`
-	color: #f5eee8;
-	font-weight: 100;
-	font-size: 14px;
+const LinkDiv = styled.div` // fix for styling next/link
 	margin-left: 12px;
-	background-color: #3c3c3c;
-	border: none;
-	padding: 0px;
-	cursor: pointer;
-	white-space: nowrap;
 	${({ selected }) => selected && `
 		border-bottom: 2px solid #06d0b2;
 	`}
-	&:hover{
-		color: #eed2c4;;
+	a {
+		color: #f5eee8;
+		font-weight: 100;
+		font-size: 14px;
+		cursor: pointer;
+		white-space: nowrap;
+		&:hover{
+			color: #eed2c4;;
+		}
 	}
 `
 
@@ -33,11 +33,22 @@ const Space = styled.div`
 	padding-left: 12px;
 `
 
-const Categories = ({ categories, onClick, selectedCategory }) => {
+const Categories = ({ categories, selectedCategory }) => {
 	return (
 		<Wrapper>
 			{categories.map((category, index) => {
-				return <CategoryButton key={index} onClick={() => onClick(category.title)} selected={selectedCategory === category.title}>{category.title}</CategoryButton>
+				const url = category.title === 'Alla produkter' ? '/' : `/?category=${category.title}`
+				return (
+					<LinkDiv selected={selectedCategory === category.title}>
+						<Link
+							key={index}
+							href={url}
+							passHref
+						>
+							{category.title}
+						</Link>
+					</LinkDiv>
+				)
 			})}
 			<Space />
 		</Wrapper>
