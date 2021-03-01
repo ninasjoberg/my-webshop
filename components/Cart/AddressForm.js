@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import ActionButton from './ActionButton.js'
+import ActionButton from '../ActionButton.js'
 
 
 const Form = styled.form`

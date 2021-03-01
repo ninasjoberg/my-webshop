@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import client from '../cmsApi';
+import client from '../cmsApi'
 import Header from '../components/Header'
 import PageContent from '../components/PageContent'
 import Footer from '../components/Footer'

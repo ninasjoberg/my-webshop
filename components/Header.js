@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
 import { getItemListFromLocalStorage } from '../utils/localStorage'
-import CartModal from './CartModal'
+import CartModal from './Cart/CartModal'
 
 
 const TopHeader = styled.div`
@@ -141,11 +141,11 @@ class Header extends Component {
 							<Link href="/" passHref>
 								<LinkStyle active={asPath === '/'}>Produkter</LinkStyle>
 							</Link>
+							<Link href="/info" passHref>
+								<LinkStyle active={asPath === '/info'}>Info</LinkStyle>
+							</Link>
 							<Link href="/about" passHref>
 								<LinkStyle active={asPath === '/about'}>Om</LinkStyle>
-							</Link>
-							<Link href="/product-care" passHref>
-								<LinkStyle active={asPath === '/product-care'}>Skötselråd</LinkStyle>
 							</Link>
 							<Link href="/conditions" passHref>
 								<LinkStyle active={asPath === '/conditions'}>Köpvillkor</LinkStyle>

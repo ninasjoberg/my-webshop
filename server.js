@@ -19,6 +19,7 @@ const redirects = [
     { from: '/p/*', to: '/' },
     { from: '/products/*', to: '/' },
     { from: '/shop', to: '/' },
+    { from: '/product-care', to: '/info' },
 ]
 
 app.prepare()

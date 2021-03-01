@@ -18,6 +18,7 @@ const ImageDiv = styled.div`
 	margin: 0 auto;
     overflow-x: scroll;
     justify-content: start;
+    flex-flow: row;
     img {
 		padding-bottom: 12px;
 		height: 400px;
@@ -28,26 +29,12 @@ const ImageDiv = styled.div`
             margin-right: 0px;
         }
         @media (max-width: 700px) {
-            height: 150px;
+            height: 250px;
         }
 	}
-	${({ order }) => order === 2 && `
-		flex-flow: row wrap;
-		padding-right: 0px;
-		margin-top: 10px;
-		img {
-			margin-right: 10px;
-			height: 200px;
-		}
-		@media (max-width: 700px) {
-			flex-flow: row;
-			overflow-x: scroll;
-			width: 100%;
-		}
-	`}
 `
 
-const ImageCarouselManual = ({imageArray, order}) => {
+const ImageCarouselManual = ({imageArray}) => {
 	const scrollImageArray = useRef()
 
 	const arrowClick = (direction) => {
@@ -56,7 +43,7 @@ const ImageCarouselManual = ({imageArray, order}) => {
 
     return (
         <ImageRowWrapper>
-            <ImageDiv ref={scrollImageArray} order={order}>
+            <ImageDiv ref={scrollImageArray}>
                 <CarouselArrows onClick={arrowClick}>
                     {imageArray}
                 </CarouselArrows>

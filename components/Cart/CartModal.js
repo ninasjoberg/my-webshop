@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import 'isomorphic-fetch'
 
 import AddressForm from './AddressForm.js'
-import ActionButton from './ActionButton.js'
+import ActionButton from '../ActionButton.js'
 
 const CartWrapper = styled.div`
     background-color: #fff;

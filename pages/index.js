@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 
-import client from '../cmsApi';
+import client from '../cmsApi'
 import Header from '../components/Header'
 import Products from '../components/Products.js'
 import Categories from '../components/Categories'
