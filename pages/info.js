@@ -55,11 +55,13 @@ const Info = ({ pageInfo })  => {
 
 
 	return (
-		<Wrapper>
+		<>
 			<Header />
-				{pageContent}
+				<Wrapper>
+					{pageContent}
+				</Wrapper>
 			<Footer />
-		</Wrapper>
+		</>
 	)
 }
 

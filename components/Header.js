@@ -131,7 +131,7 @@ class Header extends Component {
 	}
 
 	render() {
-		const { store, router: { asPath = '/' } = {} } = this.props
+		const { store, router: { asPath = '/', pathname } = {} } = this.props
 
 		return (
 			<React.Fragment>
@@ -139,7 +139,7 @@ class Header extends Component {
 					<LinkWrapper>
 						<div>
 							<Link href="/" passHref>
-								<LinkStyle active={asPath === '/'}>Produkter</LinkStyle>
+								<LinkStyle active={pathname === '/' || pathname === '/product'}>Produkter</LinkStyle>
 							</Link>
 							<Link href="/info" passHref>
 								<LinkStyle active={asPath === '/info'}>Info</LinkStyle>

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components'
-import ImageCarouselManual from '../ImageCarouselManual'
 
 const PageWrapper = styled.div`
 	background-color: #f5eee8;

@@ -1,18 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
-
-const PageWrapper = styled.div`
-	background-color: #f5eee8;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	max-width: 1800px;
-	@media (min-width: 1310px) {
-        flex-direction: row;
-		align-items: start;
-    }
-`
+import {
+	PageWrapper,
+	TextHeading,
+	TextWrapper,
+} from './sharedStyles.js'
 
 const ImageWrapper = styled.div`
 	width: 100%;
@@ -28,37 +20,16 @@ const ImageWrapper = styled.div`
     }
 	@media (min-width: 1310px) {
 		width: 34%;
-		height: 400px;
+		height: 350px;
     }
-`
-
-const TextWrapper = styled.div`
-	width: 100%;
-	max-width: 800px;
-	padding: 20px;
-	text-align: left;
-	@media (min-width: 1310px) {
-		width: 63%;
-		padding: 50px;
-		max-width: none;
-    }
-	p {
-		margin-bottom: 12px;
-	}
-`
-
-const TextHeading = styled.h2`
-	font-size: 24px;
-	font-weight: 100;
-	margin: 0px 0px 24px;
 `
 
 const WebDevSection = ({ title, text, images }) => {
     return (
-		<PageWrapper>
+		<PageWrapper flexDirection='row'>
 			<ImageWrapper url={images[0].props.src}>
 			</ImageWrapper>
-			<TextWrapper>
+			<TextWrapper fullscreenWidth='63%'>
 				<TextHeading>
 					{title}
 				</TextHeading>

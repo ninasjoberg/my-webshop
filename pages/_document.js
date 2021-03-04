@@ -28,7 +28,7 @@ export default class MyDocument extends Document {
     return (
         <Html>
             <Head/>
-            <body style={{margin: 0}}>
+            <body style={{margin: 0}} ontouchstart="">
                 <Main />
                 <NextScript />
             </body>
