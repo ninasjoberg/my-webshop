@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import {
 	PageWrapper,
@@ -9,11 +8,11 @@ import {
 const ImageWrapper = styled.div`
 	width: 100%;
 	height: 375px;
+	background-position: 50% 50%;
+	background-size: cover;
 	${({ url }) => url && `
 		background-image: url(${url});
 	`}
-	background-position: 50% 50%;
-	background-size: cover;
 	@media (min-width: 800px) {
 		width: 80%;
 		height: 500px;

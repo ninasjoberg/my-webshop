@@ -10,7 +10,7 @@ see also https://github.com/ninasjoberg/my-webshop-cms for Sanity schemas.
 - Next.js (frontend)
 - Express (server)
 - Sanity.io (cms/backend)
-- MobX (state handler)
+- Redux toolkit (state handler)
 - Styled-components (styling)
 - Sendgrid (email)
 
@@ -19,6 +19,6 @@ see also https://github.com/ninasjoberg/my-webshop-cms for Sanity schemas.
 
 
 ## Get started:
-`npm run build`
-
-`npm i && npm run dev`
+`nvm use`
+`npm i && npm run build`
+`npm run dev`

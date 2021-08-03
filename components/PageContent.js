@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-// import gitHub from '../icons/GitHubIcon.png'
+
 
 const PageWrapper = styled.div`
 	background-color: #f5eee8;
@@ -15,7 +15,6 @@ const ContentWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	max-width: 800px;
-	padding-top: 100px;
 	img {
 		width: 500px;
     	height: auto;
@@ -24,7 +23,7 @@ const ContentWrapper = styled.div`
 	p {
 		text-align: left;
 		width: 100%;
-		padding: 0 12px 12px;
+		padding: 20px 12px 12px;
 	}
 	@media (max-width: 700px) {
         padding: 16px 0 0;
@@ -57,8 +56,8 @@ const PageContent = ({ imageArray, texArray }) => {
 				<ContactLinks>
 					<a href="mailto: bellpepperstore@gmail.com"><span>email</span></a>
 					<a href="https://www.instagram.com/bellpepperse/"><span>instagram</span></a>
-					<a href="https://www.linkedin.com/in/nina-sj%C3%B6berg-9aa71b22/" target="_blank"><span>linkedIn</span></a>
-					<a href="https://github.com/ninasjoberg" target="_blank"><span>gitHub</span></a>
+					<a href="https://www.linkedin.com/in/nina-sj%C3%B6berg-9aa71b22/" target="_blank" rel="noreferrer"><span>linkedIn</span></a>
+					<a href="https://github.com/ninasjoberg" target="_blank" rel="noreferrer"><span>gitHub</span></a>
 				</ContactLinks>
 			</ContentWrapper>
 		</PageWrapper>

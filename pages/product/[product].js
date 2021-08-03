@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
 import styled from 'styled-components'
+import client from '../../cmsApi'
+import { addCart } from '../../redux/cartSlice'
+import Header from '../../components/Header'
+import Categories from '../../components/Categories'
+import ActionButton from '../../components/ActionButton.js'
+import Footer from '../../components/Footer'
 
-import client from '../cmsApi'
-import Header from '../components/Header'
-import Categories from '../components/Categories'
-import ActionButton from '../components/ActionButton.js'
-import Footer from '../components/Footer'
-import useStore from '../customHooks/useStore'
 
 const Wrapper = styled.div`
     display: flex;
@@ -100,11 +99,10 @@ const Dropdown = styled.select`
 `
 
 
-const Product = observer(({product, categories}) => {
+const Product = ({ product, categories }) => {
     const [ bigImage, setBigImage ] = useState('')
     const [ selectedVariant, setSelectedVariant ] = useState('')
-    const { store } = useStore()
-    const { imageUrls, title, price, body, variants, images } = product
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if(product?.imageUrls) {
@@ -115,7 +113,7 @@ const Product = observer(({product, categories}) => {
         }
     }, [product])
 
-    const addProductToCart = action((product) => {
+    const addProductToCart = (product) => {
         const productInfo = {
             id: product._id,
             title: product.title,
@@ -124,8 +122,8 @@ const Product = observer(({product, categories}) => {
             quantity: 1,
             variant: selectedVariant,
         }
-        store.addCart(productInfo)
-    })
+        dispatch(addCart(productInfo))
+    }
 
     const selectImg = (e) => {
         setBigImage(e.target.src)
@@ -136,14 +134,14 @@ const Product = observer(({product, categories}) => {
     }
 
 
-    if(Object.keys(product).length === 0 && product.constructor === Object) {
+    if(!product) {
         return (
             <>
                 <Header />
                 <Wrapper>
                     <WrapperContent>
                         <h3>Denna produkt finns tyvärr inte.</h3>
-                        <Link href={'/'}>
+                        <Link href={'/'} passHref>
                             <NotFoundLink>se alla produkter från bellpepper.se</NotFoundLink>
                         </Link>
                     </WrapperContent>
@@ -153,20 +151,22 @@ const Product = observer(({product, categories}) => {
         )
     }
     else {
+        const { imageUrls, title, price, body, variants, images } = product
+
         //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
-        const variant = variants && variants.length > 0 &&
+        const variant = variants?.length > 0 &&
             variants.map((item) => {
                 return <option key={item._key} value={item.title}>{item.title}</option>
             })
 
-        const imageArray = imageUrls.map((imageUrl, index) => {
+        const imageArray = imageUrls?.map((imageUrl, index) => {
             const active = imageUrl === bigImage
             return (
                 <SmallImg key={index} active={active} src={imageUrl} onClick={selectImg} alt={images[index].alt || 'produktbild silversmycke'} height="100" width="100" />
             )
         })
 
-        const texArray = body.map((section) => {
+        const texArray = body?.map((section) => {
             return <p key={section[0]._key}>{section[0].text}</p>
         })
 
@@ -185,7 +185,7 @@ const Product = observer(({product, categories}) => {
                     {texArray}
                     <PriceText>{price} SEK</PriceText>
                     {variant &&
-                        <Dropdown onChange={selectVariant} defaultValue={variants[0].title}>
+                        <Dropdown onChange={selectVariant} defaultValue={variants[0]?.title}>
                             {variant}
                         </Dropdown>
                     }
@@ -195,12 +195,29 @@ const Product = observer(({product, categories}) => {
             </Wrapper>
         )
     }
-})
+}
 
+// from: https://nextjs.org/docs/basic-features/data-fetching
+// This function gets called at build time on server-side.
+// It may be called again, on a serverless function, if the path has not been generated.
+export const getStaticPaths = async() => {
+    const productsSlugsQuery = `*[_type == 'product' && defined(slug.current)][].slug.current`
+    const slugs = await client.fetch(productsSlugsQuery)
 
+    // Get the paths we want to pre-render based on products
+    const paths = slugs.map((product) => ({
+        params: { product },
+    }))
 
-Product.getInitialProps = async({ query: { title } }) => {
-    const productQuery = `*[_type == 'product' && slug.current == '${title}'][0] {
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths, fallback: 'blocking' }
+}
+
+// This function also gets called at build time
+export const getStaticProps = async({ params }) => {
+    const productQuery = `*[_type == 'product' && slug.current == '${params.product}'][0] {
         _id,
         title,
         slug,
@@ -210,18 +227,23 @@ Product.getInitialProps = async({ query: { title } }) => {
         "imageUrls": images[].asset->url,
         "body": body.se[].children[],
     }`;
-    const product = await client.fetch(productQuery)
+    const product = await client.fetch(productQuery, {slug: params.product})
 
     const categoryQuery = `*[_type == 'category'] {
         title,
     }`;
-    const categories = await client.fetch(categoryQuery)
+    const categories = await client.fetch(categoryQuery, {slug: params.product})
     categories.unshift({title: 'Alla produkter'} )
 
     return {
-        product, categories
+        props: {
+            product, categories
+        },
+        // Next.js will attempt to re-generate the page:
+        // - When a request comes in - At most once every 30 seconds
+        // (needed to get the page updated when making changes in the cms, without having to rebuild the app)
+        revalidate: 30,
     }
 }
-
 
 export default Product

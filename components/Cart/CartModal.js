@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react'
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import Image from 'next/image'
 import styled from 'styled-components'
 import 'isomorphic-fetch'
-
 import AddressForm from './AddressForm.js'
 import ActionButton from '../ActionButton.js'
+import { removeFromCart, clearCart } from '../../redux/cartSlice'
 
 const CartWrapper = styled.div`
     background-color: #fff;
@@ -21,13 +22,13 @@ const CartWrapper = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
     display: flex;
     flex-direction: column;
+    z-index: 1;
     ${({ confirmation }) => confirmation && `
         align-items: center;
         p {
             margin-bottom: 12px;
         }
 	`}
-    z-index: 1;
     @media (max-width: 700px) {
         left: 50%;
         transform: translate(-50%, 0);
@@ -134,6 +135,7 @@ const ItemText = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-left: 20px;
 `;
 
 const TotalCost = styled.p`
@@ -142,63 +144,56 @@ const TotalCost = styled.p`
     padding: 10px 0;
 `;
 
-@inject('store')
-@observer
-class CartModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showAddressForm: false,
-            userInformation: {
-                name: '',
-                street: '',
-                zipcode: '',
-                city: '',
-                email: '',
-            },
-            message: '',
-            errorText: '',
-            submitted: false,
-            errorSendingMail: false,
-        }
-        this.addAddressClick = this.addAddressClick.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.removeProductFromCart = this.removeProductFromCart.bind(this);
-    }
 
-    removeProductFromCart(item) {
+const CartModal = ({ onCartClose }) => {
+    const [showAddressForm, setShowAdressForm] = useState(false)
+    const [userInformation, setUserInformation] = useState({
+        name: '',
+        street: '',
+        zipcode: '',
+        city: '',
+        email: '',
+    })
+    const [message, setMessage] = useState('')
+    const [errorText, setErrorText] = useState('')
+    const [submitted, setSubmitted] = useState(false)
+    const [errorSendingMail, setErrorSendingMail] = useState(false)
+    const cart = useSelector((state) => state.cart.items)
+    const dispatch = useDispatch()
+
+    const removeProductFromCart = (item) => {
         const productInfo = {
             id: item.id,
             variant: item.variant,
         }
-        this.props.store.removeFromCart(productInfo)
+        dispatch(removeFromCart(productInfo))
     }
 
-    addAddressClick() {
-        this.setState({ showAddressForm: !this.state.showAddressForm })
+    const addAddressClick = () => {
+        setShowAdressForm(!showAddressForm )
     }
 
-    onChange(e) {
-        this.setState({ errorText: '' })
+    const onChange = (e) => {
+        setErrorText('')
         if (e.target.name === 'message') {
-            this.setState({ message: e.target.value })
+
+            setMessage(e.target.value)
         } else {
-            this.setState({ userInformation: { ...this.state.userInformation, [e.target.name]: e.target.value } })
+            setUserInformation({...userInformation, [e.target.name]: e.target.value})
         }
     }
 
-    onSubmit(event, priceTotal) {
+    const onSubmit = (event, priceTotal) => {
         event.preventDefault();
 
-        if (Object.values(this.state.userInformation).includes('')) {
-            this.setState({ errorText: 'Du måste fylla i adress och email.' })
+        if (Object.values(userInformation).includes('')) {
+            setErrorText('Du måste fylla i adress och email.' )
             return
         }
         const body = {
-            userInfo: this.state.userInformation,
-            message: this.state.message,
-            order: this.props.store.cart,
+            userInfo: userInformation,
+            message: message,
+            order: cart,
             priceTotal,
         }
 
@@ -211,101 +206,102 @@ class CartModal extends Component {
             body: JSON.stringify(body),
         }).then((res) => {
             if (res.status === 200) {
-                this.setState({ submitted: true })
-                this.props.store.clearCart()
+                setSubmitted(true )
+                dispatch(clearCart())
             }
             else {
-                this.setState({ errorSendingMail: true })
+                setErrorSendingMail(true)
             }
         })
     }
 
-    render() {
-        const { showAddressForm, submitted, errorSendingMail } = this.state
-        const { store, onCartClose } = this.props
-
-        const productArray = store.cart.map((item, index) => {
-            if (item.images) {
-                return (
-                    <ProductInfo key={index}>
-                        <ItemWrapper>
-                            <ProductInfoWrapper>
-                                <img src={item.images[0]} alt="product picture" height="60" width="60" />
-                                <ItemText>
-                                    <p>{item.title}</p>
-                                    <p>{item.variant}</p>
-                                    <p>{item.price}</p>
-                                </ItemText>
-                            </ProductInfoWrapper>
-                            <QuantityWrapper>
-                                <p>{item.quantity} st</p>
-                                <RemoveButton onClick={() => this.removeProductFromCart(item)}>
-                                    <i className="material-icons">close</i>
-                                </RemoveButton>
-                            </QuantityWrapper>
-                            <PriceTag>{item.price * item.quantity} kr</PriceTag>
-                        </ItemWrapper>
-                        <Divider />
-                    </ProductInfo>
-                )
-            }
-            else return null
-        })
-
-        const priceTotal = store.cart.map((item) => {
-            return item.price * item.quantity
-        }).reduce((item, currentValue) => {
-            return item + currentValue
-        }, 0);
-
-        if (submitted) {
+    const productArray = cart.map((item, index) => {
+        if (item.images) {
             return (
-                <CartWrapper confirmation>
-                    <h3>TACK!</h3>
-                    <p>Din order har nu skickats!</p>
-                    <p>En orderbekräftelse kommer skickas till dig per mail, så snart jag behandlat din order.</p>
-                    <ActionButton buttonText="Stäng" onClick={onCartClose} />
-                </CartWrapper>
+                <ProductInfo key={index}>
+                    <ItemWrapper>
+                        <ProductInfoWrapper>
+                            <Image src={item.images[0]} alt="product picture" height="60" width="60" />
+                            <ItemText>
+                                <p>{item.title}</p>
+                                <p>{item.variant}</p>
+                                <p>{item.price}</p>
+                            </ItemText>
+                        </ProductInfoWrapper>
+                        <QuantityWrapper>
+                            <p>{item.quantity} st</p>
+                            <RemoveButton onClick={() => removeProductFromCart(item)}>
+                                <i className="material-icons">close</i>
+                            </RemoveButton>
+                        </QuantityWrapper>
+                        <PriceTag>{item.price * item.quantity} kr</PriceTag>
+                    </ItemWrapper>
+                    <Divider />
+                </ProductInfo>
             )
         }
+        else return null
+    })
 
-        if(errorSendingMail) {
-            return (
-                <CartWrapper confirmation>
-                    <h3>Något gick fel..</h3>
-                    <p>Tyvärr skickades inte din order iväg korrrekt.</p>
-                    <p>Vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
-                    <ActionButton buttonText="Stäng" onClick={onCartClose} />
-                </CartWrapper>
-            )
-        }
+    const priceTotal = cart.map((item) => {
+        return item.price * item.quantity
+    }).reduce((item, currentValue) => {
+        return item + currentValue
+    }, 0);
 
+    if (submitted) {
         return (
-            <CartWrapper>
-                <CloseButton onClick={onCartClose}>
-                    <i className="material-icons">close</i>
-                </CloseButton>
-                <h3>HÄR ÄR DIN VARUKORG</h3>
-                <div>
-                    <InfoHeaders>
-                        <p>Produkt</p>
-                        <p>Antal</p>
-                        <p>Pris</p>
-                    </InfoHeaders>
-                    <Divider />
-                    {productArray}
-                    <TotalCost>totalt: {priceTotal} sek</TotalCost>
-                    <Divider />
-                </div>
-                <div>
-                    <ActionButton buttonText="Leveransadress" onClick={this.addAddressClick} />
-                </div>
-                {showAddressForm &&
-                    <AddressForm {...this.state} handleChange={this.onChange} handleSubmit={(event) => this.onSubmit(event, priceTotal)} />
-                }
+            <CartWrapper confirmation>
+                <h3>TACK!</h3>
+                <p>Din order har nu skickats!</p>
+                <p>En orderbekräftelse kommer skickas till dig per mail, så snart jag behandlat din order.</p>
+                <ActionButton buttonText="Stäng" onClick={onCartClose} />
             </CartWrapper>
         )
     }
+
+    if(errorSendingMail) {
+        return (
+            <CartWrapper confirmation>
+                <h3>Något gick fel..</h3>
+                <p>Tyvärr skickades inte din order iväg korrrekt.</p>
+                <p>Vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
+                <ActionButton buttonText="Stäng" onClick={onCartClose} />
+            </CartWrapper>
+        )
+    }
+
+    return (
+        <CartWrapper>
+            <CloseButton onClick={onCartClose}>
+                <i className="material-icons">close</i>
+            </CloseButton>
+            <h3>HÄR ÄR DIN VARUKORG</h3>
+            <div>
+                <InfoHeaders>
+                    <p>Produkt</p>
+                    <p>Antal</p>
+                    <p>Pris</p>
+                </InfoHeaders>
+                <Divider />
+                {productArray}
+                <TotalCost>totalt: {priceTotal} sek</TotalCost>
+                <Divider />
+            </div>
+            <div>
+                <ActionButton buttonText="Leveransadress" onClick={addAddressClick} />
+            </div>
+            {showAddressForm &&
+                <AddressForm
+                    userInformation={userInformation}
+                    message={message}
+                    errorText={errorText}
+                    handleChange={onChange}
+                    handleSubmit={(event) => onSubmit(event, priceTotal)}
+                />
+            }
+        </CartWrapper>
+    )
 }
 
 export default CartModal

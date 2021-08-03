@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { withRouter } from 'next/router'
 import Link from 'next/link'
-import { inject, observer } from 'mobx-react'
 import styled from 'styled-components'
 import { getItemListFromLocalStorage } from '../utils/localStorage'
+import { setCart } from '../redux/cartSlice'
 import CartModal from './Cart/CartModal'
-
 
 const TopHeader = styled.div`
 	position: fixed;
@@ -60,13 +60,12 @@ const LinkStyle = styled.a`
 	&:hover{
 		color: #eed2c4;;
 	}
+    ${({ active }) => active && `
+		color: #06d0b2;
+	`}
 	@media (max-width: 700px) {
 		font-size: 14px;
 	}
-
-	${({ active }) => active && `
-		color: #06d0b2;
-	`}
 `;
 
 const TitleWrapper = styled.div`
@@ -105,77 +104,84 @@ const SubTitle = styled.h2`
 // 	}
 // `
 
-@inject('store')
-@observer
-class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			showCart: false,
-		}
-		this.onCartClick = this.onCartClick.bind(this);
-		this.onCartClose = this.onCartClose.bind(this);
+const Header = ({ router: { asPath = '/', pathname } = {} }) => {
+    const [checkLocalStorage, setCheckLocalStorage] = useState(true)
+    const [showCart, setShowCart] = useState(false)
+    const cart = useSelector((state) => state.cart.items)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if(checkLocalStorage) {
+            const productsInCart = getItemListFromLocalStorage('cartArray')
+            dispatch(setCart(productsInCart))
+            setCheckLocalStorage(false)
+        }
+    }, [checkLocalStorage, dispatch])
+
+
+	const onCartClick = () => {
+		setShowCart(!showCart)
 	}
 
-	componentDidMount() {
-		const productsInCart = getItemListFromLocalStorage('cartArray')
-		this.props.store.setCart(productsInCart)
+	const onCartClose = () => {
+		setShowCart(false )
 	}
 
-	onCartClick() {
-		this.setState({ showCart: !this.state.showCart })
-	}
+    const cartCount = () => {
+        if(cart.length > 0) {
+            const quantity = cart.map((item) => {
+                return item.quantity
+            }).reduce((item, currentValue) => {
+                return item + currentValue
+            }, 0);
+            return quantity
+        }
+        return 0
 
-	onCartClose() {
-		this.setState({ showCart: false })
-	}
+    }
 
-	render() {
-		const { store, router: { asPath = '/', pathname } = {} } = this.props
-
-		return (
-			<React.Fragment>
-				<TopHeader>
-					<LinkWrapper>
-						<div>
-							<Link href="/" passHref>
-								<LinkStyle active={pathname === '/' || pathname === '/product'}>Produkter</LinkStyle>
-							</Link>
-							<Link href="/info" passHref>
-								<LinkStyle active={asPath === '/info'}>Info</LinkStyle>
-							</Link>
-							<Link href="/about" passHref>
-								<LinkStyle active={asPath === '/about'}>Om</LinkStyle>
-							</Link>
-							<Link href="/conditions" passHref>
-								<LinkStyle active={asPath === '/conditions'}>Köpvillkor</LinkStyle>
-							</Link>
-						</div>
-						<Cart onClick={() => this.onCartClick()}>
-							<i className="material-icons">shopping_cart</i>
-							<p>{store.cartCount}</p>
-						</Cart>
-					</LinkWrapper>
-				</TopHeader>
-				<Wrapper>
-					<TitleWrapper>
-						<Link href="/" passHref>
-							<Title>BELL PEPPER</Title>
-						</Link>
-						<SubTitle>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg.</SubTitle>
-					</TitleWrapper>
-					{this.state.showCart &&
-						<CartModal onCartClose={this.onCartClose} />
-					}
-				</Wrapper>
-				{/* <AwayMessage>
-					<h4>Semester tom 12 augusti!</h4>
-					<p>Ordrar som läggs innan dess kommer att skickas i turordning efter 12:e aug.</p>
-					<p>Trevlig sommar!</p>
-				</AwayMessage> */}
-			</React.Fragment>
-		)
-	}
+    return (
+        <>
+            <TopHeader>
+                <LinkWrapper>
+                    <div>
+                        <Link href="/" passHref>
+                            <LinkStyle active={pathname === '/' || pathname === '/product' || pathname.includes('product') }>Produkter</LinkStyle>
+                        </Link>
+                        <Link href="/info" passHref>
+                            <LinkStyle active={asPath === '/info'}>Info</LinkStyle>
+                        </Link>
+                        <Link href="/about" passHref>
+                            <LinkStyle active={asPath === '/about'}>Om</LinkStyle>
+                        </Link>
+                        <Link href="/conditions" passHref>
+                            <LinkStyle active={asPath === '/conditions'}>Köpvillkor</LinkStyle>
+                        </Link>
+                    </div>
+                    <Cart onClick={onCartClick}>
+                        <i className="material-icons">shopping_cart</i>
+                        <p>{cartCount()}</p>
+                    </Cart>
+                </LinkWrapper>
+            </TopHeader>
+            <Wrapper>
+                <TitleWrapper>
+                    <Link href="/" passHref>
+                        <Title>BELL PEPPER</Title>
+                    </Link>
+                    <SubTitle>Handgjorda smycken i 925 sterling silver. Tillverkade i liten skala, av mig Nina Johanna Sjöberg.</SubTitle>
+                </TitleWrapper>
+                {showCart &&
+                    <CartModal onCartClose={onCartClose} />
+                }
+            </Wrapper>
+            {/* <AwayMessage>
+                <h4>Semester tom 12 augusti!</h4>
+                <p>Ordrar som läggs innan dess kommer att skickas i turordning efter 12:e aug.</p>
+                <p>Trevlig sommar!</p>
+            </AwayMessage> */}
+        </>
+    )
 }
 
 export default withRouter(Header)

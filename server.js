@@ -1,11 +1,9 @@
 const express = require('express')
 const next = require('next')
-const bodyParser = require('body-parser')
 const sgMail = require('@sendgrid/mail');
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
-
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
@@ -25,19 +23,12 @@ const redirects = [
 app.prepare()
     .then(() => {
         const server = express()
-
-        server.use(bodyParser.json())
+        server.use(express.json());
 
         redirects.forEach(({ from, to, type = 301, method = 'get' }) => {
             server[method](from, (req, res) => {
               res.redirect(type, to)
             })
-        })
-
-        server.get('/product/:id', (req, res) => {
-            const actualPage = '/product'
-            const queryParams = { title: req.params.id }
-            app.render(req, res, actualPage, queryParams)
         })
 
         server.post('/api/address', (req, res) => {
@@ -64,7 +55,7 @@ app.prepare()
                 subject: name,
                 text: street,
                 html: `
-                    <h3>Ny beställning från:</h3>
+                    <h2>Ny beställning från:</h2>
                     <br />
                     <strong>${name}</strong>
                     <br />
@@ -75,7 +66,7 @@ app.prepare()
                     <strong>${email}</strong>
                     <br />
                     <br />
-                    <h3>Order:</h3>
+                    <h2>Order:</h2>
                     <br />
                     ${orderHTML}
                     <br />

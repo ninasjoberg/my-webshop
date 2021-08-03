@@ -8,16 +8,15 @@ import Products from '../components/Products.js'
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
 
-
 const Wrapper = styled.div`
-    min-height: 100vh;
+  min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: #3c3c3c;
 `;
 
 const IndexPage = ({ products, categories }) => {
-	const [selectedCategory, setSelectedCategory] = useState('Alla produkter')
+  const [selectedCategory, setSelectedCategory] = useState('Alla produkter')
 	const router = useRouter()
 
     useEffect(() => {
@@ -28,18 +27,21 @@ const IndexPage = ({ products, categories }) => {
 		}
 	}, [router])
 
-	return (
-		<Wrapper>
-			<Header />
+  return (
+    <Wrapper>
+
+
+      <Header />
 			<Categories categories={categories} selectedCategory={selectedCategory}/>
 			<Products products={products} selectedCategory={selectedCategory}/>
 			<Footer />
-		</Wrapper>
-	)
+    </Wrapper>
+  )
 }
 
 
-IndexPage.getInitialProps = async() => {
+// This function gets called at build time
+export const getStaticProps = async() => {
 	const productsQuery = `*[_type == 'product'] | order(order asc) {
 		_id,
 		title,
@@ -54,12 +56,20 @@ IndexPage.getInitialProps = async() => {
 	const categoryQuery = `*[_type == 'category'] {
 		title,
 	}`;
+
 	const categories = await client.fetch(categoryQuery)
 	categories.unshift({title: 'Alla produkter'} )
 
 	return {
-		products, categories
-	}
+		props: {
+			products, categories
+		},
+		// Next.js will attempt to re-generate the page:
+		// - When a request comes in - At most once every 30 seconds
+		// (needed to get the page updated when making changes in the cms, without having to rebuild the app)
+		revalidate: 30,
+		}
 }
+
 
 export default IndexPage

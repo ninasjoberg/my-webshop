@@ -17,4 +17,3 @@ export function getItemListFromLocalStorage(listName) {
     return storedCartArray || [];
 }
 
-

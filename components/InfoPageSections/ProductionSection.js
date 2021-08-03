@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import {
 	PageWrapper,
@@ -22,11 +21,11 @@ const ImagesDiv = styled.div`
 
 const ImageWrapper = styled.div`
 	width: 100%;
+	background-position: 50% 50%;
+	background-size: cover;
 	${({ url }) => url && `
 		background-image: url(${url});
 	`}
-	background-position: 50% 50%;
-	background-size: cover;
 `
 
 const ProductionSection =  ({ title, text, images }) => {

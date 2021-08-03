@@ -49,7 +49,8 @@ const ErrorInfo = styled.div`
 `
 
 
-const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleSubmit, errorText }) => {
+const AddressForm = ({ userInformation, message, handleChange, handleSubmit, errorText }) => {
+    const {name, street, zipcode, city, email} = userInformation
     return (
         <div>
             <Form
@@ -66,7 +67,7 @@ const AddressForm = ({ name, street, zipcode, city, email, handleChange, handleS
                 <label>Mailadress:</label>
                 <input type="text" name='email' value={email} onChange={handleChange} placeholder='mailadress' />
                 <label>Meddelande:</label>
-                <textarea type="text" name='message' value={email} onChange={handleChange} />
+                <textarea type="text" name='message' value={message} onChange={handleChange} />
                 <p>Betalning sker via Swish i samband med leveransbekräftelse.</p>
                 <p>Vidare info och orderbekräftelsen fås via mail.</p>
                 <ActionButton buttonText="Skicka order" />

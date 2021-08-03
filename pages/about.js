@@ -1,47 +1,43 @@
-import React, { Component } from 'react';
-
+import Image from 'next/image'
 import client from '../cmsApi';
 import Header from '../components/Header'
 import PageContent from '../components/PageContent'
 import Footer from '../components/Footer'
 
 
-class about extends Component {
-	constructor(props) {
-		super(props);
-	}
+const about = ({ pageInfo }) => {
+	const { body, imageUrls } = pageInfo[0]
 
-	static async getInitialProps() {
-		const pageQuery = `*[_type == 'page' && title == 'About'] {
-			"body": body.se[].children[],
-			"imageUrls": images[].asset->url,
-		}`;
-		const pageInfo = await client.fetch(pageQuery)
-		return {
-			pageInfo
-		}
-	}
-
-	render() {
-		const { body, imageUrls } = this.props.pageInfo[0]
-
-		const imageArray = imageUrls.map((imageUrl, index) => {
-            return (
-                <img key={index} src={imageUrl} alt="product picture" height="500" />
-            )
-        })
-
-		const texArray = body.map((section) => {
-            return <p key={section[0]._key}>{section[0].text}</p>
-        })
-
+	const imageArray = imageUrls.map((imageUrl, index) => {
 		return (
-			<React.Fragment>
-				<Header />
-				<PageContent imageArray={imageArray} texArray={texArray} />
-				<Footer />
-			</React.Fragment>
+			<Image key={index} src={imageUrl} alt="product picture" height={500} width={500} />
 		)
+	})
+
+	const texArray = body.map((section) => {
+		return <p key={section[0]._key}>{section[0].text}</p>
+	})
+
+	return (
+		<>
+			<Header />
+			<PageContent imageArray={imageArray} texArray={texArray} />
+			<Footer />
+		</>
+	)
+}
+
+// This function gets called at build time
+export const getStaticProps = async() => {
+	const pageQuery = `*[_type == 'page' && title == 'About'] {
+		"body": body.se[].children[],
+		"imageUrls": images[].asset->url,
+	}`;
+	const pageInfo = await client.fetch(pageQuery)
+	return {
+		props: {
+			pageInfo
+		  }
 	}
 }
 

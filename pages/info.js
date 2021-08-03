@@ -1,4 +1,4 @@
-import React from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 import client from '../cmsApi'
 import Header from '../components/Header'
@@ -26,7 +26,7 @@ const Info = ({ pageInfo })  => {
 		const imageArray = section.imageUrls ? section.imageUrls.map((imageUrl, index) => {
 			const elementId = index === 0 ? 'observe' : ''
 			return (
-				<img key={index} id={elementId} src={imageUrl} height="100" width="100" />
+				<Image key={index} id={elementId} src={imageUrl} alt="product image" height={100} width={100} />
 			)
 		}) : ''
 
@@ -66,7 +66,8 @@ const Info = ({ pageInfo })  => {
 }
 
 
-Info.getInitialProps = async() => {
+// This function gets called at build time
+export const getStaticProps = async() => {
 	const pageQuery = `*[_type == 'startPage'] {
 		title,
 		order,
@@ -76,7 +77,9 @@ Info.getInitialProps = async() => {
 	}`;
 	const pageInfo = await client.fetch(pageQuery)
 	return {
-		pageInfo
+		props: {
+			pageInfo
+		}
 	}
 }
 
