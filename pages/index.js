@@ -29,8 +29,6 @@ const IndexPage = ({ products, categories }) => {
 
   return (
     <Wrapper>
-
-
       <Header />
 			<Categories categories={categories} selectedCategory={selectedCategory}/>
 			<Products products={products} selectedCategory={selectedCategory}/>
