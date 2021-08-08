@@ -134,7 +134,7 @@ const Product = ({ product, categories }) => {
     }
 
 
-    if(!product) {
+    if(Object.keys(product).length === 0 && product.constructor === Object) {
         return (
             <>
                 <Header />
@@ -217,32 +217,43 @@ export const getStaticPaths = async() => {
 
 // This function also gets called at build time
 export const getStaticProps = async({ params }) => {
-    const productQuery = `*[_type == 'product' && slug.current == '${params.product}'][0] {
-        _id,
-        title,
-        slug,
-        price,
-        images,
-        variants,
-        "imageUrls": images[].asset->url,
-        "body": body.se[].children[],
-    }`;
-    const product = await client.fetch(productQuery, {slug: params.product})
 
-    const categoryQuery = `*[_type == 'category'] {
-        title,
-    }`;
-    const categories = await client.fetch(categoryQuery, {slug: params.product})
-    categories.unshift({title: 'Alla produkter'} )
+    // google search console searches for page product/[product] which gives params === undefined and generates a 500
+    // this is done to avoid that...
+    if(Object.keys(params).length === 0 && params.constructor === Object) {
+        return {
+            props: {product: {}, categories: {}},
+        }
+    }
 
-    return {
-        props: {
-            product, categories
-        },
-        // Next.js will attempt to re-generate the page:
-        // - When a request comes in - At most once every 30 seconds
-        // (needed to get the page updated when making changes in the cms, without having to rebuild the app)
-        revalidate: 30,
+    else {
+        const productQuery = `*[_type == 'product' && slug.current == '${params.product}'][0] {
+            _id,
+            title,
+            slug,
+            price,
+            images,
+            variants,
+            "imageUrls": images[].asset->url,
+            "body": body.se[].children[],
+        }`;
+        const product = await client.fetch(productQuery, {slug: params.product})
+
+        const categoryQuery = `*[_type == 'category'] {
+            title,
+        }`;
+        const categories = await client.fetch(categoryQuery, {slug: params.product})
+        categories.unshift({title: 'Alla produkter'} )
+
+        return {
+            props: {
+                product, categories
+            },
+            // Next.js will attempt to re-generate the page:
+            // - When a request comes in - At most once every 30 seconds
+            // (needed to get the page updated when making changes in the cms, without having to rebuild the app)
+            revalidate: 30,
+        }
     }
 }
 
