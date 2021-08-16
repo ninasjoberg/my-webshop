@@ -42,7 +42,6 @@ export const cartSlice = createSlice({
                 updateItemListToLocalStorage(newCart, 'cartArray')
             }
             else {
-                console.log('ADD')
                 state.items.push(product)
                 saveItemToLocalStorage(product, 'cartArray')
             }

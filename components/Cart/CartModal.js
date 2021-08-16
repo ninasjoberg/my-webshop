@@ -131,11 +131,15 @@ const PriceTag = styled.p`
     justify-content: flex-end;
 `;
 
-const ItemText = styled.div`
+const ItemTextDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 20px;
+`;
+
+const ItemText = styled.div`
+    text-align: left;
 `;
 
 const TotalCost = styled.p`
@@ -222,11 +226,11 @@ const CartModal = ({ onCartClose }) => {
                     <ItemWrapper>
                         <ProductInfoWrapper>
                             <Image src={item.images[0]} alt="product picture" height="60" width="60" />
-                            <ItemText>
-                                <p>{item.title}</p>
-                                <p>{item.variant}</p>
-                                <p>{item.price}</p>
-                            </ItemText>
+                            <ItemTextDiv>
+                                <ItemText>{item.title}</ItemText>
+                                <ItemText>{item.variant}</ItemText>
+                                <ItemText>{item.price}kr</ItemText>
+                            </ItemTextDiv>
                         </ProductInfoWrapper>
                         <QuantityWrapper>
                             <p>{item.quantity} st</p>
