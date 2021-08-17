@@ -53,11 +53,13 @@ app.prepare()
                                     </tr>
                                     <tr>
                                         <td><strong>Antal</strong></td>
-                                        <td style="text-align:end;">${quantity}st</td>
+                                        <td style="text-align:end;">
+                                            <strong>${quantity} st</strong>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>Pris</strong></td>
-                                        <td style="text-align:end;">${price}kr</td>
+                                        <td style="text-align:end;">${price} kr/st</td>
                                     </tr>
                                 </table>
                             </td>
@@ -90,7 +92,7 @@ app.prepare()
                     <h2>Order:</h2>
                     <div style="background:#f7f7f7; padding: 4%;">
                         ${orderHTML}
-                        <h4 style="margin-bottom: 0px; text-align: end">Totalt: ${req.body.priceTotal}kr</h4>
+                        <h4 style="margin-bottom: 0px; text-align: end">Totalt: ${req.body.priceTotal} kr</h4>
                     </div>
                     <br />
                     <table>

@@ -35,6 +35,7 @@ const CartWrapper = styled.div`
         width: 100%;
         max-height: none;
         height: 100%;
+        padding: 20px;
     }
 `;
 
@@ -98,48 +99,43 @@ const ItemWrapper = styled.div`
 
 const ProductInfoWrapper = styled.div`
     display: flex;
-    flex-basis: 50%;
     align-items: center;
-    img {
-        width: auto;
-        padding-right: 20px;
-    }
+`;
+
+const ItemTextDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 145px;
     @media (max-width: 700px) {
-        p {
-            text-align: left;
-            font-size: 14px;
-        }
-        img {
-            padding-right: 10px;
-        }
+        width: 120px;
     }
+`;
+
+const ItemTitle = styled.p`
+    text-align: left;
+`;
+
+const ItemText = styled.p`
+    text-align: left;
+    font-size: 14px;
 `;
 
 const QuantityWrapper = styled.div`
     display: flex;
-    flex-basis: 25%;
-    p {
-        display: flex;
-        margin-right: 25px;
-        text-align: right;
-    }
+    align-items: center;
+    justify-content: flex-end;
+`;
+
+const ItemQuantity = styled.p`
+    margin-right: 12px;
+    white-space: nowrap;
 `;
 
 const PriceTag = styled.p`
     display: flex;
     flex-basis: 25%;
     justify-content: flex-end;
-`;
-
-const ItemTextDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 20px;
-`;
-
-const ItemText = styled.div`
-    text-align: left;
 `;
 
 const TotalCost = styled.p`
@@ -225,15 +221,15 @@ const CartModal = ({ onCartClose }) => {
                 <ProductInfo key={index}>
                     <ItemWrapper>
                         <ProductInfoWrapper>
-                            <Image src={item.images[0]} alt="product picture" height="60" width="60" />
+                            <Image src={item.images[0]} alt="product picture" height="60px" width="60px" />
                             <ItemTextDiv>
-                                <ItemText>{item.title}</ItemText>
+                                <ItemTitle>{item.title}</ItemTitle>
                                 <ItemText>{item.variant}</ItemText>
-                                <ItemText>{item.price}kr</ItemText>
+                                <ItemText>{item.price} kr/st</ItemText>
                             </ItemTextDiv>
                         </ProductInfoWrapper>
                         <QuantityWrapper>
-                            <p>{item.quantity} st</p>
+                            <ItemQuantity>{item.quantity} st</ItemQuantity>
                             <RemoveButton onClick={() => removeProductFromCart(item)}>
                                 <i className="material-icons">close</i>
                             </RemoveButton>
@@ -284,12 +280,13 @@ const CartModal = ({ onCartClose }) => {
             <div>
                 <InfoHeaders>
                     <p>Produkt</p>
+                    <p></p>
                     <p>Antal</p>
                     <p>Pris</p>
                 </InfoHeaders>
                 <Divider />
                 {productArray}
-                <TotalCost>totalt: {priceTotal} sek</TotalCost>
+                <TotalCost>totalt: {priceTotal} kr</TotalCost>
                 <Divider />
             </div>
             <div>
