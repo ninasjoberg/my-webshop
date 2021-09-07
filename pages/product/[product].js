@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
 import client from '../../cmsApi'
@@ -9,13 +10,12 @@ import Categories from '../../components/Categories'
 import ActionButton from '../../components/ActionButton.js'
 import Footer from '../../components/Footer'
 
-
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #3c3c3c;
-`;
+`
 
 const WrapperContent = styled.div`
     max-width: 800px;
@@ -40,7 +40,7 @@ const WrapperContent = styled.div`
             letter-spacing: 0.8px;
         }
     }
-`;
+`
 
 const NotFoundLink = styled.p`
     cursor: pointer;
@@ -48,21 +48,21 @@ const NotFoundLink = styled.p`
         color: #06d0b2;
         opacity: 0.7;
     }
-`;
+`
 
 const BigImage = styled.img`
     max-width: 100%;
     @media (max-width: 700px) {
         max-width: 100%;
     }
-`;
+`
 
 const SmallImgWrapper = styled.div`
     display: flex;
     flex-flow: wrap;
     width: 100%;
     margin-bottom: 16px;
-`;
+`
 
 const SmallImg = styled.img`
     margin: 16px 12px 0px 0px;
@@ -70,16 +70,18 @@ const SmallImg = styled.img`
     &:last-child {
         margin-right: 0px;
     }
-    ${({ active }) => active && `
+    ${({ active }) =>
+        active &&
+        `
         opacity: 0.5;
 	`}
 `
 
 const PriceText = styled.p`
-    color:  #06d0b2;
+    color: #06d0b2;
     font-size: 18px;
     margin: 12px 0;
-`;
+`
 
 const Dropdown = styled.select`
     color: #51616a;
@@ -90,6 +92,7 @@ const Dropdown = styled.select`
     font-size: 16px;
     padding-left: 6px;
     background-color: white;
+    margin-top: 10px;
     :focus {
         outline: 0;
     }
@@ -98,18 +101,23 @@ const Dropdown = styled.select`
     }
 `
 
-
 const Product = ({ product, categories }) => {
-    const [ bigImage, setBigImage ] = useState('')
-    const [ selectedVariant, setSelectedVariant ] = useState('')
+    const [bigImage, setBigImage] = useState('')
+    const [selectedVariant, setSelectedVariant] = useState('')
+    const [selectedSize, setSelectedSize] = useState('')
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(product?.imageUrls) {
+        if (product?.imageUrls) {
             setBigImage(product.imageUrls[0])
         }
-        if(product?.variants && product?.variants.length > 0) { //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
+        if (product?.variants && product.variants.length > 0) {
+            //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
             setSelectedVariant(product.variants[0].title)
+        }
+        if (product?.size && product.size.length > 0) {
+            //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
+            setSelectedSize(product.size[0].title)
         }
     }, [product])
 
@@ -121,6 +129,7 @@ const Product = ({ product, categories }) => {
             price: product.price,
             quantity: 1,
             variant: selectedVariant,
+            size: selectedSize,
         }
         dispatch(addCart(productInfo))
     }
@@ -130,11 +139,14 @@ const Product = ({ product, categories }) => {
     }
 
     const selectVariant = (e) => {
-        setSelectedVariant(e.target.value )
+        setSelectedVariant(e.target.value)
     }
 
+    const selectSize = (e) => {
+        setSelectedSize(e.target.value)
+    }
 
-    if(Object.keys(product).length === 0 && product.constructor === Object) {
+    if (Object.keys(product).length === 0 && product.constructor === Object) {
         return (
             <>
                 <Header />
@@ -142,27 +154,61 @@ const Product = ({ product, categories }) => {
                     <WrapperContent>
                         <h3>Denna produkt finns tyvärr inte.</h3>
                         <Link href={'/'} passHref>
-                            <NotFoundLink>se alla produkter från bellpepper.se</NotFoundLink>
+                            <NotFoundLink>
+                                se alla produkter från bellpepper.se
+                            </NotFoundLink>
                         </Link>
                     </WrapperContent>
-                    </Wrapper>
+                </Wrapper>
                 <Footer />
             </>
         )
-    }
-    else {
-        const { imageUrls, title, price, body, variants, images } = product
+    } else {
+        const {
+            imageUrls,
+            title,
+            price,
+            body,
+            variants,
+            images,
+            size,
+            titleForGoogleSearch,
+        } = product
 
         //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
-        const variant = variants?.length > 0 &&
+        const variantOptions =
+            variants?.length > 0 &&
             variants.map((item) => {
-                return <option key={item._key} value={item.title}>{item.title}</option>
+                return (
+                    <option key={item._key} value={item.title}>
+                        {item.title}
+                    </option>
+                )
+            })
+
+        //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
+        const sizeOptions =
+            size?.length > 0 &&
+            size.map((item) => {
+                return (
+                    <option key={item._key} value={item.title}>
+                        {item.title}
+                    </option>
+                )
             })
 
         const imageArray = imageUrls?.map((imageUrl, index) => {
             const active = imageUrl === bigImage
             return (
-                <SmallImg key={index} active={active} src={imageUrl} onClick={selectImg} alt={images[index].alt || 'produktbild silversmycke'} height="100" width="100" />
+                <SmallImg
+                    key={index}
+                    active={active}
+                    src={imageUrl}
+                    onClick={selectImg}
+                    alt={images[index].alt || 'produktbild silversmycke'}
+                    height="100"
+                    width="100"
+                />
             )
         })
 
@@ -172,24 +218,50 @@ const Product = ({ product, categories }) => {
 
         return (
             <Wrapper>
+                <Head>
+                    <title>
+                        {titleForGoogleSearch || 'silversmycke från bellpepper'}
+                    </title>
+                    <meta
+                        name="description"
+                        content="Handgjort smycken i 925 sterling silver, tillverkat i liten skala av mig i min verkstad."
+                    />
+                </Head>
                 <Header />
-                <Categories categories={categories}/>
+                <Categories categories={categories} />
                 <WrapperContent>
                     <h3>{title}</h3>
                     <div>
-                        <BigImage src={bigImage} alt="selected product picture" />
+                        <BigImage
+                            src={bigImage}
+                            alt="selected product picture"
+                        />
                     </div>
-                    <SmallImgWrapper>
-                        {imageArray}
-                    </SmallImgWrapper>
+                    <SmallImgWrapper>{imageArray}</SmallImgWrapper>
                     {texArray}
                     <PriceText>{price} SEK</PriceText>
-                    {variant &&
-                        <Dropdown onChange={selectVariant} defaultValue={variants[0]?.title}>
-                            {variant}
+                    {variantOptions && (
+                        <Dropdown
+                            onChange={selectVariant}
+                            defaultValue={variants[0]?.title}
+                        >
+                            {variantOptions}
                         </Dropdown>
-                    }
-                    <ActionButton buttonText="Lägg till" onClick={() => {addProductToCart(product) }} />
+                    )}
+                    {sizeOptions && (
+                        <Dropdown
+                            onChange={selectSize}
+                            defaultValue={size[0]?.title}
+                        >
+                            {sizeOptions}
+                        </Dropdown>
+                    )}
+                    <ActionButton
+                        buttonText="Lägg till"
+                        onClick={() => {
+                            addProductToCart(product)
+                        }}
+                    />
                 </WrapperContent>
                 <Footer />
             </Wrapper>
@@ -200,7 +272,7 @@ const Product = ({ product, categories }) => {
 // from: https://nextjs.org/docs/basic-features/data-fetching
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if the path has not been generated.
-export const getStaticPaths = async() => {
+export const getStaticPaths = async () => {
     const productsSlugsQuery = `*[_type == 'product' && defined(slug.current)][].slug.current`
     const slugs = await client.fetch(productsSlugsQuery)
 
@@ -216,38 +288,42 @@ export const getStaticPaths = async() => {
 }
 
 // This function also gets called at build time
-export const getStaticProps = async({ params }) => {
-
+export const getStaticProps = async ({ params }) => {
     // google search console searches for page product/[product] which gives params === undefined and generates a 500
     // this is done to avoid that...
-    if(Object.keys(params).length === 0 && params.constructor === Object) {
+    if (Object.keys(params).length === 0 && params.constructor === Object) {
         return {
-            props: {product: {}, categories: {}},
+            props: { product: {}, categories: {} },
         }
-    }
-
-    else {
+    } else {
         const productQuery = `*[_type == 'product' && slug.current == '${params.product}'][0] {
             _id,
             title,
             slug,
+            titleForGoogleSearch,
             price,
             images,
             variants,
+            size,
             "imageUrls": images[].asset->url,
             "body": body.se[].children[],
-        }`;
-        const product = await client.fetch(productQuery, {slug: params.product})
+        }`
+        const product = await client.fetch(productQuery, {
+            slug: params.product,
+        })
 
         const categoryQuery = `*[_type == 'category'] {
             title,
-        }`;
-        const categories = await client.fetch(categoryQuery, {slug: params.product})
-        categories.unshift({title: 'Alla produkter'} )
+        }`
+        const categories = await client.fetch(categoryQuery, {
+            slug: params.product,
+        })
+        categories.unshift({ title: 'Alla produkter' })
 
         return {
             props: {
-                product, categories
+                product,
+                categories,
             },
             // Next.js will attempt to re-generate the page:
             // - When a request comes in - At most once every 30 seconds

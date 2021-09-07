@@ -23,7 +23,9 @@ const CartWrapper = styled.div`
     display: flex;
     flex-direction: column;
     z-index: 1;
-    ${({ confirmation }) => confirmation && `
+    ${({ confirmation }) =>
+        confirmation &&
+        `
         align-items: center;
         p {
             margin-bottom: 12px;
@@ -37,7 +39,7 @@ const CartWrapper = styled.div`
         height: 100%;
         padding: 20px;
     }
-`;
+`
 
 const CloseButton = styled.button`
     display: flex;
@@ -53,17 +55,17 @@ const CloseButton = styled.button`
     i {
         font-size: 24px;
     }
-`;
+`
 
 const InfoHeaders = styled.div`
     display: flex;
     justify-content: space-between;
-`;
+`
 
 const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
-`;
+`
 
 const RemoveButton = styled.button`
     display: flex;
@@ -82,25 +84,25 @@ const RemoveButton = styled.button`
     i {
         font-size: 16px;
     }
-`;
+`
 
 const Divider = styled.div`
     height: 1px;
     width: 100%;
     background-color: lightgray;
-`;
+`
 
 const ItemWrapper = styled.div`
     display: flex;
     margin: 20px 0;
     align-items: center;
     justify-content: space-between;
-`;
+`
 
 const ProductInfoWrapper = styled.div`
     display: flex;
     align-items: center;
-`;
+`
 
 const ItemTextDiv = styled.div`
     display: flex;
@@ -110,40 +112,39 @@ const ItemTextDiv = styled.div`
     @media (max-width: 700px) {
         width: 120px;
     }
-`;
+`
 
 const ItemTitle = styled.p`
     text-align: left;
-`;
+`
 
 const ItemText = styled.p`
     text-align: left;
     font-size: 14px;
-`;
+`
 
 const QuantityWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-`;
+`
 
 const ItemQuantity = styled.p`
     margin-right: 12px;
     white-space: nowrap;
-`;
+`
 
 const PriceTag = styled.p`
     display: flex;
     flex-basis: 25%;
     justify-content: flex-end;
-`;
+`
 
 const TotalCost = styled.p`
     text-align: right;
     font-weight: bold;
     padding: 10px 0;
-`;
-
+`
 
 const CartModal = ({ onCartClose }) => {
     const [showAddressForm, setShowAdressForm] = useState(false)
@@ -170,24 +171,26 @@ const CartModal = ({ onCartClose }) => {
     }
 
     const addAddressClick = () => {
-        setShowAdressForm(!showAddressForm )
+        setShowAdressForm(!showAddressForm)
     }
 
     const onChange = (e) => {
         setErrorText('')
         if (e.target.name === 'message') {
-
             setMessage(e.target.value)
         } else {
-            setUserInformation({...userInformation, [e.target.name]: e.target.value})
+            setUserInformation({
+                ...userInformation,
+                [e.target.name]: e.target.value,
+            })
         }
     }
 
     const onSubmit = (event, priceTotal) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (Object.values(userInformation).includes('')) {
-            setErrorText('Du måste fylla i adress och email.' )
+            setErrorText('Du måste fylla i adress och email.')
             return
         }
         const body = {
@@ -200,16 +203,15 @@ const CartModal = ({ onCartClose }) => {
         fetch('/api/address', {
             method: 'post',
             headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
         }).then((res) => {
             if (res.status === 200) {
-                setSubmitted(true )
+                setSubmitted(true)
                 dispatch(clearCart())
-            }
-            else {
+            } else {
                 setErrorSendingMail(true)
             }
         })
@@ -221,16 +223,24 @@ const CartModal = ({ onCartClose }) => {
                 <ProductInfo key={index}>
                     <ItemWrapper>
                         <ProductInfoWrapper>
-                            <Image src={item.images[0]} alt="product picture" height="60px" width="60px" />
+                            <Image
+                                src={item.images[0]}
+                                alt="product picture"
+                                height="60px"
+                                width="60px"
+                            />
                             <ItemTextDiv>
                                 <ItemTitle>{item.title}</ItemTitle>
                                 <ItemText>{item.variant}</ItemText>
+                                <ItemText>{item.size}</ItemText>
                                 <ItemText>{item.price} kr/st</ItemText>
                             </ItemTextDiv>
                         </ProductInfoWrapper>
                         <QuantityWrapper>
                             <ItemQuantity>{item.quantity} st</ItemQuantity>
-                            <RemoveButton onClick={() => removeProductFromCart(item)}>
+                            <RemoveButton
+                                onClick={() => removeProductFromCart(item)}
+                            >
                                 <i className="material-icons">close</i>
                             </RemoveButton>
                         </QuantityWrapper>
@@ -239,33 +249,40 @@ const CartModal = ({ onCartClose }) => {
                     <Divider />
                 </ProductInfo>
             )
-        }
-        else return null
+        } else return null
     })
 
-    const priceTotal = cart.map((item) => {
-        return item.price * item.quantity
-    }).reduce((item, currentValue) => {
-        return item + currentValue
-    }, 0);
+    const priceTotal = cart
+        .map((item) => {
+            return item.price * item.quantity
+        })
+        .reduce((item, currentValue) => {
+            return item + currentValue
+        }, 0)
 
     if (submitted) {
         return (
             <CartWrapper confirmation>
                 <h3>TACK!</h3>
                 <p>Din order har nu skickats!</p>
-                <p>En orderbekräftelse kommer skickas till dig per mail, så snart jag behandlat din order.</p>
+                <p>
+                    En orderbekräftelse kommer skickas till dig per mail, så
+                    snart jag behandlat din order.
+                </p>
                 <ActionButton buttonText="Stäng" onClick={onCartClose} />
             </CartWrapper>
         )
     }
 
-    if(errorSendingMail) {
+    if (errorSendingMail) {
         return (
             <CartWrapper confirmation>
                 <h3>Något gick fel..</h3>
                 <p>Tyvärr skickades inte din order iväg korrrekt.</p>
-                <p>Vänligen försök igen eller kontakta mig på bellpepperstore@gmail.com</p>
+                <p>
+                    Vänligen försök igen eller kontakta mig på
+                    bellpepperstore@gmail.com
+                </p>
                 <ActionButton buttonText="Stäng" onClick={onCartClose} />
             </CartWrapper>
         )
@@ -290,9 +307,12 @@ const CartModal = ({ onCartClose }) => {
                 <Divider />
             </div>
             <div>
-                <ActionButton buttonText="Leveransadress" onClick={addAddressClick} />
+                <ActionButton
+                    buttonText="Leveransadress"
+                    onClick={addAddressClick}
+                />
             </div>
-            {showAddressForm &&
+            {showAddressForm && (
                 <AddressForm
                     userInformation={userInformation}
                     message={message}
@@ -300,7 +320,7 @@ const CartModal = ({ onCartClose }) => {
                     handleChange={onChange}
                     handleSubmit={(event) => onSubmit(event, priceTotal)}
                 />
-            }
+            )}
         </CartWrapper>
     )
 }

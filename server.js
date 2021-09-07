@@ -1,19 +1,30 @@
 const express = require('express')
 const next = require('next')
-const sgMail = require('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail')
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-
 const redirects = [
-    { from: '/p/halsband-silver-kvinnosymbol', to: '/product/halsband-silver-kvinnosymbol-m' },
-    { from: '/product/halsband-silver-kvinnosymbol', to: '/product/halsband-silver-kvinnosymbol-s' },
-    { from: '/p/halsband-silver-kvinnosymbol-xl', to: '/product/halsband-silver-kvinnosymbol-xl' },
+    {
+        from: '/p/halsband-silver-kvinnosymbol',
+        to: '/product/halsband-silver-kvinnosymbol-m',
+    },
+    {
+        from: '/product/halsband-silver-kvinnosymbol',
+        to: '/product/halsband-silver-kvinnosymbol-s',
+    },
+    {
+        from: '/p/halsband-silver-kvinnosymbol-xl',
+        to: '/product/halsband-silver-kvinnosymbol-xl',
+    },
     { from: '/p/halsband-silver-svala', to: '/product/halsband-silver-svala' },
-    { from: '/p/armband-silver-kvinnosymbol', to: '/product/armband-silver-kvinnosymbol'},
+    {
+        from: '/p/armband-silver-kvinnosymbol',
+        to: '/product/armband-silver-kvinnosymbol',
+    },
     { from: '/p/*', to: '/' },
     { from: '/products/*', to: '/' },
     { from: '/shop', to: '/' },
@@ -23,19 +34,20 @@ const redirects = [
 app.prepare()
     .then(() => {
         const server = express()
-        server.use(express.json());
+        server.use(express.json())
 
         redirects.forEach(({ from, to, type = 301, method = 'get' }) => {
             server[method](from, (req, res) => {
-              res.redirect(type, to)
+                res.redirect(type, to)
             })
         })
 
         server.post('/api/address', (req, res) => {
             const { name, street, zipcode, city, email } = req.body.userInfo
 
-            const orderHTML = req.body.order.map(({ title, images, price, quantity, variant }) => {
-                return `
+            const orderHTML = req.body.order
+                .map(({ title, images, price, quantity, variant, size }) => {
+                    return `
                     <table style="margin-bottom: 20px; width: 100%">
                         <tr>
                             <td style="width: 25%; padding-right: 4%;">
@@ -49,7 +61,15 @@ app.prepare()
                                     </tr>
                                     <tr>
                                         <td><strong>Variant</td>
-                                        <td style="text-align:end;">${variant || "-"}</td>
+                                        <td style="text-align:end;">${
+                                            variant || '-'
+                                        }</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Storlek</td>
+                                        <td style="text-align:end;">${
+                                            size || '-'
+                                        }</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Antal</strong></td>
@@ -66,10 +86,10 @@ app.prepare()
                         </tr>
                     </table>
                 `
-            }).join('')
+                })
+                .join('')
 
-
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY)
             const msg = {
                 to: 'bellpepperstore@gmail.com',
                 from: email,
@@ -102,9 +122,9 @@ app.prepare()
                         </tr>
                     </table>
                 </div>
-                `
-            };
-            sgMail.send(msg);
+                `,
+            }
+            sgMail.send(msg)
 
             res.send('success')
         })
@@ -122,5 +142,3 @@ app.prepare()
         console.error(ex.stack)
         process.exit(1)
     })
-
-
