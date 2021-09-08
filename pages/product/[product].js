@@ -209,12 +209,11 @@ const Product = ({ product, categories }) => {
                     active={active}
                     onClick={selectImg}
                 >
-                    <Image
+                    <img
                         src={imageUrl}
                         alt={images[index].alt || 'produktbild silversmycke'}
                         width="100%"
                         height="100%"
-                        layout="responsive"
                     />
                 </SmallImgWrapper>
             )
