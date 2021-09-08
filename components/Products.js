@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import styled from 'styled-components'
@@ -8,16 +8,18 @@ const Wrapper = styled.ul`
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 0px;
-`;
+`
 
 const ProductWrapper = styled.li`
     background-color: #f5eee8;
     padding: 12px;
     margin: 12px;
-    ${({ hidden }) => hidden && `
+    ${({ hidden }) =>
+        hidden &&
+        `
 		display: none;
 	`}
-    :hover{
+    :hover {
         filter: brightness(120%);
     }
     @media (max-width: 700px) {
@@ -25,7 +27,7 @@ const ProductWrapper = styled.li`
         padding: 0 0 6px;
         margin: 6px;
     }
-`;
+`
 
 const DispalyProduct = styled.a`
     display: flex;
@@ -35,47 +37,55 @@ const DispalyProduct = styled.a`
     letter-spacing: 0.6px;
     font-weight: 200;
     max-width: 300px;
-    img{
-        max-width: 100%;
-        max-height: 100%;
-    }
     @media (max-width: 700px) {
-        h3, p {
+        h3 {
             font-size: 12px;
-            margin: 0;
+            margin: 8px 0px 0px;
         }
-        img {
-            margin-bottom: 8px;
+        p {
+            font-size: 12px;
+            margin: 0px;
         }
     }
-`;
+`
 
-
-const ProductLink = ({ slug, img, alt, title, price, hidden}) => (
-	<ProductWrapper hidden={hidden}>
-            <Link href={`/product/${slug}`} passHref>
+const ProductLink = ({ slug, img, alt, title, price, hidden }) => (
+    <ProductWrapper hidden={hidden}>
+        <Link href={`/product/${slug}`} passHref>
             <DispalyProduct>
-                <Image src={img} alt={alt || 'produktbild silversmycke'} width={300} height={300} />
+                <Image
+                    src={img}
+                    alt={alt || 'produktbild silversmycke'}
+                    width={300}
+                    height={300}
+                />
                 <h3>{title}</h3>
                 <p>{price} SEK</p>
             </DispalyProduct>
-		</Link>
-	</ProductWrapper>
+        </Link>
+    </ProductWrapper>
 )
-
 
 const Products = ({ products, selectedCategory }) => {
     const productList = products.map((product) => {
-        const isHidden = selectedCategory === 'Alla produkter' ? false : !product?.categories?.includes(selectedCategory)
+        const isHidden =
+            selectedCategory === 'Alla produkter'
+                ? false
+                : !product?.categories?.includes(selectedCategory)
         return (
-            <ProductLink key={product._id} hidden={isHidden} id={product._id} title={product.title} slug={product.slug.current} img={product.firstImageUrl} alt={product.images[0].alt} price={product.price} />
+            <ProductLink
+                key={product._id}
+                hidden={isHidden}
+                id={product._id}
+                title={product.title}
+                slug={product.slug.current}
+                img={product.firstImageUrl}
+                alt={product.images[0].alt}
+                price={product.price}
+            />
         )
     })
-    return(
-        <Wrapper>
-            {productList}
-        </Wrapper>
-    )
+    return <Wrapper>{productList}</Wrapper>
 }
 
 export default Products

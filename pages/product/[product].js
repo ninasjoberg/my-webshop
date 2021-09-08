@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import styled from 'styled-components'
 import client from '../../cmsApi'
 import { addCart } from '../../redux/cartSlice'
@@ -50,11 +51,9 @@ const NotFoundLink = styled.p`
     }
 `
 
-const BigImage = styled.img`
-    max-width: 100%;
-    @media (max-width: 700px) {
-        max-width: 100%;
-    }
+const ImageWrapper = styled.div`
+    max-width: 600px;
+    height: auto;
 `
 
 const SmallImgWrapper = styled.div`
@@ -109,7 +108,12 @@ const Product = ({ product, categories }) => {
 
     useEffect(() => {
         if (product?.imageUrls) {
-            setBigImage(product.imageUrls[0])
+            console.log(product)
+            setBigImage({
+                src: product.imageUrls[0],
+                alt: product.images[0].alt,
+            })
+            //setBigImage(product.imageUrls[0])
         }
         if (product?.variants && product.variants.length > 0) {
             //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
@@ -135,7 +139,9 @@ const Product = ({ product, categories }) => {
     }
 
     const selectImg = (e) => {
-        setBigImage(e.target.src)
+        console.log(e.target)
+        setBigImage({ src: e.target.src, alt: e.target.alt })
+        //setBigImage(e.target.src)
     }
 
     const selectVariant = (e) => {
@@ -231,12 +237,17 @@ const Product = ({ product, categories }) => {
                 <Categories categories={categories} />
                 <WrapperContent>
                     <h3>{title}</h3>
-                    <div>
-                        <BigImage
-                            src={bigImage}
-                            alt="selected product picture"
-                        />
-                    </div>
+                    <ImageWrapper>
+                        {bigImage && (
+                            <Image
+                                src={bigImage.src}
+                                alt={bigImage.alt}
+                                width="100%"
+                                height="100%"
+                                layout="responsive"
+                            />
+                        )}
+                    </ImageWrapper>
                     <SmallImgWrapper>{imageArray}</SmallImgWrapper>
                     {texArray}
                     <PriceText>{price} SEK</PriceText>
