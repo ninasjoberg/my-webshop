@@ -52,7 +52,7 @@ const CloseButton = styled.button`
     :hover {
         opacity: 0.4;
     }
-    i {
+    span {
         font-size: 24px;
     }
 `
@@ -80,9 +80,6 @@ const RemoveButton = styled.button`
     cursor: pointer;
     :hover {
         opacity: 0.4;
-    }
-    i {
-        font-size: 16px;
     }
 `
 
@@ -241,7 +238,7 @@ const CartModal = ({ onCartClose }) => {
                             <RemoveButton
                                 onClick={() => removeProductFromCart(item)}
                             >
-                                <i className="material-icons">close</i>
+                                <span>X</span>
                             </RemoveButton>
                         </QuantityWrapper>
                         <PriceTag>{item.price * item.quantity} kr</PriceTag>
@@ -291,7 +288,7 @@ const CartModal = ({ onCartClose }) => {
     return (
         <CartWrapper>
             <CloseButton onClick={onCartClose}>
-                <i className="material-icons">close</i>
+                <span>X</span>
             </CloseButton>
             <h3>HÄR ÄR DIN VARUKORG</h3>
             <div>
