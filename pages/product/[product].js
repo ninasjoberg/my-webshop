@@ -51,21 +51,23 @@ const NotFoundLink = styled.p`
     }
 `
 
-const ImageWrapper = styled.div`
+const BigImageWrapper = styled.div`
     max-width: 600px;
     height: auto;
 `
 
-const SmallImgWrapper = styled.div`
+const ImagesWrapper = styled.div`
     display: flex;
     flex-flow: wrap;
     width: 100%;
     margin-bottom: 16px;
 `
 
-const SmallImg = styled.img`
+const SmallImgWrapper = styled.div`
     margin: 16px 12px 0px 0px;
     cursor: pointer;
+    width: 96px;
+    height: auto;
     &:last-child {
         margin-right: 0px;
     }
@@ -108,12 +110,10 @@ const Product = ({ product, categories }) => {
 
     useEffect(() => {
         if (product?.imageUrls) {
-            console.log(product)
             setBigImage({
                 src: product.imageUrls[0],
                 alt: product.images[0].alt,
             })
-            //setBigImage(product.imageUrls[0])
         }
         if (product?.variants && product.variants.length > 0) {
             //sanity gives you an empty array if you have once opened this field, even if you never add or have deleted the variant..
@@ -139,9 +139,7 @@ const Product = ({ product, categories }) => {
     }
 
     const selectImg = (e) => {
-        console.log(e.target)
         setBigImage({ src: e.target.src, alt: e.target.alt })
-        //setBigImage(e.target.src)
     }
 
     const selectVariant = (e) => {
@@ -206,15 +204,19 @@ const Product = ({ product, categories }) => {
         const imageArray = imageUrls?.map((imageUrl, index) => {
             const active = imageUrl === bigImage
             return (
-                <SmallImg
+                <SmallImgWrapper
                     key={index}
                     active={active}
-                    src={imageUrl}
                     onClick={selectImg}
-                    alt={images[index].alt || 'produktbild silversmycke'}
-                    height="100"
-                    width="100"
-                />
+                >
+                    <Image
+                        src={imageUrl}
+                        alt={images[index].alt || 'produktbild silversmycke'}
+                        width="100%"
+                        height="100%"
+                        layout="responsive"
+                    />
+                </SmallImgWrapper>
             )
         })
 
@@ -237,8 +239,8 @@ const Product = ({ product, categories }) => {
                 <Categories categories={categories} />
                 <WrapperContent>
                     <h3>{title}</h3>
-                    <ImageWrapper>
-                        {bigImage && (
+                    <BigImageWrapper>
+                        {bigImage?.src && (
                             <Image
                                 src={bigImage.src}
                                 alt={bigImage.alt}
@@ -247,8 +249,8 @@ const Product = ({ product, categories }) => {
                                 layout="responsive"
                             />
                         )}
-                    </ImageWrapper>
-                    <SmallImgWrapper>{imageArray}</SmallImgWrapper>
+                    </BigImageWrapper>
+                    <ImagesWrapper>{imageArray}</ImagesWrapper>
                     {texArray}
                     <PriceText>{price} SEK</PriceText>
                     {variantOptions && (
