@@ -138,8 +138,8 @@ const Product = ({ product, categories }) => {
         dispatch(addCart(productInfo))
     }
 
-    const selectImg = (e) => {
-        setBigImage({ src: e.target.src, alt: e.target.alt })
+    const selectImg = (imgSrc, imgAlt) => {
+        setBigImage({ src: imgSrc, alt: imgAlt })
     }
 
     const selectVariant = (e) => {
@@ -207,13 +207,14 @@ const Product = ({ product, categories }) => {
                 <SmallImgWrapper
                     key={index}
                     active={active}
-                    onClick={selectImg}
+                    onClick={() => selectImg(imageUrl, images[index].alt)}
                 >
-                    <img
+                    <Image
                         src={imageUrl}
                         alt={images[index].alt || 'produktbild silversmycke'}
                         width="100%"
                         height="100%"
+                        layout="responsive"
                     />
                 </SmallImgWrapper>
             )
