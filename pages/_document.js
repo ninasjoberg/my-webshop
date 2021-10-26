@@ -46,7 +46,6 @@ export default class MyDocument extends Document {
                         name="google-site-verification"
                         content="P62ChL8wEUwp2QCClCPZzZ5Apk4xZm1sIfI9T-z0fsE"
                     />
-                    <link rel="canonical" href="https://www.bellpepper.se" />
                 </Head>
                 <body style={{ margin: 0 }} ontouchstart="">
                     <Main />

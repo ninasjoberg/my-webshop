@@ -36,6 +36,7 @@ const IndexPage = ({ products, categories }) => {
                     name="description"
                     content="Handgjorda smycken i 925 sterling silver, tillverkade i liten skala. Kvinnosymboler, geometriska former och stilren design."
                 />
+                <link rel="canonical" href="https://www.bellpepper.se" />
             </Head>
             <Header />
             <Categories

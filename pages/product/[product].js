@@ -102,7 +102,7 @@ const Dropdown = styled.select`
     }
 `
 
-const Product = ({ product, categories }) => {
+const Product = ({ product, categories, slug }) => {
     const [bigImage, setBigImage] = useState('')
     const [selectedVariant, setSelectedVariant] = useState('')
     const [selectedSize, setSelectedSize] = useState('')
@@ -234,6 +234,10 @@ const Product = ({ product, categories }) => {
                         name="description"
                         content="Handgjort smycken i 925 sterling silver, tillverkat i liten skala av mig i min verkstad."
                     />
+                    <link
+                        rel="canonical"
+                        href={`https://www.bellpepper.se/product/${slug}`}
+                    />
                 </Head>
                 <Header />
                 <Categories categories={categories} />
@@ -321,15 +325,17 @@ export const getStaticProps = async ({ params }) => {
             "imageUrls": images[].asset->url,
             "body": body.se[].children[],
         }`
+
+        const slug = params.product
         const product = await client.fetch(productQuery, {
-            slug: params.product,
+            slug,
         })
 
         const categoryQuery = `*[_type == 'category'] {
             title,
         }`
         const categories = await client.fetch(categoryQuery, {
-            slug: params.product,
+            slug,
         })
         categories.unshift({ title: 'Alla produkter' })
 
@@ -337,6 +343,7 @@ export const getStaticProps = async ({ params }) => {
             props: {
                 product,
                 categories,
+                slug,
             },
             // Next.js will attempt to re-generate the page:
             // - When a request comes in - At most once every 30 seconds
