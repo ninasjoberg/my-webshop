@@ -50,7 +50,7 @@ const IndexPage = ({ products, categories }) => {
 }
 
 // This function gets called at build time
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
     const productsQuery = `*[_type == 'product'] | order(order asc) {
 		_id,
 		title,
@@ -74,10 +74,6 @@ export const getStaticProps = async () => {
             products,
             categories,
         },
-        // Next.js will attempt to re-generate the page:
-        // - When a request comes in - At most once every 30 seconds
-        // (needed to get the page updated when making changes in the cms, without having to rebuild the app)
-        revalidate: 30,
     }
 }
 
