@@ -1,4 +1,7 @@
 # my-webshop
+
+FYI: This projety is not in use anymore, I have made a new repo and webshop. checkout https://github.com/ninasjoberg/my-webshop-njs925
+
 webshop for my silversmithing project. https://www.bellpepper.se
 
 ongoing hobby project, develop and updating when I have time..
